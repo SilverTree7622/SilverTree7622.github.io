@@ -25,7 +25,6 @@ const fetchTrial = async <T> (
     const { data, pending, error, refresh } = await useFetch<T>(
         `${ apiURL }/${ url }`, fetchConfig,
     );
-    console.log('url, trialCnt, data, pending, error, fetchConfig: ', url, trialCnt, data, pending, error, fetchConfig);
     if (error.value) {
         if (trialCnt >= FETCH_TRIAL_MAX_CNT) {
             return {
@@ -42,9 +41,13 @@ const fetchTrial = async <T> (
         }
         return await fetchTrial(apiURL, url, reqConfig, config, trialCnt + 1);
     }
-    return {
-        data: data.value, pending: pending.value, error: !!error.value,
+    const trialResult = {
+        data: data.value,
+        pending: pending.value,
+        error: !!error.value,
     };
+    console.log('url, trialCnt, trialResult, fetchConfig: ', url, trialCnt, trialResult, fetchConfig);
+    return trialResult;
 };
 
 

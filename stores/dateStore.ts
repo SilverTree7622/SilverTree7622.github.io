@@ -37,8 +37,6 @@ export const useDateStore = defineStore('dateStore', () => {
     };
 
     const getFromDate = (): number => {
-
-        console.log('opt.date: ', opt.date, getDate(), getDate().getUTCDate());
         return UtilDate.getWithOutMillisecond(getDate().getTime());
     };
 

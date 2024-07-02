@@ -4,10 +4,12 @@ import type { TSportScheduleTypes } from "~/types/schedule";
 import UtilDate from "~/utils/date";
 
 
+export type TContentStorePrefix = '' | 'home' | 'away';
+
 export const useContentStore = defineStore('contentStore', () => {
 
-    const go_prefix_via_position = (position: number = 0) => {
-        let prefix = '';
+    const go_prefix_via_position = (position: number = 0): TContentStorePrefix => {
+        let prefix: TContentStorePrefix = '';
         if (position === 0) {
             prefix = 'home';
         }
@@ -34,7 +36,7 @@ export const useContentStore = defineStore('contentStore', () => {
     };
     
     const getLeagueScore = (newLeague: TCommonLiveRealTime, position: number = 0): string => {
-        // make oppositie for just now something wrong
+        // ISSUE: make oppositie for just now something wrong
         if (position === 0) position = 1;
         else position = 0;
         // end
@@ -63,8 +65,8 @@ export const useContentStore = defineStore('contentStore', () => {
     };
 
     const getMatchTime = (league: TSportScheduleTypes): string => {
-        const date = new Date(Number(`${ league.ai_match_time }000`));
-        const time = `${UtilDate.syncDigit(date.getUTCHours())}:${UtilDate.syncDigit(date.getUTCMinutes())}`;
+        const timestamp = UtilDate.addMillisecond(league.ai_match_time);
+        const time = `${ UtilDate.syncDigit(timestamp.getUTCHours()) }:${ UtilDate.syncDigit(timestamp.getUTCMinutes()) }`;
         return time;
     };
 

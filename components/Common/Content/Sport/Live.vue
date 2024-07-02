@@ -78,7 +78,7 @@ const getLeagueTime = (
     ai_match_status: TCommonLiveRealTime['ai_match_status'],
     ai_kickoff_timestamp: number,
 ): string => {
-    const currentTime = UtilDate.getWithOutMillisecond(new Date(Date.now()).getTime());
+    const currentTime = UtilDate.getWithOutMillisecond();
     const kickOffTime = ai_kickoff_timestamp;
     const gapTime = currentTime - kickOffTime;
     let dateTime = 0;

@@ -10,6 +10,12 @@ const UtilDate = {
         return time;
     },
 
+    /**
+     * utc based chck is same day
+     * @param d1 compare date 1
+     * @param d2 compare date 2
+     * @returns
+     */
     chckSameDay: (d1: Date, d2: Date): boolean => {
         return d1.getUTCFullYear() === d2.getUTCFullYear() &&
         d1.getUTCMonth() === d2.getUTCMonth() &&
@@ -20,12 +26,12 @@ const UtilDate = {
         return UtilDate.chckSameDay(d, new Date(Date.now()));
     },
 
-    getWithOutMillisecond: (timestamp: number) => {
-        return ~~( timestamp / 1000 );
+    getWithOutMillisecond: (timestamp?: number): number => {
+        return ~~( ( timestamp ?? new Date(Date.now()).getTime() ) / 1000 );
     },
 
     addMillisecond: (timestamp: number) => {
-        return new Date(Number(`${ timestamp }000`));
+        return new Date( Number(`${ timestamp }000`) );
     },
 };
 

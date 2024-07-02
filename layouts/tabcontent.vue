@@ -54,6 +54,7 @@
 <script lang="ts" setup>
 import { ECommonSportSectionValue, type TCommonSportSection } from '~/types/Common/sport';
 import type { TCommonTabTypes } from '~/types/Common/tab';
+import type { TSportScheduleTypes } from '~/types/schedule';
 import UtilDate from '~/utils/date';
 
 const props = defineProps<{
@@ -63,6 +64,7 @@ const props = defineProps<{
     sName: TCommonSportSection;
     tab: TCommonTabTypes;
     result: any;
+    sortedList: TSportScheduleTypes[];
     changeTab: () => Promise<void>;
     changeDate: () => Promise<void>;
     toggleByTime: () => Promise<void>;
@@ -128,6 +130,14 @@ watch(
     async () => {
         await props.updateLiveRealTime();
     }
+);
+
+// watch list item length for the time update
+watch(
+    () => props.sortedList.length,
+    async (p) => {
+        await props.updateLiveRealTime();
+    },
 );
 
 const prevDate = (date: Date) => {

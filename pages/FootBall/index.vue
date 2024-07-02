@@ -7,6 +7,7 @@
         :sName="'football'"
         :tab="opt.tab"
         :result="opt.result"
+        :sortedList="list.sortedList"
         :changeTab="changeTab"
         :changeDate="changeDate"
         :toggleByTime="toggleByTime"
@@ -159,10 +160,8 @@ const updateLiveRealTime = async () => {
     //     console.log(`nothing changed`);
     //     return;
     // }
-    // console.log('isListEqual, isMatchUpListEqual, isScore1ListEqual, isScore2ListEqual, isTimeListEqual: ', isListEqual, isMatchUpListEqual, isScore1ListEqual, isScore2ListEqual, isTimeListEqual);
-    // console.log('list.totalList: ', list.totalList);
-    // console.log('list.sortedList: ', list.sortedList);
-    
+
+    // 각 list에 있는 item의 component에 update 및 update에 필요한 값 넘겨주기
     if (!$liveMain.value) return;
     list.sortedList.map((item, idx) => {
         const filteredKickOffList = list.sortedKickOffList.find((filterItem) => {
