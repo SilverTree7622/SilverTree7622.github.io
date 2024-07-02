@@ -13,10 +13,10 @@
 </template>
 
 <script setup lang="ts">
-import type { TBasketBallFixtures } from '~/types/BasketBall/fixtures';
+import type { TBasketBallSchedule } from "~/types/BasketBall/schedule";
 
 const props = defineProps<{
-    result_league_list: TBasketBallFixtures[];
+    result_league_list: TBasketBallSchedule[];
 }>();
 
 const chckIsLast = (idx: number) => {

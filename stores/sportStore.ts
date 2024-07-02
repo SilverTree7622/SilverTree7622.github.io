@@ -11,6 +11,9 @@ import UtilArray from "~/utils/array";
 export type TSportStoreKickOffList = { idx: number; match_id: string; ai_kickoff_timestamp: number; }[];
 
 export const useSportStore = defineStore('sportStore', () => {
+    const {
+        MAX_PAGINATION_CONTENT,
+    } = useRuntimeConfig().public.CONSTANTS;
 
     const res = async (
         totalList: TSportScheduleTypes[],
@@ -20,9 +23,15 @@ export const useSportStore = defineStore('sportStore', () => {
         $liveMain,
         sportSection: TCacheStoreSection,
         tab: TCommonTabTypes,
-        callNextContents: (isFilter?: boolean) => Promise<void>,
+        // loadSortedContent: (isFilter: boolean, list: any[]) => Promise<{ loadPageIdx: number; loadPageIsPending: boolean; loadSortedList: any[]; }>,
+        callNextContents: (isFilter?: boolean) => Promise<boolean>,
         endCallback: () => void = () => {},
-    ) => {
+    ): Promise<{
+        resTotalList: TSportScheduleTypes[];
+        resTotalKickOffList: TSportStoreKickOffList;
+        resSortedList: TSportScheduleTypes[];
+        resSortedKickOffList: TSportStoreKickOffList;
+    }> => {
         const isToday = UtilDate.chckDateIsToday(
             UtilDate.addMillisecond(useDateStore().getFromDate())
         );
@@ -40,18 +49,24 @@ export const useSportStore = defineStore('sportStore', () => {
             await callNextContents();
             if (tab === 'live') {
                 await updateLiveRealTime(
-                    totalList, totalKickOffList, sortedList, sortedKickOffList, $liveMain, callNextContents
+                    totalList,
+                    totalKickOffList,
+                    sortedList,
+                    sortedKickOffList,
+                    $liveMain,
+                    callNextContents,
                 );
             }
         } catch (e) {
             console.warn('e from sportStore res: ', e);
         }
         endCallback && endCallback();
+        console.log('sortedList, sortedList.length: ', sortedList, sortedList.length);
         return {
-            totalList,
-            totalKickOffList,
-            sortedList,
-            sortedKickOffList,
+            resTotalList: totalList,
+            resTotalKickOffList: totalKickOffList,
+            resSortedList: sortedList,
+            resSortedKickOffList: sortedKickOffList,
         };
     };
     
@@ -61,7 +76,8 @@ export const useSportStore = defineStore('sportStore', () => {
         sortedList: TSportScheduleTypes[],
         sortedKickOffList: TSportStoreKickOffList,
         $liveMain,
-        callNextContents: (isFilter?: boolean) => Promise<void>,
+        // loadSortedContent: (isFilter: boolean, list: any[]) => Promise<{ loadPageIdx: number; loadPageIsPending: boolean; loadSortedList: any[]; }>,
+        callNextContents: (isFilter?: boolean) => Promise<boolean>,
     ) => {
         const prevSortedList = [ ...sortedList ];
         const prevSortedListMatchUpList = sortedList.map( item => item.match_id );
@@ -144,7 +160,115 @@ export const useSportStore = defineStore('sportStore', () => {
         };
     };
 
-    
+    /**
+     * call next content (pagination)
+     * @param isFilter 
+     * @returns { Promise<boolean> } return is content is done or not
+     */
+    const callNextContents = async (
+        pageIdx: number,
+        pageIsPending: boolean,
+        isOutOfContent: boolean,
+        totalList: TSportScheduleTypes[],
+        sortedList: TSportScheduleTypes[],
+        tab: TCommonTabTypes,
+        loadSortedContent: (isFilter: boolean, list: any[]) => Promise<{ loadPageIdx: number; loadPageIsPending: boolean; loadSortedList: any[]; }>,
+        isFilter: boolean = false,
+    ): Promise<{
+        pageIdx: number;
+        pageIsPending: boolean;
+        isOutOfContent: boolean;
+        sortedList: TSportScheduleTypes[];
+    }> => {
+        const pagedList = useFilterStore().sortList(
+            totalList,
+            useDateStore().getDate(),
+            {
+                tab,
+                date: (item) => {
+                    return UtilDate.addMillisecond(item.ai_match_time);
+                },
+                league: (item) => {
+                    return item.ai_competition_id;
+                }
+            }
+        );
+        // is content done (out of item)
+        if ((pagedList.length === sortedList.length) && pagedList.length !== 0) {
+            if (isFilter) sortedList = pagedList;
+            isOutOfContent = true;
+            return {
+                pageIdx,
+                pageIsPending,
+                isOutOfContent,
+                sortedList,
+            };
+        }
+        const {
+            loadPageIdx,
+            loadPageIsPending,
+            loadSortedList,
+        } = await loadSortedContent(isFilter, sortedList);
+        sortedList = loadSortedList;
+        isOutOfContent = (pagedList.length === sortedList.length);
+        return {
+            pageIdx: loadPageIdx,
+            pageIsPending: loadPageIsPending,
+            isOutOfContent,
+            sortedList,
+        };
+    };
+
+    /**
+     * get paged list from total list (pagination via page idx)
+     * @param isFilter 
+     * @param list 
+     */
+    const loadSortedContent = async (
+        pageIdx: number,
+        pageIsPending: boolean,
+        isFilter: boolean,
+        list: any[],
+    ): Promise<{
+        loadPageIdx: number;
+        loadPageIsPending: boolean;
+        loadSortedList: any[];
+    }> => {
+        console.log('loadSortedContent list: ', list.length, list);
+        if (list.length === 0) {
+            return {
+                loadPageIdx: pageIdx, loadPageIsPending: pageIsPending, loadSortedList: list,
+            };
+        }
+        if (isFilter) {
+            // ISSUE: sorted list is empty wtf
+            console.log('pageIdx: ', pageIdx);
+
+            return {
+                loadPageIdx: pageIdx,
+                loadPageIsPending: pageIsPending,
+                loadSortedList: list.slice(0, MAX_PAGINATION_CONTENT * pageIdx),
+            };
+        }
+        if (list.length < pageIdx) {
+            return {
+                loadPageIdx: pageIdx,
+                loadPageIsPending: pageIsPending,
+                loadSortedList: list,
+            };
+        }
+        if (pageIdx !== 0) pageIsPending = true;
+        // load next content
+        pageIdx++;
+        const slicedList = list.slice(0, MAX_PAGINATION_CONTENT * pageIdx);
+        pageIsPending = false;
+        return {
+            loadPageIdx: pageIdx,
+            loadPageIsPending: pageIsPending,
+            loadSortedList: slicedList,
+        };
+    };
+
     const onMounted = async (
         totalList: TSportScheduleTypes[],
         totalKickOffList: TSportStoreKickOffList,
@@ -153,26 +277,45 @@ export const useSportStore = defineStore('sportStore', () => {
         $liveMain,
         sportSection: TCacheStoreSection,
         tab: TCommonTabTypes,
-        callNextContents: (isFilter?: boolean) => Promise<void>,
+        // loadSortedContent: (isFilter: boolean, list: any[]) => Promise<{ loadPageIdx: number; loadPageIsPending: boolean; loadSortedList: any[]; }>,
+        callNextContents: (isFilter?: boolean) => Promise<boolean>,
         endCallback: () => void = () => {}
-    ) => {
-        await res(
+    ): Promise<{
+        totalList: TSportScheduleTypes[];
+        totalKickOffList: TSportStoreKickOffList;
+        sortedList: TSportScheduleTypes[];
+        sortedKickOffList: TSportStoreKickOffList;
+    }> => {
+        const {
+            resTotalList,
+            resTotalKickOffList,
+            resSortedList,
+            resSortedKickOffList,
+        } = await res(
             totalList,
             totalKickOffList,
             sortedList,
             sortedKickOffList,
-            sportSection,
             $liveMain,
+            sportSection,
             tab,
+            // loadSortedContent,
             callNextContents,
             endCallback,
         );
+        return {
+            totalList: resTotalList,
+            totalKickOffList: resTotalKickOffList,
+            sortedList: resSortedList,
+            sortedKickOffList: resSortedKickOffList,
+        };
     };
 
     return {
         res,
         updateLiveRealTime,
+        callNextContents,
+        loadSortedContent,
         onMounted,
-
     };
 });

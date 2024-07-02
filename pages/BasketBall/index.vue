@@ -7,13 +7,17 @@
         :sName="'BasketBall'"
         :tab="opt.tab"
         :result="opt.result"
+        :sortedList="list.sortedList"
         :changeTab="changeTab"
         :changeDate="changeDate"
         :toggleByTime="toggleByTime"
+        :updateLiveRealTime="updateLiveRealTime"
     >
         <BasketBallLiveMain
             v-if="opt.tab === 'live'"
+            ref="$liveMain"
             :result_league_list="list.sortedList"
+            :onMounted="updateLiveRealTime"
         />
         <BasketBallFixturesMain
             v-if="opt.tab === 'fixtures'"
@@ -35,8 +39,10 @@
 
 <script setup lang="ts">
 import type { TBasketBallFixtures } from '~/types/BasketBall/fixtures';
-import { ECommonSportValue } from '~/types/Common/sport';
+import { ECommonSportSectionValue, ECommonSportValue } from '~/types/Common/sport';
 import type { TCommonTabTypes } from '~/types/Common/tab';
+import type { TBasketBallSchedule } from "~/types/BasketBall/schedule";
+import UtilDate from '~/utils/date';
 
 const {
     ONE_DAY_MILLISECOND,
@@ -46,6 +52,7 @@ const filterStore = useFilterStore();
 const dateStore = useDateStore();
 const scrollStore = useScrollStore();
 const cacheStore = useCacheStore();
+const sportStore = useSportStore();
 const route = useRoute();
 
 const scroll = reactive({
@@ -62,11 +69,15 @@ const opt = reactive({
     },
 });
 
+const $liveMain = ref();
+
 const list = reactive({
     // total list
-    totalList: <TBasketBallFixtures[]> [],
+    totalList: <TBasketBallSchedule[]> [],
+    totalKickOffList: <{ idx: number; match_id: string; ai_kickoff_timestamp: number; }[]> [],
     // sorted list from total list (= visaulized list)
-    sortedList: <TBasketBallFixtures[]> [],
+    sortedList: <TBasketBallSchedule[]> [],
+    sortedKickOffList: <{ idx: number; match_id: string; ai_kickoff_timestamp: number; }[]> [],
 });
 
 const page = reactive({
@@ -83,7 +94,7 @@ const init = () => {
 };
 
 const changeTab = async () => {
-    opt.tab = route.query['tab'] as TCommonTabTypes;
+    opt.tab = route.query['tab'] as TCommonTabTypes ?? 'live';
     list.totalList = [];
     opt.isBooting = true;
     opt.isPending = true;
@@ -95,27 +106,64 @@ const changeDate = async () => {
     if (opt.isBooting) return;
     init();
     opt.isPending = true;
-    await callNextContents();
+    if (opt.tab === 'live') {
+        await callNextContents();
+    } else {
+        await res();
+    }
     opt.isPending = false;
 };
 
 const toggleByTime = async () => {
-    await callNextContents(true);
+    await updateLiveRealTime();
+};
+
+
+const updateLiveRealTime = async () => {
+    const {
+        totalList,
+        totalKickOffList,
+        sortedList,
+        sortedKickOffList,
+    } = await sportStore.updateLiveRealTime(
+        list.totalList,
+        list.totalKickOffList,
+        list.sortedList,
+        list.sortedKickOffList,
+        $liveMain,
+        callNextContents,
+    );
+    list.totalList = totalList;
+    list.totalKickOffList = totalKickOffList;
+    list.sortedList = sortedList;
+    list.sortedKickOffList = sortedKickOffList;
 };
 
 /**
  * res from first page entrance
  */
 const res = async () => {
-    const res = await cacheStore.onMountedTab(
-        'basketball', opt.tab, 'fixtures',
-        {
-            sid: ECommonSportValue['BasketBall'],
-            fromdate: dateStore.getDate().getTime(),
-        }
+    const isToday = UtilDate.chckDateIsToday(
+        UtilDate.addMillisecond(dateStore.getFromDate())
     );
-    list.totalList = res['data']['Body'];
-    await callNextContents();
+    const res = await cacheStore.onMountedTab(
+        'basketball',
+        opt.tab,
+        {
+            sid: ECommonSportValue[ ECommonSportSectionValue['basketball'] ],
+            fromdate: isToday ? 0 : dateStore.getFromDate(),
+        },
+    );
+    console.log('res from page index: ', res);
+    try {
+        list.totalList = res['data'];
+        await callNextContents();
+        if (opt.tab === 'live') {
+            await updateLiveRealTime();
+        }
+    } catch (e) {
+
+    }
     opt.isPending = false;
     opt.isBooting = false;
 };
@@ -145,19 +193,16 @@ const loadSortedContent = async (isFilter: boolean, list: any[]) => {
  * @param isFilter 
  */
 const callNextContents = async (isFilter: boolean = false): Promise<boolean> => {
-    const isWholeDate = (opt.tab === 'odds' || opt.tab === 'league');
-    const isResult = (opt.tab === 'result');
     const pagedList = filterStore.sortList(
         list.totalList,
         dateStore.getDate(),
         {
-            isWholeDate,
-            isResult,
+            tab: opt.tab,
             date: (item) => {
-                return new Date(item.Fixture.StartDate);
+                return UtilDate.addMillisecond(item.ai_match_time);
             },
             league: (item) => {
-                return item.Fixture.League.Id;
+                return item.ai_competition_id;
             }
         }
     );
@@ -176,13 +221,19 @@ onMounted(async () => {
     await nextTick();
     scrollStore.setScroll2Top();
     await res();
-    scrollStore.register(scroll.key, callNextContents);
+    scrollStore.register(
+        scroll.key,
+        async () => {
+            const result = await callNextContents();
+            await updateLiveRealTime();
+            return result;
+        }
+    );
 });
 
 onBeforeUnmount(async () => {
     init();
     scrollStore.onBeforeUnmount(scroll.key);
-    cacheStore.onBeforeUnmountTab();
 });
 </script>
 
