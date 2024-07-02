@@ -36,6 +36,7 @@
 <script setup lang="ts">
 import type { TBasketBallFixtures } from '~/types/BasketBall/fixtures';
 import { ECommonSportValue } from '~/types/Common/sport';
+import type { TCommonTabTypes } from '~/types/Common/tab';
 
 const {
     ONE_DAY_MILLISECOND,

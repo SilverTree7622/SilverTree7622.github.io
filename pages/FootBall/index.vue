@@ -94,7 +94,6 @@ const init = () => {
 };
 
 const changeTab = async () => {
-    console.log(`change tab`);
     opt.tab = route.query['tab'] as TCommonTabTypes ?? 'live';
     list.totalList = [];
     opt.isBooting = true;
@@ -241,6 +240,7 @@ const loadSortedContent = async (isFilter: boolean, list: any[]) => {
 /**
  * call next content (pagination)
  * @param isFilter 
+ * @returns { Promise<boolean> } return is content is done or not
  */
 const callNextContents = async (isFilter: boolean = false): Promise<boolean> => {
     const pagedList = filterStore.sortList(
@@ -272,11 +272,14 @@ onMounted(async () => {
     await nextTick();
     scrollStore.setScroll2Top();
     await res();
-    scrollStore.register(scroll.key, async () => {
-        const result = await callNextContents();
-        await updateLiveRealTime();
-        return result;
-    });
+    scrollStore.register(
+        scroll.key,
+        async () => {
+            const result = await callNextContents();
+            await updateLiveRealTime();
+            return result;
+        }
+    );
 });
 
 onBeforeUnmount(async () => {

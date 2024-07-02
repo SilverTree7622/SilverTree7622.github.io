@@ -50,7 +50,6 @@ const fetchTrial = async <T> (
     return trialResult;
 };
 
-
 export const useApiFetch = async <T> (
     url: string,
     config,

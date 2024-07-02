@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { useToast } from 'vue-toastification'
 
+
 export const useToastStore = defineStore('toastStore', () => {
     const toast = useToast();
 
