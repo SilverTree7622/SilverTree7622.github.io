@@ -44,13 +44,13 @@
 
 <script setup lang="ts">
 import UtilDate from "~/utils/date";
-import type { TFootBallSchedule } from "~/types/FootBall/schedule";
 import type { TCommonLiveRealTime } from "~/types/Common/Live";
 import type { TMatchUpStoreConfig } from "~/types/matchUp";
+import type { TCommonSchedule } from "~/types/Common/schedule";
 
 const props = defineProps<{
     idx: number;
-    league: TFootBallSchedule;
+    league: TCommonSchedule;
 }>();
 
 const prev = reactive({
@@ -153,7 +153,7 @@ const on = (home: boolean, away: boolean, time: boolean) => {
     if (time) updateOpt.time = true;
 };
 
-const goLiveTracker = (league: TFootBallSchedule) => {
+const goLiveTracker = (league: TCommonSchedule) => {
     const config: TMatchUpStoreConfig = {
         match_id: league.match_id,
         leagueName: league.ai_competition_name,

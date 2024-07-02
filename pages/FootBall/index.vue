@@ -19,7 +19,7 @@
             :result_league_list="list.sortedList"
             :onMounted="updateLiveRealTime"
         />
-    <FootBallFixturesMain
+        <FootBallFixturesMain
             v-if="opt.tab === 'fixtures'"
             :result_league_list="list.sortedList"
         />
@@ -39,8 +39,6 @@
 
 <script setup lang="ts">
 import { ECommonSportSectionValue, ECommonSportValue, type TCommonSportNavCode, type TCommonSportSection } from '~/types/Common/sport';
-import UtilObj from '~/utils/obj';
-import UtilArray from '~/utils/array';
 import type { TFootBallSchedule } from "~/types/FootBall/schedule";
 import type { TCommonTabTypes } from "~/types/Common/tab";
 import UtilDate from '~/utils/date';

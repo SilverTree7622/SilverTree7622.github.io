@@ -38,7 +38,6 @@
 </template>
 
 <script setup lang="ts">
-import type { TBasketBallFixtures } from '~/types/BasketBall/fixtures';
 import { ECommonSportSectionValue, ECommonSportValue } from '~/types/Common/sport';
 import type { TCommonTabTypes } from '~/types/Common/tab';
 import type { TBasketBallSchedule } from "~/types/BasketBall/schedule";
@@ -117,7 +116,6 @@ const changeDate = async () => {
 const toggleByTime = async () => {
     await updateLiveRealTime();
 };
-
 
 const updateLiveRealTime = async () => {
     const {
