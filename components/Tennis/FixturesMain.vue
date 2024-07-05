@@ -1,8 +1,12 @@
 <template>
     <div class="contents_-football_-live-Mzx5SR" id="contents_-football_-live">
         <div class="leagueFrame">
-            <template v-for="(league, idx) in props.result_league_list">
+            <template
+                v-for="(league, idx) in props.result_league_list"
+                :key="`${ idx }-0`"
+            >
                 <CommonContentSportFixtures
+                    ref="$fixtures"
                     :idx="idx"
                     :league="league"
                 />
@@ -12,11 +16,13 @@
 </template>
 
 <script setup lang="ts">
-import type { TTennisFixtures } from '~/types/Tennis/fixtures';
+import type { TTennisSchedule } from '~/types/Tennis/schedule';
 
 const props = defineProps<{
-    result_league_list: TTennisFixtures[];
+    result_league_list: TTennisSchedule[];
 }>();
+
+const $fixtures = ref();
 
 onMounted(async () => {
     await nextTick();

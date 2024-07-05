@@ -39,6 +39,7 @@
                 <LoadingSkeleton />
                 <LoadingSkeleton />
             </div>
+            <!-- down stroke icon -->
             <div
                 v-show="!props.isOutOfContent && !props.isPending && !props.pageIsPending"
                 class="mx-auto my-4"
@@ -49,6 +50,10 @@
                 >
                     <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5"></path>
                 </svg>
+            </div>
+            <!-- display this when slot has no items -->
+            <div v-show="!props.sortedList.length && !props.isPending" class="w-full text-center mb-16">
+                No Content
             </div>
         </div>
 

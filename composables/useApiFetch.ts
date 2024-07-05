@@ -23,8 +23,10 @@ const fetchTrial = async <T> (
         };
     }
     const { data, pending, error, refresh } = await useFetch<T>(
-        `${ apiURL }/${ url }`, fetchConfig,
+        `${ apiURL }${ url }`, fetchConfig,
     );
+    console.log('`${ apiURL }${ url }`, fetchConfig, trialCnt: ', `${ apiURL }${ url }`, fetchConfig, trialCnt);
+
     if (error.value) {
         if (trialCnt >= FETCH_TRIAL_MAX_CNT) {
             return {

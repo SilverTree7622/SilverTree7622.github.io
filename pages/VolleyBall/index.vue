@@ -242,6 +242,7 @@ const callNextContents = async (isFilter: boolean = false): Promise<boolean> => 
         list.totalList,
         dateStore.getDate(),
         {
+            sportSection: 'volleyball',
             tab: opt.tab,
             date: (item) => {
                 return UtilDate.addMillisecond(item.ai_match_time);

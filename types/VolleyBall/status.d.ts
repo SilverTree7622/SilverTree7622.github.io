@@ -1,5 +1,5 @@
 
-export type TBasketBallMatchStatus =
+export type TVolleyBallMatchStatus =
     // fixtures
     0 |                                         // Abnormal(suggest hiding)
     1 |                                         // NOT_STARTED

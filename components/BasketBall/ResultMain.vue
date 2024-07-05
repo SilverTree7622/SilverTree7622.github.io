@@ -5,6 +5,7 @@
                 <CommonContentSportResult
                     :idx="idx"
                     :league="league"
+                    :getScore="(prefix, schedule) => Types.getScore('basketball', prefix, schedule)"
                 />
             </template>
         </div>
@@ -12,6 +13,7 @@
 </template>
 
 <script setup lang="ts">
+import * as Types from '~/types/';
 import type { TBasketBallSchedule } from "~/types/BasketBall/schedule";
 
 const props = defineProps<{

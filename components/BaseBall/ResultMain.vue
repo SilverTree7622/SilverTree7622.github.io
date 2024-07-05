@@ -5,6 +5,7 @@
                 <CommonContentSportResult
                     :idx="idx"
                     :league="league"
+                    :getScore="(prefix, schedule) => Types.getScore('baseball', prefix, schedule)"
                 />
             </template>
         </div>
@@ -12,10 +13,11 @@
 </template>
 
 <script setup lang="ts">
-import type { TBaseBallFixtures } from '~/types/BaseBall/fixtures';
+import * as Types from '~/types/';
+import type { TBaseBallSchedule } from '~/types/BaseBall/schedule';
 
 const props = defineProps<{
-    result_league_list: TBaseBallFixtures[];
+    result_league_list: TBaseBallSchedule[];
 }>();
 
 onMounted(async () => {

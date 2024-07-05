@@ -13,10 +13,10 @@
 </template>
 
 <script setup lang="ts">
-import type { TCommonSchedule } from '~/types/Common/schedule';
+import type { TBaseBallSchedule } from '~/types/BaseBall/schedule';
 
 const props = defineProps<{
-    result_league_list: TCommonSchedule[];
+    result_league_list: TBaseBallSchedule[];
 }>();
 
 const chckIsLast = (idx: number) => {

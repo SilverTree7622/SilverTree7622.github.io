@@ -1,16 +1,19 @@
 import { defineStore } from "pinia";
+import * as Types from '~/types';
+import type { TCommonSportSection } from "~/types/Common/sport";
 import type { TCommonTabTypes } from "~/types/Common/tab";
 
 
 export type TCustomDatePath = (item) => Date;
 export type TCustomLeaguePath = (item) => string;
 export type TCustomPathConfig = {
+    sportSection?: TCommonSportSection;
     tab?: TCommonTabTypes;
     isWholeDate?: boolean;
     isLive?: boolean;
     isResult?: boolean;
     date?: TCustomDatePath;
-    league?: TCustomLeaguePath; 
+    league?: TCustomLeaguePath;
 };
 
 export const useFilterStore = defineStore('filterStore', () => {
@@ -94,7 +97,7 @@ export const useFilterStore = defineStore('filterStore', () => {
         sortedList: <any[]>[],
     });
 
-    const filterViaConfig = (list: any[], customPath?: TCustomPathConfig) => {
+    const filterViaConfig = (list: any[], customPath?: TCustomPathConfig): any[] => {
         const isWholeDate = customPath?.isWholeDate ?? false;
         const isResult = customPath?.isResult ?? false;
         const isLive  = customPath?.isLive ?? false;
@@ -105,21 +108,34 @@ export const useFilterStore = defineStore('filterStore', () => {
                 return true;
             }
             if (isLive) {
-                return (
-                    item.ai_status_id === 2 ||
-                    item.ai_status_id === 3 ||
-                    item.ai_status_id === 4 ||
-                    item.ai_status_id === 5 ||
-                    item.ai_status_id === 6 ||
-                    item.ai_status_id === 7
-                );
+                if (customPath && customPath?.sportSection) {
+                    return Types.isLive(customPath.sportSection, item.ai_status_id);
+                } else {
+                    // default live check (football status based)
+                    return (
+                        item.ai_status_id === 2 ||
+                        item.ai_status_id === 3 ||
+                        item.ai_status_id === 4 ||
+                        item.ai_status_id === 5 ||
+                        item.ai_status_id === 6 ||
+                        item.ai_status_id === 7
+                    );
+                }
             }
             if (isResult) {
                 // result tab
-                return getDatePath(item).getTime() < getNow;
+                if (customPath && customPath?.sportSection) {
+                    return Types.isResult(customPath.sportSection, item.ai_status_id);
+                } else {
+                    return getDatePath(item).getTime() < getNow;
+                }
             } else {
                 // fixtures tab
-                return getDatePath(item).getTime() > getNow;
+                if (customPath && customPath?.sportSection) {
+                    return Types.isFixtures(item.ai_status_id);
+                } else {
+                    return getDatePath(item).getTime() > getNow;
+                }
             }
         });
         return configFilteredList;
@@ -138,17 +154,25 @@ export const useFilterStore = defineStore('filterStore', () => {
     };
 
     const sortList = <T> (
-        list: T[], filterDate: Date, customPath?: TCustomPathConfig,
+        list: T[], filterDate: Date, customPath?: TCustomPathConfig, isUsingDateFilter: boolean = true
     ) => {
         opt.list = list;
+        // set partial config via tab name
         if (customPath && customPath.tab) {
             const { tab } = customPath;
             customPath.isWholeDate = (tab === 'odds' || tab === 'league');
             customPath.isLive = (tab === 'live');
             customPath.isResult = (tab === 'result');
         }
-        const returnList = date.sortLogic(list, filterDate, customPath);
-        opt.sortedList = filterViaConfig(returnList, customPath);
+
+        // TEST: just for tennis & icehockey
+        if (isUsingDateFilter) {
+            const returnList = date.sortLogic(list, filterDate, customPath);
+            opt.sortedList = filterViaConfig(returnList, customPath);
+        } else {
+            opt.sortedList = filterViaConfig(list, customPath);
+        }
+
         if (favorite.isToggled) {
             opt.sortedList = favorite.sortLogic(opt.sortedList, customPath);
         }

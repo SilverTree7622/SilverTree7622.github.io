@@ -55,3 +55,7 @@ sport page별 logic 정리 후 basketball에 적용시켜주기
 
 issue
     일부 team logo가 규격 외일 경우 일부만 보이는 경향이 있음
+
+thesports
+	pka9973@gmail.com
+	pka130825

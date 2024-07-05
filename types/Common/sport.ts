@@ -15,7 +15,7 @@ export const ECommonSportSectionValue = {
     'baseball': 'BaseBall',
     'volleyball': 'VolleyBall',
     'tennis': 'Tennis',
-    'icehockey': 'Icehockey',
+    'icehockey': 'IceHockey',
 } as const;
 
 export const ECommonSportValue = {

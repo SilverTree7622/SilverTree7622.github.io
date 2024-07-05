@@ -1,16 +1,19 @@
 <template>
     <div class="odds_-grop-odds mb-2">
-        <NuxtLink to="/OddsTop">
+        <!-- <NuxtLink to="/OddsTop"> -->
+        <NuxtLink to="/">
             <div class="frame-30">
                 <div class="text-26 valign-text-middle body2">{{ setFormat(props.top) }}</div>
             </div>
         </NuxtLink>
-        <NuxtLink to="/OddsDraw">
+        <!-- <NuxtLink to="/OddsDraw"> -->
+        <NuxtLink to="/">
             <div class="frame-30">
                 <div class="text-27 valign-text-middle body2">{{ setFormat(props.draw) }}</div>
             </div>
         </NuxtLink>
-        <NuxtLink to="/OddsLow">
+        <!-- <NuxtLink to="/OddsLow"> -->
+        <NuxtLink to="/">
             <div class="frame-306-odds">
                 <div class="text-28 valign-text-middle body2">{{ setFormat(props.low) }}</div>
             </div>
