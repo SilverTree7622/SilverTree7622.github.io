@@ -271,7 +271,6 @@ const loadSortedContent = async (isFilter: boolean, list: any[]) => {
         return list;
     }
     if (page.idx !== 0) page.isPending = true;
-    console.log('add page idx');
     page.idx++;
     const slicedList = list.slice(0, MAX_PAGINATION_CONTENT * page.idx);
     page.isPending = false;

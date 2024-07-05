@@ -59,7 +59,7 @@ export const useContentStore = defineStore('contentStore', () => {
     //     return league[`ai_${ prefix }_team_img`];
     // };
 
-    const getLeagueScoreResult = (league: TSportScheduleTypes, position: number = 0): string => {
+    const getLeagueScoreResult = (league: TSportScheduleTypes, position: number = 0): number => {
         const prefix = go_prefix_via_position(position);
         return league[`ai_${ prefix }_scores`][0];
     };

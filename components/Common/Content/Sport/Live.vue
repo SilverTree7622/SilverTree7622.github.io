@@ -51,15 +51,53 @@ import type { TCommonSchedule } from "~/types/Common/schedule";
 const props = defineProps<{
     idx: number;
     league: TCommonSchedule;
+    getScore?: (prefix: TContentStorePrefix, schedule) => number;
+    getTime?: (ai_match_status: number, ai_kickoff_timestamp: number) => number;
 }>();
 
 const prev = reactive({
     timestamp: <TCommonLiveRealTime['ai_kickoff_timestamp']> 0,
 });
 
+const getScore = (prefix: TContentStorePrefix, schedule): number[] => {
+    if (props?.getScore) {
+        return [ props.getScore(prefix, schedule) ];
+    } else {
+        // default scores from schedule item
+        return schedule[`ai_${ prefix }_scores`];
+    }
+};
+
+const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): number => {
+    if (props?.getTime) {
+        return props.getTime(ai_match_status, ai_kickoff_timestamp);
+    } else {
+        // default time calculation via match status
+        const currentTime = UtilDate.getWithOutMillisecond();
+        const kickOffTime = ai_kickoff_timestamp;
+        const gapTime = currentTime - kickOffTime;
+        let dateTime = 0;
+        if (ai_match_status === 2) {
+            dateTime = gapTime / 60 + 1;
+        }
+        if (ai_match_status === 3) {
+            dateTime = 45;
+        }
+        if (
+            ai_match_status === 4 ||
+            ai_match_status === 5 ||
+            ai_match_status === 6 ||
+            ai_match_status === 7
+        ) {
+            dateTime = gapTime / 60 + 45 + 1;
+        }
+        return dateTime;
+    }
+};
+
 const opt = reactive({
-    ai_away_scores: <TCommonLiveRealTime['ai_away_scores']> props.league.ai_away_scores,
-    ai_home_scores: <TCommonLiveRealTime['ai_home_scores']> props.league.ai_home_scores,
+    ai_away_scores: <TCommonLiveRealTime['ai_away_scores']> getScore('away', props.league),
+    ai_home_scores: <TCommonLiveRealTime['ai_home_scores']> getScore('home', props.league),
     ai_kickoff_timestamp: <TCommonLiveRealTime['ai_kickoff_timestamp']> props.league.ai_kickoff_timestamp ?? 0,
     ai_match_status: <TCommonLiveRealTime['ai_match_status']> props.league.ai_status_id,
     match_id: <TCommonLiveRealTime['match_id']> props.league.match_id,
@@ -78,25 +116,10 @@ const getLeagueTime = (
     ai_match_status: TCommonLiveRealTime['ai_match_status'],
     ai_kickoff_timestamp: number,
 ): string => {
-    const currentTime = UtilDate.getWithOutMillisecond();
     const kickOffTime = ai_kickoff_timestamp;
-    const gapTime = currentTime - kickOffTime;
     let dateTime = 0;
     if (kickOffTime !== 0) {
-        if (ai_match_status === 2) {
-            dateTime = gapTime / 60 + 1;
-        }
-        if (ai_match_status === 3) {
-            dateTime = 45;
-        }
-        if (
-            ai_match_status === 4 ||
-            ai_match_status === 5 ||
-            ai_match_status === 6 ||
-            ai_match_status === 7
-        ) {
-            dateTime = gapTime / 60 + 45 + 1;
-        }
+        dateTime = getTime(ai_match_status, ai_kickoff_timestamp);
     } else {
         // dateTime = currentTime - props.league.ai_match_time;
     }
@@ -160,10 +183,10 @@ const goLiveTracker = (league: TCommonSchedule) => {
         timestamp: league.ai_match_time,
         homeLogo: league.ai_home_team_img,
         homeName: league.ai_home_team_name,
-        homeScore: league.ai_home_scores[0],
+        homeScore: getScore('home', league)[0],
         awayLogo: league.ai_away_team_img,
         awayName: league.ai_away_team_name,
-        awayScore: league.ai_away_scores[0],
+        awayScore: getScore('away', league)[0],
         matchStatus: league.ai_status_id,
     };
     goStore.go_livetraker(league.match_id, config);

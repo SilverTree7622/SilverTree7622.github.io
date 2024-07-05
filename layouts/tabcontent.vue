@@ -5,6 +5,11 @@
         />
         <CommonHeaderTabMain :sName="props.sName" :tab="opt.tab" />
 
+        <CommonCarouselLive
+            v-if="props.tab === 'live' && props.sortedList.length !== 0"
+            :list="[]"
+        />
+
         <div class="sub-tap-Mzx5SR">
             <div class="rectangle-38-rkUyvw"></div>
             <div class="frame-279-rkUyvw">
@@ -190,7 +195,7 @@ const nextDate = (date: Date) => {
     }
     // change tab
     if (UtilDate.chckDateIsToday(date)) {
-        opt.useInitForChangingTab = false;   
+        opt.useInitForChangingTab = false;
     }
     navigateTo({
         path: `/${ ECommonSportSectionValue[ props.sName ] }`,

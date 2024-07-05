@@ -5,6 +5,7 @@
                 <CommonContentSportResult
                     :idx="idx"
                     :league="league"
+                    :getScore="getScore"
                 />
             </template>
         </div>
@@ -12,11 +13,15 @@
 </template>
 
 <script setup lang="ts">
-import type { TVolleyBallFixtures } from '~/types/VolleyBall/fixtures';
+import type { TVolleyBallSchedule } from "~/types/VolleyBall/schedule";
 
 const props = defineProps<{
-    result_league_list: TVolleyBallFixtures[];
+    result_league_list: TVolleyBallSchedule[];
 }>();
+
+const getScore = (prefix: TContentStorePrefix, schedule) => {
+    return schedule['ai_scores']['ft'][ prefix === 'home' ? 0 : 1 ];
+};
 
 onMounted(async () => {
     await nextTick();

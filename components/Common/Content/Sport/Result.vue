@@ -19,8 +19,8 @@
                     <img class="vector-1" src="~/public/img/vector-1@2x.png" alt="Vector" />
                     <div class="text text-center text-xs">{{ contentStore.getMatchTime(league) }}</div>
                     <div class="ft-4 text-xs">FT</div>
-                    <div class="number number-2 pretendard-semi-bold-black-20px">{{ contentStore.getLeagueScoreResult(props.league, 0) }}</div>
-                    <div class="number-1 number-2 pretendard-semi-bold-black-20px">{{ contentStore.getLeagueScoreResult(props.league, 1) }}</div>
+                    <div class="number number-2 pretendard-semi-bold-black-20px">{{ getScore('home', league)[0] }}</div>
+                    <div class="number-1 number-2 pretendard-semi-bold-black-20px">{{ getScore('away', league)[0] }}</div>
                 </div>
                 <div class="btn_-statistics text-[13px]">
                     <div class="statistics">STATISTICS</div>
@@ -41,61 +41,38 @@
 </template>
 
 <script setup lang="ts">
-import UtilDate from "~/utils/date";
 import type { TFootBallSchedule } from "~/types/FootBall/schedule";
 import type { TMatchUpStoreConfig } from "~/types/matchUp";
 
 const props = defineProps<{
     idx: number;
     league: TFootBallSchedule;
+    getScore?: (prefix: TContentStorePrefix, schedule) => number;
 }>();
 
-const dateStore = useDateStore();
 const goStore = useGoStore();
 const contentStore = useContentStore();
 
-// const setLeagueGroup = (league): boolean => {
-//     return league.hasLeagueTag ?? false;
-// };
-
-// const getLeagueFlag = (league: TFootBallFixtures): string => {
-//     return `/img/${ECommonCountry[league.Fixture.Location.Name]}.png`;
-// };
-
-// const getLeagueAlt = (league: TFootBallFixtures): string => {
-//     return league.Fixture.Location.Name;
-// };
-
-// const getLeagueName = (league: TFootBallFixtures): string => {
-//     return league.Fixture.League.Name;
-// };
-
-const getLeagueTime = (league: TFootBallSchedule): string => {
-    const date = new Date(league.ai_match_time);
-    const time = `${UtilDate.syncDigit(date.getUTCHours())}:${UtilDate.syncDigit(date.getUTCMinutes())}`;
-    return time;
+const getScore = (prefix: TContentStorePrefix, schedule): number[] => {
+    if (props?.getScore) {
+        return [ props.getScore(prefix, schedule) ];
+    } else {
+        // default scores from schedule item
+        return [ contentStore.getLeagueScoreResult(props.league, 0) ];
+    }
 };
 
-// const getParticipantSrc = (league: TFootBallFixtures, position: number = 1): string => {
-//     return league.Fixture.Participants[position].Id;
-// };
-
-// const getParticipantName = (league: TFootBallFixtures, position: number = 0): string => {
-//     return league.Fixture.Participants[position].Name;
-// };
-
 const goLiveTracker = (league: TFootBallSchedule) => {
-    console.log('league: ', league);
     const config: TMatchUpStoreConfig = {
         match_id: league.match_id,
         leagueName: league.ai_competition_name,
         timestamp: league.ai_match_time,
         homeLogo: league.ai_home_team_img,
         homeName: league.ai_home_team_name,
-        homeScore: league.ai_home_scores[0],
+        homeScore: getScore('home', league)[0],
         awayLogo: league.ai_away_team_img,
         awayName: league.ai_away_team_name,
-        awayScore: league.ai_away_scores[0],
+        awayScore: getScore('away', league)[0],
         matchStatus: league.ai_status_id,
     };
     goStore.go_livetraker(league.match_id, config);

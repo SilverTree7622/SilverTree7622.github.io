@@ -43,7 +43,7 @@ export const useSportStore = defineStore('sportStore', () => {
                 fromdate: isToday ? 0 : useDateStore().getFromDate(),
             },
         );
-        console.log('res from page index: ', res);
+        // console.log('res from page index: ', res);
         try {
             totalList = res['data'];
             await callNextContents();

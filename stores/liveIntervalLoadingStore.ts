@@ -67,8 +67,13 @@ export const useLiveIntervalLoadingStore = defineStore('liveIntervalLoadingStore
         }
     };
 
-    const updateLiveRealTime = (list: TSportScheduleTypes[]): TSportScheduleTypes[] => {
-        const returnList = [ ...list ];
+    const updateLiveRealTime = (list: TSportScheduleTypes[] | string): TSportScheduleTypes[] => {
+        let returnList: TSportScheduleTypes[] = [];
+        if (typeof list === 'string') {
+            returnList = [ ...JSON.parse(list) ];
+        } else {
+            returnList = [ ...(list ?? []) ];
+        }
         opt.realTimeData.map((item: TSportLiveRealTimeTypes) => {
             const { match_id } = item;
             const totalIdx = returnList.findIndex( totalItem => totalItem.match_id === match_id );
