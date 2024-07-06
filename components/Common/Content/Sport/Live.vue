@@ -8,37 +8,47 @@
         :src="contentStore.getLeagueFlag(props.league)"
         :alt="contentStore.getLeagueAlt(props.league)"
     />
-    <!-- match content -->
-    <div class="live_-match">
-        <div class="live-match-Jbo1mR live-match">
-            <div class="group-5-AKR3e5 group-5">
-                <img class="aston-villa-oDU2Nu aston-villa" :src="contentStore.getParticipantSrc(props.league, 0)" :alt="contentStore.getParticipantName(props.league, 0)" />
-                <div class="aston-villa-ADr9KY valign-text-middle aston-villa body2">{{ contentStore.getParticipantName(props.league, 0) }}</div>
-            </div>
-            <div class="score-AKR3e5 score">
-                <img class="vector-eyBPRK vector" src="/img/vector-27@2x.png" alt="Vector" />
-                <img class="vector-n1oFur vector" src="/img/vector-28@2x.png" alt="Vector" />
-                <img class="vector-z3kuGS vector" src="/img/vector-29@2x.png" alt="Vector" />
-                <div class="txt-live !text-[10px] mt-[1px]">LIVE</div>
-                <div class="x100new pretendard-semi-bold-black-12px">
-                    <span v-if="updateOpt.time" class="span0-TpclY9 body2">{{ getLeagueTime(opt.ai_match_status, opt.ai_kickoff_timestamp) }}</span>
-                    <!-- <span v-else class="span0-TpclY9 body2">{{ getLeagueTime(opt) }}</span> -->
-                    <span class="span1-TpclY9 pretendard-semi-bold-black-14px">’</span>
-                </div>
-                <div v-if="updateOpt.score1" class="x000-eyBPRK x000 pretendard-semi-bold-black-20px">{{ contentStore.getLeagueScore(opt, 0) }}</div>
-                <div v-if="updateOpt.score2" class="x000-n1oFur x000 pretendard-semi-bold-black-20px">{{ contentStore.getLeagueScore(opt, 1) }}</div>
-            </div>
-            <div class="group-6-AKR3e5 group-6">
-                <img class="arsenal-x4WW4Z arsenal" :src="contentStore.getParticipantSrc(props.league, 1)" :alt="contentStore.getParticipantName(props.league, 1)" />
-                <div class="arsenal-tGhDC5 valign-text-middle arsenal body2 !text-center !h-[24px]">{{ contentStore.getParticipantName(props.league, 1) }}</div>
-            </div>
-        </div>
-        <CommonFavoriteStar :isToggled="false" />
-        <div class="live-tracker">
-            <a href="javascript:;" @click="goLiveTracker(league)">
-                <img class="btn_-live-tracker" src="/img/btn-livetracker-9@2x.png" alt="Btn_LiveTracker" />
-            </a>
-        </div>
+    <!-- match content via conditions -->
+    <div v-if="hasSlot('default')">
+        <slot
+            :idx="props.idx"
+            :homeLogo="contentStore.getParticipantSrc(props.league, 0)"
+            :homeName="contentStore.getParticipantName(props.league, 0)"
+            :homeScore="contentStore.getLeagueScore(opt, 0)"
+            :time="getLeagueTime(opt.ai_match_status, opt.ai_kickoff_timestamp)"
+            :awayLogo="contentStore.getParticipantSrc(props.league, 1)"
+            :awayName="contentStore.getParticipantName(props.league, 1)"
+            :awayScore="contentStore.getLeagueScore(opt, 1)"
+            :goLiveTracker="() => goLiveTracker(props.league)"
+            :updateOpt="{
+                time: updateOpt.time,
+                score1: updateOpt.score1,
+                score2: updateOpt.score2,
+            }"
+            :isFavorite="false"
+        />
+    </div>
+    <div v-else-if="useItemStyleStore().getStyle() === 'classic'">
+        
+    </div>
+    <div v-else>
+        <CommonContentSportStyleLiveDefault
+            :idx="props.idx"
+            :homeLogo="contentStore.getParticipantSrc(props.league, 0)"
+            :homeName="contentStore.getParticipantName(props.league, 0)"
+            :homeScore="contentStore.getLeagueScore(opt, 0)"
+            :time="getLeagueTime(opt.ai_match_status, opt.ai_kickoff_timestamp)"
+            :awayLogo="contentStore.getParticipantSrc(props.league, 1)"
+            :awayName="contentStore.getParticipantName(props.league, 1)"
+            :awayScore="contentStore.getLeagueScore(opt, 1)"
+            :goLiveTracker="() => goLiveTracker(props.league)"
+            :updateOpt="{
+                time: updateOpt.time,
+                score1: updateOpt.score1,
+                score2: updateOpt.score2,
+            }"
+            :isFavorite="false"
+        />
     </div>
 </template>
 
@@ -106,12 +116,17 @@ const opt = reactive({
 
 const goStore = useGoStore();
 const contentStore = useContentStore();
+const slots = useSlots();
 
 const updateOpt = reactive({
     time: <boolean> true,
     score1: <boolean> true,
     score2: <boolean> true,
 });
+
+const hasSlot = (name) => {
+    return !!slots[name];
+};
 
 const getLeagueTime = (
     ai_match_status: TCommonLiveRealTime['ai_match_status'],

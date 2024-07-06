@@ -28,6 +28,7 @@ import type { TInitData } from "~/types/loading";
 
 const selectorStore = useSelectorStore();
 const matchStateStore = useMatchStateStore();
+const itemStyleStore = useItemStyleStore();
 const cacheStore = useCacheStore();
 const route = useRoute();
 
@@ -63,6 +64,7 @@ const getInitData = async () => {
 onMounted(async () => {
 	await getInitData();
 	await nextTick();
+	itemStyleStore.onMounted();
 	cacheStore.onMountedBased();
 });
 

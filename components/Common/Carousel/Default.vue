@@ -96,10 +96,10 @@ const carousel = ref<CarouselInterface>();
 
 const checkDirection = () => {
     if (opt.touchendX < opt.touchstartX) {
-        setTimeout(() => { next(true); }, 0);
+        setTimeout(() => { next(); }, 0);
     }
     if (opt.touchendX > opt.touchstartX) {
-        setTimeout(() => { prev(true); }, 0);
+        setTimeout(() => { prev(); }, 0);
     }
 };
 
