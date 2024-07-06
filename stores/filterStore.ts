@@ -109,6 +109,7 @@ export const useFilterStore = defineStore('filterStore', () => {
             }
             if (isLive) {
                 if (customPath && customPath?.sportSection) {
+                    // console.log('customPath.sportSection, item.ai_status_id: ', customPath.sportSection, item.ai_status_id);
                     return Types.isLive(customPath.sportSection, item.ai_status_id);
                 } else {
                     // default live check (football status based)

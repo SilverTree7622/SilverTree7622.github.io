@@ -3,6 +3,7 @@ import type { TFootBallSchedule } from "./schedule";
 
 
 export const isLive = (ai_status_id: number): boolean => {
+    // console.log('ai_status_id from football isLive: ', ai_status_id);
     return (
         ai_status_id === 2 ||
         ai_status_id === 3 ||
