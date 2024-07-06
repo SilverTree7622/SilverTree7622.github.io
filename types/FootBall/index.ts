@@ -29,7 +29,7 @@ export const getScore = (prefix: TContentStorePrefix, schedule: TFootBallSchedul
     return schedule[`ai_${ prefix }_scores`][0];
 };
 
-export const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): number => {
+export const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): string => {
     const currentTime = UtilDate.getWithOutMillisecond();
     const kickOffTime = ai_kickoff_timestamp;
     const gapTime = currentTime - kickOffTime;
@@ -48,5 +48,6 @@ export const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): 
     ) {
         dateTime = gapTime / 60 + 45 + 1;
     }
-    return dateTime;
+    const matchUpTime = `${ UtilDate.syncDigit(~~(dateTime)) }’`;
+    return matchUpTime;
 };

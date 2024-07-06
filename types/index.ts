@@ -123,7 +123,7 @@ export const getScore = (sportSection: TCommonSportSection, prefix: TContentStor
     return 0;
 };
 
-export const getTime = (sportSection: TCommonSportSection, ai_match_status: number, ai_kickoff_timestamp: number): number => {
+export const getTime = (sportSection: TCommonSportSection, ai_match_status: number, ai_kickoff_timestamp: number): string => {
     if (sportSection === 'football') {
         return football.getTime(ai_match_status, ai_kickoff_timestamp);
     }
@@ -142,5 +142,5 @@ export const getTime = (sportSection: TCommonSportSection, ai_match_status: numb
     if (sportSection === 'icehockey') {
         return icehockey.getTime(ai_match_status, ai_kickoff_timestamp);
     }
-    return 0;
+    return `00`;
 };

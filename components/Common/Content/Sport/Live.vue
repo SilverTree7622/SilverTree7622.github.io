@@ -52,7 +52,7 @@ const props = defineProps<{
     idx: number;
     league: TCommonSchedule;
     getScore?: (prefix: TContentStorePrefix, schedule) => number;
-    getTime?: (ai_match_status: number, ai_kickoff_timestamp: number) => number;
+    getTime?: (ai_match_status: number, ai_kickoff_timestamp: number) => string;
 }>();
 
 const prev = reactive({
@@ -68,7 +68,7 @@ const getScore = (prefix: TContentStorePrefix, schedule): number[] => {
     }
 };
 
-const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): number => {
+const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): string => {
     if (props?.getTime) {
         return props.getTime(ai_match_status, ai_kickoff_timestamp);
     } else {
@@ -91,7 +91,8 @@ const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): number 
         ) {
             dateTime = gapTime / 60 + 45 + 1;
         }
-        return dateTime;
+        const matchUpTime = `${ UtilDate.syncDigit(~~(dateTime)) }’`;
+        return matchUpTime;
     }
 };
 
@@ -117,7 +118,7 @@ const getLeagueTime = (
     ai_kickoff_timestamp: number,
 ): string => {
     const kickOffTime = ai_kickoff_timestamp;
-    let dateTime = 0;
+    let dateTime: string = `0`;
     if (kickOffTime !== 0) {
         dateTime = getTime(ai_match_status, ai_kickoff_timestamp);
     } else {
@@ -128,7 +129,7 @@ const getLeagueTime = (
         // console.log('kickOffTime, dateTime, props.league.ai_match_time: ', kickOffTime, dateTime, props.league.ai_match_time);
     }
 
-    const matchUpTime = `${ UtilDate.syncDigit(~~(dateTime)) }’`;
+    const matchUpTime = dateTime;
     prev.timestamp = kickOffTime;
     return matchUpTime;
 };

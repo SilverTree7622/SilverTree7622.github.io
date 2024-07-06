@@ -30,25 +30,12 @@ export const getScore = (prefix: TContentStorePrefix, schedule: TBasketBallSched
     return schedule[`ai_${ prefix }_scores`][0];
 };
 
-export const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): number => {
+export const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): string => {
     // default time calculation via match status
     const currentTime = UtilDate.getWithOutMillisecond();
     const kickOffTime = ai_kickoff_timestamp;
     const gapTime = currentTime - kickOffTime;
-    let dateTime = 0;
-    if (ai_match_status === 2) {
-        dateTime = gapTime / 60 + 1;
-    }
-    if (ai_match_status === 3) {
-        dateTime = 45;
-    }
-    if (
-        ai_match_status === 4 ||
-        ai_match_status === 5 ||
-        ai_match_status === 6 ||
-        ai_match_status === 7
-    ) {
-        dateTime = gapTime / 60 + 45 + 1;
-    }
-    return dateTime;
+    let dateTime = gapTime / 60 + 1;
+    const matchUpTime = `${ UtilDate.syncDigit(~~(dateTime)) }’`;
+    return matchUpTime;
 };

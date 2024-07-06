@@ -62,24 +62,11 @@ export const getScore = (prefix: TContentStorePrefix, schedule: TBaseBallSchedul
     return schedule['ai_scores']['ft'][ prefix === 'home' ? 0 : 1 ];
 };
 
-export const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): number => {
+export const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): string => {
     const currentTime = UtilDate.getWithOutMillisecond();
     const kickOffTime = ai_kickoff_timestamp;
     const gapTime = currentTime - kickOffTime;
-    let dateTime = 0;
-    if (ai_match_status === 432) {
-        dateTime = gapTime / 60 + 1;
-    }
-    if (ai_match_status === 3) {
-        dateTime = 45;
-    }
-    if (
-        ai_match_status === 434 ||
-        ai_match_status === 436 ||
-        ai_match_status === 438 ||
-        ai_match_status === 440
-    ) {
-        dateTime = gapTime / 60 + 45 + 1;
-    }
-    return dateTime;
+    let dateTime = gapTime / 60 + 1;
+    const matchUpTime = `${ UtilDate.syncDigit(~~(dateTime)) }’`;
+    return matchUpTime;
 };

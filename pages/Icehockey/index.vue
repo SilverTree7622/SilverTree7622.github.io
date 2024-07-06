@@ -38,7 +38,6 @@
 </template>
 
 <script setup lang="ts">
-import type { TFootBallFixtures } from '~/types/FootBall/fixtures';
 import { ECommonSportSectionValue, ECommonSportValue } from '~/types/Common/sport';
 import type { TCommonTabTypes } from '~/types/Common/tab';
 import type { TIceHockeySchedule } from '~/types/IceHockey/schedule';
