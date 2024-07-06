@@ -33,8 +33,8 @@ export const useLiveIntervalLoadingStore = defineStore('liveIntervalLoadingStore
                 fromdate: useDateStore().getFromDate(),
             },
         );
-        console.log('cnt, res from interval loading: ', tmp.cnt, res);
         opt.realTimeData = res['data']['data']['data'];
+        console.log('cnt, res from interval loading: ', tmp.cnt, opt.realTimeData.length, res);
         opt.isPending = false;
         opt.timeOutInstance = setTimeout(async () => {
             if (!opt.isOnLiveTab) return;
@@ -67,26 +67,48 @@ export const useLiveIntervalLoadingStore = defineStore('liveIntervalLoadingStore
         }
     };
 
-    const updateLiveRealTime = (list: TSportScheduleTypes[] | string): TSportScheduleTypes[] => {
-        let returnList: TSportScheduleTypes[] = [];
-        if (typeof list === 'string') {
-            returnList = [ ...JSON.parse(list) ];
-        } else {
-            returnList = [ ...(list ?? []) ];
-        }
+    const handleOnlyMatched = (list: TSportScheduleTypes[]): TSportScheduleTypes[] => {
+        const returnList = [];
+        // opt.realTimeData.map((item: TSportLiveRealTimeTypes) => {
+        //     const { match_id } = item;
+        //     const matchedIdx = returnList.findIndex( totalItem => totalItem.match_id === match_id );
+        //     // console.log('matchedIdx, match_id: ', matchedIdx, match_id);
+        //     if (matchedIdx < 0) return;
+        //     // find matchup via id
+        //     if (item['ai_scores']) {
+        //         returnList[ matchedIdx ]['ai_scores'] = item['ai_scores'];
+        //     } else {
+        //         returnList[ matchedIdx ].ai_away_scores = item.ai_away_scores;
+        //         returnList[ matchedIdx ].ai_home_scores = item.ai_home_scores;
+        //     }
+        //     returnList[ matchedIdx ].ai_status_id = item.ai_match_status;
+        // });
+        return returnList;
+    };
+
+    const updateLiveRealTime = (list: TSportScheduleTypes[]): TSportScheduleTypes[] => {
+        const returnList = [ ...list ];
         opt.realTimeData.map((item: TSportLiveRealTimeTypes) => {
             const { match_id } = item;
-            const totalIdx = returnList.findIndex( totalItem => totalItem.match_id === match_id );
-            if (totalIdx < 0) return;
+            const matchedIdx = returnList.findIndex( totalItem => totalItem.match_id === match_id );
+            if (matchedIdx < 0) return;
             // find matchup via id
-            returnList[ totalIdx ].ai_away_scores = item.ai_away_scores;
-            returnList[ totalIdx ].ai_home_scores = item.ai_home_scores;
-            returnList[ totalIdx ].ai_status_id = item.ai_match_status;
+            if (item['ai_scores']) {
+                returnList[ matchedIdx ]['ai_scores'] = item['ai_scores'];
+            } else {
+                returnList[ matchedIdx ].ai_away_scores = item['ai_away_scores'];
+                returnList[ matchedIdx ].ai_home_scores = item['ai_home_scores'];
+            }
+            returnList[ matchedIdx ].ai_status_id = item.ai_match_status;
         });
         return returnList;
     };
 
-    const updateLiveKickOff = (list: TSportScheduleTypes[]): { idx: number; match_id: string; ai_kickoff_timestamp: number; }[] => {
+    const updateLiveKickOff = (list: TSportScheduleTypes[]): {
+        idx: number;
+        match_id: string;
+        ai_kickoff_timestamp: number;
+    }[] => {
         const kickOffList: { idx: number; match_id: string; ai_kickoff_timestamp: number; }[] = [];
         opt.realTimeData.map((item: TSportLiveRealTimeTypes) => {
             const { match_id } = item;
@@ -111,6 +133,7 @@ export const useLiveIntervalLoadingStore = defineStore('liveIntervalLoadingStore
         onBeforeUnmount,
         changeTab,
         setTabActive,
+        handleOnlyMatched,
         updateLiveRealTime,
         updateLiveKickOff,
         getRealTimeData,

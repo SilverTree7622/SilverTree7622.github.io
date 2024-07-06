@@ -319,6 +319,8 @@ const callNextContents = async (isFilter: boolean = false): Promise<boolean> => 
             }
         }
     );
+    console.log('pagedList from totallist in callNextContents: ', pagedList);
+
     if ((pagedList.length === list.sortedList.length) && pagedList.length !== 0) {
         if (isFilter) list.sortedList = pagedList;
         opt.isOutOfContent = true;

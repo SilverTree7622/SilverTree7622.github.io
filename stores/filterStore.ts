@@ -169,7 +169,9 @@ export const useFilterStore = defineStore('filterStore', () => {
         // TEST: just for tennis & icehockey
         if (isUsingDateFilter) {
             const returnList = date.sortLogic(list, filterDate, customPath);
+            // console.log('returnList from sortList: ', returnList);
             opt.sortedList = filterViaConfig(returnList, customPath);
+            // console.log('opt.sortedList: ', opt.sortedList);
         } else {
             opt.sortedList = filterViaConfig(list, customPath);
         }

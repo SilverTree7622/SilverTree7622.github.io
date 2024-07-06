@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import * as Types from '~/types';
-import type { TCommonLiveRealTimeConfig } from '~/types/Common/Live';
+import type { TCommonLiveRealTime } from '~/types/Common/Live';
 import type { TTennisSchedule } from '~/types/Tennis/schedule';
 
 const props = defineProps<{
@@ -31,7 +31,7 @@ const $live = ref();
 
 const liveIntervalLoadingStore = useLiveIntervalLoadingStore();
 
-const update = (idx: number, newLeague: TCommonLiveRealTimeConfig) => {
+const update = (idx: number, newLeague: TCommonLiveRealTime) => {
     if (!$live.value) return;
     if (!$live.value[idx]) return;
     $live.value[idx].update(newLeague);

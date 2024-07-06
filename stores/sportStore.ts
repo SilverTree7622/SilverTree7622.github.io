@@ -88,14 +88,6 @@ export const useSportStore = defineStore('sportStore', () => {
         
         totalList = useLiveIntervalLoadingStore().updateLiveRealTime(totalList);
         totalKickOffList = useLiveIntervalLoadingStore().updateLiveKickOff(totalList);
-        
-        // console.log('sortedList.length: ', sortedList.length);
-        // if (sortedList.length) {
-        //     sortedList = useLiveIntervalLoadingStore().updateLiveRealTime(sortedList);
-        // } else {
-        //     // match id from totalList for add 2 sortedList
-        //     // sortedList = useLiveIntervalLoadingStore().updateLiveRealTime(totalList);
-        // }
         sortedList = useLiveIntervalLoadingStore().updateLiveRealTime(sortedList);
         sortedKickOffList = useLiveIntervalLoadingStore().updateLiveKickOff(sortedList);
         
