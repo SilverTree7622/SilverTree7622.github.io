@@ -121,90 +121,90 @@ const toggleByTime = async () => {
 };
 
 const updateLiveRealTime = async () => {
-    const prevSortedList = [ ...list.sortedList ];
-    const prevSortedListMatchUpList = list.sortedList.map( item => item.match_id );
-    const prevSortedListHomeScoreList = list.sortedList.map( item => item.ai_home_scores[0] );
-    const prevSortedListAwayScoreList = list.sortedList.map( item => item.ai_away_scores[0] );
-    const prevSortedListMatchStatusList = list.sortedList.map( item => item.ai_status_id );
-    const prevSortedKickOffList = [ ...list.sortedKickOffList ];
+    // const prevSortedList = [ ...list.sortedList ];
+    // const prevSortedListMatchUpList = list.sortedList.map( item => item.match_id );
+    // const prevSortedListHomeScoreList = list.sortedList.map( item => item.ai_home_scores[0] );
+    // const prevSortedListAwayScoreList = list.sortedList.map( item => item.ai_away_scores[0] );
+    // const prevSortedListMatchStatusList = list.sortedList.map( item => item.ai_status_id );
+    // const prevSortedKickOffList = [ ...list.sortedKickOffList ];
     
-    list.totalList = liveIntervalLoadingStore.updateLiveRealTime(list.totalList);
-    list.totalKickOffList = liveIntervalLoadingStore.updateLiveKickOff(list.totalList);
-    list.sortedList = liveIntervalLoadingStore.updateLiveRealTime(list.sortedList);
-    list.sortedKickOffList = liveIntervalLoadingStore.updateLiveKickOff(list.sortedList);
+    // list.totalList = liveIntervalLoadingStore.updateLiveRealTime(list.totalList);
+    // list.totalKickOffList = liveIntervalLoadingStore.updateLiveKickOff(list.totalList);
+    // list.sortedList = liveIntervalLoadingStore.updateLiveRealTime(list.sortedList);
+    // list.sortedKickOffList = liveIntervalLoadingStore.updateLiveKickOff(list.sortedList);
     
-    await callNextContents(true);
+    // await callNextContents(true);
 
-    const isListEqual = UtilObj.compareEquals(prevSortedList, list.sortedList);
-    // compare matchup id list
-    const newSortedListMatchUpList = list.sortedList.map( item => item.match_id );
-    const isMatchUpListEqual = UtilArray.compareList(
-        prevSortedListMatchUpList, newSortedListMatchUpList
-    );
-    const newSortedListScore1List = list.sortedList.map( item => item.ai_home_scores[0] );
-    const isScore1ListEqual = UtilArray.compareList(
-        prevSortedListHomeScoreList, newSortedListScore1List
-    );
-    const newSortedListScore2List = list.sortedList.map( item => item.ai_away_scores[0] );
-    const isScore2ListEqual = UtilArray.compareList(
-        prevSortedListAwayScoreList, newSortedListScore2List
-    );
-    const isTimeListEqual = UtilArray.compareList(
-        prevSortedKickOffList, list.sortedKickOffList
-    );
-
-    // console.log('prevSortedKickOffList, list.sortedKickOffList: ', prevSortedKickOffList, list.sortedKickOffList);
-    // if (
-    //     isListEqual && isMatchUpListEqual && isScore1ListEqual && isScore2ListEqual && isTimeListEqual
-    // ) {
-    //     console.log(`nothing changed`);
-    //     return;
-    // }
-
-    // 각 list에 있는 item의 component에 update 및 update에 필요한 값 넘겨주기
-    if (!$liveMain.value) return;
-    // console.log('list.sortedList, list.totalList: ', list.sortedList.length, list.sortedList, list.totalList.length, list.totalList, );
-    list.sortedList.map((item, idx) => {
-        const filteredKickOffList = list.sortedKickOffList.find((filterItem) => {
-            return filterItem.idx === idx;
-        });
-        const prevFilteredKickOffList = prevSortedKickOffList.find((filterItem) => {
-            return filterItem.idx === idx;
-        }) ?? 0;
-        const ai_kickoff_timestamp = filteredKickOffList ?
-            filteredKickOffList['ai_kickoff_timestamp'] :
-            prevFilteredKickOffList['ai_kickoff_timestamp']
-        ;
-        const config = {};
-        if (prevSortedListAwayScoreList[idx] !== item.ai_away_scores[0]) {
-            config['ai_away_scores'] = item.ai_away_scores;
-        }
-        if (prevSortedListHomeScoreList[idx] !== item.ai_home_scores[0]) {
-            config['ai_home_scores'] = item.ai_home_scores;
-        }
-        config['ai_kickoff_timestamp'] = ai_kickoff_timestamp;
-        config['ai_match_status'] = item.ai_status_id;
-        config['match_id'] = item.match_id;
-        // console.log('config: ', config);
-        $liveMain.value.update(idx, config);
-    });
-    // const {
-    //     totalList,
-    //     totalKickOffList,
-    //     sortedList,
-    //     sortedKickOffList,
-    // } = await sportStore.updateLiveRealTime(
-    //     list.totalList,
-    //     list.totalKickOffList,
-    //     list.sortedList,
-    //     list.sortedKickOffList,
-    //     $liveMain,
-    //     callNextContents,
+    // const isListEqual = UtilObj.compareEquals(prevSortedList, list.sortedList);
+    // // compare matchup id list
+    // const newSortedListMatchUpList = list.sortedList.map( item => item.match_id );
+    // const isMatchUpListEqual = UtilArray.compareList(
+    //     prevSortedListMatchUpList, newSortedListMatchUpList
     // );
-    // list.totalList = totalList;
-    // list.totalKickOffList = totalKickOffList;
-    // list.sortedList = sortedList;
-    // list.sortedKickOffList = sortedKickOffList;
+    // const newSortedListScore1List = list.sortedList.map( item => item.ai_home_scores[0] );
+    // const isScore1ListEqual = UtilArray.compareList(
+    //     prevSortedListHomeScoreList, newSortedListScore1List
+    // );
+    // const newSortedListScore2List = list.sortedList.map( item => item.ai_away_scores[0] );
+    // const isScore2ListEqual = UtilArray.compareList(
+    //     prevSortedListAwayScoreList, newSortedListScore2List
+    // );
+    // const isTimeListEqual = UtilArray.compareList(
+    //     prevSortedKickOffList, list.sortedKickOffList
+    // );
+
+    // // console.log('prevSortedKickOffList, list.sortedKickOffList: ', prevSortedKickOffList, list.sortedKickOffList);
+    // // if (
+    // //     isListEqual && isMatchUpListEqual && isScore1ListEqual && isScore2ListEqual && isTimeListEqual
+    // // ) {
+    // //     console.log(`nothing changed`);
+    // //     return;
+    // // }
+
+    // // 각 list에 있는 item의 component에 update 및 update에 필요한 값 넘겨주기
+    // if (!$liveMain.value) return;
+    // // console.log('list.sortedList, list.totalList: ', list.sortedList.length, list.sortedList, list.totalList.length, list.totalList, );
+    // list.sortedList.map((item, idx) => {
+    //     const filteredKickOffList = list.sortedKickOffList.find((filterItem) => {
+    //         return filterItem.idx === idx;
+    //     });
+    //     const prevFilteredKickOffList = prevSortedKickOffList.find((filterItem) => {
+    //         return filterItem.idx === idx;
+    //     }) ?? 0;
+    //     const ai_kickoff_timestamp = filteredKickOffList ?
+    //         filteredKickOffList['ai_kickoff_timestamp'] :
+    //         prevFilteredKickOffList['ai_kickoff_timestamp']
+    //     ;
+    //     const config = {};
+    //     if (prevSortedListAwayScoreList[idx] !== item.ai_away_scores[0]) {
+    //         config['ai_away_scores'] = item.ai_away_scores;
+    //     }
+    //     if (prevSortedListHomeScoreList[idx] !== item.ai_home_scores[0]) {
+    //         config['ai_home_scores'] = item.ai_home_scores;
+    //     }
+    //     config['ai_kickoff_timestamp'] = ai_kickoff_timestamp;
+    //     config['ai_match_status'] = item.ai_status_id;
+    //     config['match_id'] = item.match_id;
+    //     // console.log('config: ', config);
+    //     $liveMain.value.update(idx, config);
+    // });
+    const {
+        totalList,
+        totalKickOffList,
+        sortedList,
+        sortedKickOffList,
+    } = await sportStore.updateLiveRealTime(
+        list.totalList,
+        list.totalKickOffList,
+        list.sortedList,
+        list.sortedKickOffList,
+        $liveMain,
+        callNextContents,
+    );
+    list.totalList = totalList;
+    list.totalKickOffList = totalKickOffList;
+    list.sortedList = sortedList;
+    list.sortedKickOffList = sortedKickOffList;
 };
 
 /**
