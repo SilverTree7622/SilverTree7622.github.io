@@ -67,16 +67,16 @@ onMounted(async () => {
 	await nextTick();
 	itemStyleStore.onMounted();
 	cacheStore.onMountedBased();
-	useToastStore().success('msg from toast');
-	useToastStore().error('msg from toast');
-	useToastStore().info('msg from toast');
-	useToastStore().warn('msg from toast');
-	setInterval(() => {
-		useToastStore().success('msg from toast');
-		useToastStore().error('msg from toast');
-		useToastStore().info('msg from toast');
-		useToastStore().warn('msg from toast');
-	}, 10 * 1000);
+	// useToastStore().success('msg from toast');
+	// useToastStore().error('msg from toast');
+	// useToastStore().info('msg from toast');
+	// useToastStore().warn('msg from toast');
+	// setInterval(() => {
+	// 	useToastStore().success('msg from toast');
+	// 	useToastStore().error('msg from toast');
+	// 	useToastStore().info('msg from toast');
+	// 	useToastStore().warn('msg from toast');
+	// }, 10 * 1000);
 });
 
 onBeforeUnmount(() => {

@@ -234,16 +234,12 @@ export const useSportStore = defineStore('sportStore', () => {
         loadPageIsPending: boolean;
         loadSortedList: any[];
     }> => {
-        console.log('loadSortedContent list: ', list.length, list);
         if (list.length === 0) {
             return {
                 loadPageIdx: pageIdx, loadPageIsPending: pageIsPending, loadSortedList: list,
             };
         }
         if (isFilter) {
-            // ISSUE: sorted list is empty wtf
-            console.log('pageIdx: ', pageIdx);
-
             return {
                 loadPageIdx: pageIdx,
                 loadPageIsPending: pageIsPending,

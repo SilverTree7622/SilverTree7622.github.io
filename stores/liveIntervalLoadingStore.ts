@@ -67,25 +67,6 @@ export const useLiveIntervalLoadingStore = defineStore('liveIntervalLoadingStore
         }
     };
 
-    const handleOnlyMatched = (list: TSportScheduleTypes[]): TSportScheduleTypes[] => {
-        const returnList = [];
-        // opt.realTimeData.map((item: TSportLiveRealTimeTypes) => {
-        //     const { match_id } = item;
-        //     const matchedIdx = returnList.findIndex( totalItem => totalItem.match_id === match_id );
-        //     // console.log('matchedIdx, match_id: ', matchedIdx, match_id);
-        //     if (matchedIdx < 0) return;
-        //     // find matchup via id
-        //     if (item['ai_scores']) {
-        //         returnList[ matchedIdx ]['ai_scores'] = item['ai_scores'];
-        //     } else {
-        //         returnList[ matchedIdx ].ai_away_scores = item.ai_away_scores;
-        //         returnList[ matchedIdx ].ai_home_scores = item.ai_home_scores;
-        //     }
-        //     returnList[ matchedIdx ].ai_status_id = item.ai_match_status;
-        // });
-        return returnList;
-    };
-
     const updateLiveRealTime = (list: TSportScheduleTypes[]): TSportScheduleTypes[] => {
         const returnList = [ ...list ];
         opt.realTimeData.map((item: TSportLiveRealTimeTypes) => {
@@ -133,7 +114,6 @@ export const useLiveIntervalLoadingStore = defineStore('liveIntervalLoadingStore
         onBeforeUnmount,
         changeTab,
         setTabActive,
-        handleOnlyMatched,
         updateLiveRealTime,
         updateLiveKickOff,
         getRealTimeData,

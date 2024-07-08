@@ -40,11 +40,11 @@ const props = defineProps<{
     idx: number;
     homeLogo: string;
     homeName: string;
-    homeScore: string;
+    homeScore: number;
     time: string;
     awayLogo: string;
     awayName: string;
-    awayScore: string;
+    awayScore: number;
     goLiveTracker: () => void;
     updateOpt: {
         time: boolean;

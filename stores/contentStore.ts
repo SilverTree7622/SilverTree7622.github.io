@@ -35,7 +35,7 @@ export const useContentStore = defineStore('contentStore', () => {
         return league.ai_competition_name;
     };
     
-    const getLeagueScore = (newLeague: TCommonLiveRealTime, position: number = 0): string => {
+    const getLeagueScore = (newLeague: TCommonLiveRealTime, position: number = 0): number => {
         // ISSUE: make oppositie for just now something wrong
         if (position === 0) position = 1;
         else position = 0;
