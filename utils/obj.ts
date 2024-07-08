@@ -37,7 +37,7 @@ const UtilObj = {
     },
 
     chckIsEmpty: (obj): boolean => {
-        return !Object.keys(obj).length;
+        return !Object.keys(obj ?? {}).length;
     },
 };
 

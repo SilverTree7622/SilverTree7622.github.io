@@ -2,7 +2,7 @@
     <div class="frame-578">
         <div class="frame-368"></div>
         <div class="frame-591">
-            <p class="there-are-no-live-ma-1">There are no live matches in progress at this time.</p>
+            <p class="there-are-no-live-ma-1 text-base">There are no live matches in progress at this time.</p>
         </div>
     </div>
 </template>
@@ -45,7 +45,7 @@
 .there-are-no-live-ma-1 {
   color: var(--bk);
   font-family: var(--font-family-pretendard-semibold);
-  font-size: var(--font-size-m);
+  /* font-size: var(--font-size-m); */
   font-weight: 600;
   letter-spacing: 0;
   line-height: normal;

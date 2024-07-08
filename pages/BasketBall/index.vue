@@ -152,7 +152,7 @@ const res = async () => {
             fromdate: isToday ? 0 : dateStore.getFromDate(),
         },
     );
-    console.log('res from page index: ', res);
+    
     try {
         list.totalList = res['data'];
         await callNextContents();

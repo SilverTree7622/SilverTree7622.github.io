@@ -29,6 +29,7 @@ import type { TInitData } from "~/types/loading";
 
 const selectorStore = useSelectorStore();
 const matchStateStore = useMatchStateStore();
+const leftStore = useLeftStore();
 const itemStyleStore = useItemStyleStore();
 const cacheStore = useCacheStore();
 const route = useRoute();
@@ -51,15 +52,17 @@ const getInitData = async () => {
 		);
 	}
 	console.log('res: ', res);
-	if (!UtilObj.chckIsEmpty(res)) {
-		initData = res['data']['data'] ?? {};
-		selectorStore.onMounted(
-			initData['st_time'] ?? [],
-			initData['st_odds'] ?? [],
-			initData['st_sports'] ?? [],
-		);
-		matchStateStore.onMounted(initData);
+	if (UtilObj.chckIsEmpty(res)) {
+		return;
 	}
+	initData = res['data']['data'] ?? {};
+	selectorStore.onMounted(
+		initData['st_time'] ?? [],
+		initData['st_odds'] ?? [],
+		initData['st_sports'] ?? [],
+	);
+	matchStateStore.onMounted(initData);
+	leftStore.onMounted(sportType, initData);
 };
 
 onMounted(async () => {
@@ -67,20 +70,11 @@ onMounted(async () => {
 	await nextTick();
 	itemStyleStore.onMounted();
 	cacheStore.onMountedBased();
-	// useToastStore().success('msg from toast');
-	// useToastStore().error('msg from toast');
-	// useToastStore().info('msg from toast');
-	// useToastStore().warn('msg from toast');
-	// setInterval(() => {
-	// 	useToastStore().success('msg from toast');
-	// 	useToastStore().error('msg from toast');
-	// 	useToastStore().info('msg from toast');
-	// 	useToastStore().warn('msg from toast');
-	// }, 10 * 1000);
 });
 
 onBeforeUnmount(() => {
 	cacheStore.onBeforeUnmountBased();
+	leftStore.onBeforeUnmount();
 });
 </script>
 

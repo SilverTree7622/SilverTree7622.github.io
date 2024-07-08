@@ -166,7 +166,7 @@ export const useFilterStore = defineStore('filterStore', () => {
             customPath.isResult = (tab === 'result');
         }
 
-        // TEST: just for tennis & icehockey
+        // TEST: just for tennis & icehockey options
         if (isUsingDateFilter) {
             const returnList = date.sortLogic(list, filterDate, customPath);
             // console.log('returnList from sortList: ', returnList);

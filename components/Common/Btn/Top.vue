@@ -9,11 +9,21 @@
             transition duration-300 hover:bg-gray-700 
             hover:text-gray-200
         "
+        @pointerenter="opt.isHover = true"
+        @pointerleave="opt.isHover = false"
     >
         <img
-            src="https://media.geeksforgeeks.org/wp-content/uploads/20240227155250/up.png" 
-            class="w-16 h-16 rounded-full bg-white" alt=""
-        >
+            v-show="opt.isHover"
+            class="w-16 h-16 rounded-full bg-white"
+            src="~/public/img/Btn_ScrollToTop_Hover.svg"
+            alt=""
+        />
+        <img
+            v-show="!opt.isHover"
+            class="w-16 h-16 rounded-full bg-white"
+            src="~/public/img/Btn_ScrollToTop_Default.svg"
+            alt=""
+        />
     </button>
 </template>
 
@@ -25,6 +35,7 @@ const $scrollToTopButton = ref();
 
 const opt = reactive({
     isVisible: <boolean> false,
+    isHover: <boolean> false,
 });
 
 const scrollToTop = () => {

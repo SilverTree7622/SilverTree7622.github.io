@@ -222,7 +222,7 @@ const res = async () => {
             fromdate: isToday ? 0 : dateStore.getFromDate(),
         },
     );
-    console.log('res from page index: ', res);
+    
     try {
         list.totalList = res['data'];
         await callNextContents();
@@ -319,8 +319,7 @@ const callNextContents = async (isFilter: boolean = false): Promise<boolean> => 
             }
         }
     );
-    console.log('pagedList from totallist in callNextContents: ', pagedList);
-
+    // console.log('pagedList from totallist in callNextContents: ', pagedList);
     if ((pagedList.length === list.sortedList.length) && pagedList.length !== 0) {
         if (isFilter) list.sortedList = pagedList;
         opt.isOutOfContent = true;

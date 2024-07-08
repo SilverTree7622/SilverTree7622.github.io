@@ -8,9 +8,9 @@
                         <img class="x1-w5grIQ" src="/img/search.png" alt="1" />
                         <input class="search-w5grIQ body" name="search" placeholder="search" type="text" required />
                     </div>
-                    <CommonSelectorSection />
+                    <!-- <CommonSelectorSection /> -->
                 </div>
-                <a @click="clickLogin">
+                <!-- <a @click="clickLogin">
                     <div class="btn_-log-in-2AWpWu">
                         <div class="group-32-1jS6aQ">
                             <div class="rectangle-13-PmwrQq"></div>
@@ -33,9 +33,25 @@
                             <div class="join valign-text-middle body">JOIN</div>
                         </div>
                     </div>
-                </a>
-
+                </a> -->
                 <div class="frame-302-2AWpWu">
+                    <div
+                        v-for="(item, idx) in opt.popular"
+                    >
+                        <div> {{ `${ item.ai_sports } / ${ item.category_name }` }} </div>
+                    </div>
+                </div>
+                <div>
+                ____________________________
+                </div>
+                <div class="">
+                    <div
+                        v-for="(item, idx) in opt.etc"
+                    >
+                        <div> {{ `${ item.category_name } / ${ item.competition_name }` }} </div>
+                    </div>
+                </div>
+                <div v-show="false" class="frame-302-2AWpWu">
                     <div class="popular-leagues-RD63qm headline2">POPULAR LEAGUES</div>
                     <div class="football-RD63qm body2">FOOTBALL</div>
                     <div class="tennis-RD63qm body2">TENNIS</div>
@@ -228,24 +244,50 @@
 </template>
 
 <script lang="ts" setup>
+import type { TInitDataLeaguePopular, TInitDataLeagueEtc } from '~/types/loading';
+
 const overlayStore = useOverlayStore();
-const authStore = useAuthStore();
+const leftStore = useLeftStore();
+
+watch(
+    () => leftStore.getWatchProps(),
+    (p) => {
+        const { popular, etc, } = leftStore.getData();
+        opt.popular = popular as TInitDataLeaguePopular[];
+        opt.etc = etc as TInitDataLeagueEtc[];
+    },
+);
+
+const opt = reactive({
+    popular: <TInitDataLeaguePopular[]> [],
+    etc: <TInitDataLeagueEtc[]> [],
+});
 
 const hide = () => {
     overlayStore.HideOverlay('left', 'animate-appear');
 };
 
-const clickJoin = async () => {
-    authStore.show('signup');
-};
+// const clickJoin = async () => {
+//     authStore.show('signup');
+// };
 
-const clickLogin = async () => {
-    authStore.show('signin');
+// const clickLogin = async () => {
+//     authStore.show('signin');
+// };
+
+const updateList = (popular: TInitDataLeaguePopular[], etc: TInitDataLeagueEtc[]) => {
+    opt.popular = popular;
+    opt.etc = etc;
 };
 
 onMounted(async () => {
     await nextTick();
     overlayStore.closeOutsideOverlay("left");
+    leftStore.register(updateList);
+});
+
+onBeforeUnmount(() => {
+
 });
 </script>
 

@@ -200,7 +200,7 @@ const res = async () => {
             fromdate: 1638003600
         },
     );
-    console.log('res from page index: ', res);
+    
     try {
         list.totalList = res['data'];
         await callNextContents();

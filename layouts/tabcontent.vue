@@ -100,6 +100,7 @@ const opt = reactive({
 const filterStore = useFilterStore();
 const dateStore = useDateStore();
 const liveIntervalLoadingStore = useLiveIntervalLoadingStore();
+const leftStore = useLeftStore();
 const route = useRoute();
 
 const $date = ref();
@@ -219,10 +220,11 @@ const nextDate = (date: Date) => {
 onMounted(async () => {
     await nextTick();
     await props.updateLiveRealTime();
+    leftStore.onMountedSport(props.sName);
 });
 
 onBeforeUnmount(() => {
-
+    leftStore.onBeforeUnmountSport();
 });
 </script>
 
