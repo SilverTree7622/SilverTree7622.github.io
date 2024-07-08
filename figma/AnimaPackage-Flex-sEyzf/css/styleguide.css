@@ -1,0 +1,50 @@
+:root { 
+  --bggray: #f8f8f8;
+  --bk: #000000;
+  --catalina-blue: #0a3472;
+  --frblue: #011e3d;
+  --ndefaultblue: #002a56;
+  --ptyellow: #f6d04e;
+  --tory-blue: #0c4aa4;
+  --wt: #ffffff;
+ 
+  --font-size-l: 15px;
+  --font-size-m: 13px;
+  --font-size-s: 8px;
+  --font-size-xl: 18px;
+  --font-size-xxl: 22px;
+ 
+  --font-family-pretendard-regular: "Pretendard-Regular", Helvetica;
+  --font-family-pretendard-semibold: "Pretendard-SemiBold", Helvetica;
+}
+.body {
+  font-family: var(--font-family-pretendard-regular);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.smallsportsicon {
+  font-family: var(--font-family-pretendard-semibold);
+  font-size: var(--font-size-s);
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.biggerbody {
+  font-family: var(--font-family-pretendard-semibold);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.tapselected {
+  font-family: var(--font-family-pretendard-semibold);
+  font-size: var(--font-size-xxl);
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0;
+}

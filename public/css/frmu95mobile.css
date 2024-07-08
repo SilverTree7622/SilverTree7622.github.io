@@ -833,7 +833,7 @@
 .frmu95mobile .sub-tap-Mzx5SR {
   align-self: stretch;
   background-color: transparent;
-  height: 35px;
+  height: 30px;
   position: relative;
   width: 100%;
 }
@@ -1153,7 +1153,7 @@
   background-color: transparent;
   display: flex;
   flex-direction: column;
-  min-height: 100px;
+  /* min-height: 100px; */
   padding: 0px 10px 8px;
   position: relative;
   width: 100%;
