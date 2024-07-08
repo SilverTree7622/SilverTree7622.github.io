@@ -122,7 +122,6 @@
                 <!-- </a> -->
             </NuxtLink>
         </div>
-        <div class="live-Mzx5SR live headline2">&nbsp;</div>
     </div>
 </template>
 

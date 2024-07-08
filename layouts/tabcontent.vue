@@ -5,9 +5,14 @@
         />
         <CommonHeaderTabMain :sName="props.sName" :tab="opt.tab" />
 
+        <div class="live-Mzx5SR live headline2">&nbsp;</div>
+
         <CommonCarouselLive
             v-if="props.tab === 'live' && props.sortedList.length !== 0"
             :list="[]"
+        />
+        <CommonContentEmptyCarousel
+            v-show="props.tab === 'live' && props.sortedList.length === 0 && !props.isPending"
         />
 
         <div class="sub-tap-Mzx5SR">
@@ -25,7 +30,7 @@
             </div>
         </div>
 
-        <div class="live-Mzx5SR live headline2">&nbsp;</div>
+        <div class="py-1"></div>
 
         <!-- init content loading skeletons -->
         <LoadingSkeleton v-show="props.isPending" />
@@ -54,7 +59,7 @@
             </div>
             <!-- display this when slot has no items -->
             <div v-show="!props.sortedList.length && !props.isPending" class="w-full text-center mb-16">
-                No Content
+                <CommonContentEmptyList />
             </div>
         </div>
 
