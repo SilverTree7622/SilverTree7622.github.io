@@ -4,6 +4,15 @@ import type { TInitData, TInitDataLeaguePopular, TInitDataLeagueEtc, TInitDateTy
 import UtilObj from "~/utils/obj";
 
 
+export type TLeftStoreUpdate = {
+    popular: TInitDataLeaguePopular[];
+    etc: {
+        category: string;
+        categoryLogo?: string;
+        leagueList: TInitDataLeagueEtc[];
+    }[];
+};
+
 export const useLeftStore = defineStore('leftStore', () => {
     const opt = reactive<TInitData>({
         left_menu: {},
@@ -14,38 +23,35 @@ export const useLeftStore = defineStore('leftStore', () => {
         st_time: [],
     });
 
-    type TUpdateCallback = (popular: TInitDataLeaguePopular[], etc: TInitDataLeagueEtc[]) => void;
+    type TUpdateCallback = (popular: TInitDataLeaguePopular[], etc: TLeftStoreUpdate['etc']) => void;
 
     const config = reactive({
         currentSport: <TCommonSportSection> 'football',
         popular: <TInitData['left_menu']['popular']> [],
-        etc: <TInitData['left_menu']['etc1']> [],
-        updateCallback: <TUpdateCallback> (popular: TInitDataLeaguePopular[], etc: TInitDataLeagueEtc[], ) => {},
+        etc: <TLeftStoreUpdate['etc']> [],
+        updateCallback: <TUpdateCallback> (popular: TInitDataLeaguePopular[], etc: TLeftStoreUpdate['etc']) => {},
     });
 
-    const sortViaSport = (sport: TCommonSportSection): {
-        popular: TInitDataLeaguePopular[];
-        etc: TInitDataLeagueEtc[];
-    } => {
-        const res = {
+    const init = () => {
+        opt.left_menu['popular'] = [];
+        opt.left_menu['etc1'] = [];
+        opt.left_menu['etc2'] = [];
+    };
+
+    const sortViaSport = (sport: TCommonSportSection): TLeftStoreUpdate => {
+        const res: TLeftStoreUpdate = {
             popular: <TInitDataLeaguePopular[]> [],
-            etc: <TInitDataLeagueEtc[]> [],
+            etc: [],
         };
         if (opt.left_menu['popular']) {
             res.popular = opt.left_menu['popular'].filter( item => item.ai_sports === ECommonSportSectionValue[sport] );
         }
-        if (opt.left_menu['etc1']) {
-            // res.etc = opt.left_menu['etc1'].filter( item => item.ai_sports === ECommonSportSectionValue[sport] );
-            res.etc = opt.left_menu['etc1'];
-        }
-        if (opt.left_menu['etc2']) {
-            res.etc.push(
-                // ...opt.left_menu['etc2'].filter( item => item.ai_sports === ECommonSportSectionValue[sport] )
-                ...opt.left_menu['etc2'],
-            );
-        }
-        if (res.etc.length) {
-            const groupedLeague = res.etc.reduce((acc, match) => {
+        const tmpEtcLeagueList = [
+            ...opt.left_menu['etc1'] ?? [],
+            ...opt.left_menu['etc2'] ?? [],
+        ];
+        if (tmpEtcLeagueList.length) {
+            const groupedLeague = tmpEtcLeagueList.reduce((acc, match) => {
                 if (!acc[match.category_name]) {
                     acc[match.category_name] = [];
                 }
@@ -53,18 +59,16 @@ export const useLeftStore = defineStore('leftStore', () => {
                 return acc;
             }, {});
             const sortedLeague = Object.entries(groupedLeague).map((item) => {
-                const [ country, league, ] = item;
-                const leagueList = league as any;
+                const [ category, league, ] = item;
+                const leagueList = league as TInitDataLeagueEtc[];
+                const categoryLogo = '';
                 return {
-                    country,
+                    category,
+                    categoryLogo,
                     leagueList,
                 };
             });
-            const finalList: any[] = [];
-            sortedLeague.map((item) => {
-                finalList.push(...item.leagueList);
-            });
-            res.etc = finalList;
+            res.etc = sortedLeague;
         }
         return res;
     };
@@ -135,6 +139,21 @@ export const useLeftStore = defineStore('leftStore', () => {
         return config.currentSport;
     };
 
+    const chckIsSportRoute = (name: string): boolean => {
+        let cnt = 0;
+        for (const value in ECommonSportSectionValue) {
+            if (name === ECommonSportSectionValue[value]) {
+                cnt++;
+            }
+        }
+        for (const value in ECommonSportSection) {
+            if (name === ECommonSportSection[value]) {
+                cnt++;
+            }
+        }
+        return cnt > 0;
+    };
+
     return {
         register,
         onMounted,
@@ -145,6 +164,7 @@ export const useLeftStore = defineStore('leftStore', () => {
         removeFavorite,
         getData,
         getWatchProps,
+        chckIsSportRoute,
 
     };
 });

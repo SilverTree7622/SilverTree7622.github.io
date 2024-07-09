@@ -14,7 +14,13 @@ export default defineNuxtConfig({
 	nitro: {
 		preset: 'github-pages'
 	},
-	modules: ['@pinia/nuxt', '@nuxt/ui', "@nuxtjs/i18n", 'nuxt-socket-io', ],
+	modules: [
+		'@pinia/nuxt',
+		'@nuxt/ui',
+		"@nuxtjs/i18n",
+		'nuxt-socket-io',
+		'@davestewart/nuxt-scrollbar',
+	],
 
 	// https://nuxt.com/modules/socket-io
 	// io: {

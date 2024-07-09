@@ -5,18 +5,7 @@
                 <div class="oddsnavicom-rhojcY">ODDSNAVI.COM</div>
             </a>
             <a @click="overlayStore.ShowOverlay('left', 'animate-appear')">
-                <div class="btn_menu-rhojcY">
-                    <div class="group-35-AhxpXh">
-                        <div class="rectangle-2-NjWEv0 rectangle-2"></div>
-                        <div class="rectangle-3-NjWEv0 rectangle-3"></div>
-                        <div class="rectangle-4-NjWEv0 rectangle-4"></div>
-                    </div>
-                    <div class="group-36-AhxpXh smart-layers-pointers">
-                        <div class="rectangle-2-4re5zK rectangle-2"></div>
-                        <div class="rectangle-3-4re5zK rectangle-3"></div>
-                        <div class="rectangle-4-4re5zK rectangle-4"></div>
-                    </div>
-                </div>
+                <img class="btn_-menu cursor-pointer" src="/img/btn-menu@2x.png" alt="Btn_Menu" />
             </a>
         </header>
         <div class="frame-322-Mzx5SR">
@@ -127,4 +116,11 @@ const overlayStore = useOverlayStore();
 
 <style scoped>
 
+.btn_-menu {
+  height: 20px;
+  position: relative;
+  width: 22px;
+  left: 11px;
+  top: 11px;
+}
 </style>

@@ -34,6 +34,17 @@ const itemStyleStore = useItemStyleStore();
 const cacheStore = useCacheStore();
 const route = useRoute();
 
+// watch route change in sport sections
+watch(
+	() => route.name,
+	async () => {
+		if (!leftStore.chckIsSportRoute(route.name as string)) {
+			return;
+		}
+		await getInitData();
+	}
+);
+
 const getInitData = async () => {
 	const sportType = route.name as TCommonSportSectionTabName;
 	let initData: TInitData | {} = {};
