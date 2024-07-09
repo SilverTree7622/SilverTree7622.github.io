@@ -1,16 +1,15 @@
 <template>
     <div>
         <header class="header-Mzx5SR">
-            <a href="/" target="_self">
-                <div class="oddsnavicom-rhojcY">ODDSNAVI.COM</div>
-            </a>
-            <a @click="overlayStore.ShowOverlay('left', 'animate-appear')">
-                <img class="btn_-menu cursor-pointer" src="/img/btn-menu@2x.png" alt="Btn_Menu" />
-            </a>
+            <CommonLogo class="h-full ml-3" />
+            <div class="mr-3">
+                <CommonHeaderRight />
+            </div>
         </header>
         <div class="frame-322-Mzx5SR">
-            <div class="sub-header-Ec7wbx">
-                <div class="frame-321-4QEj8e">
+            <CommonHeaderSport />
+            <div v-show="false" class="sub-header-Ec7wbx">
+                <div v-show="false" class="frame-321-4QEj8e">
                     <NuxtLink :to="`/FootBall`">
                     <!-- <a href="/FootBall" target="_self"> -->
                         <div class="btn_-sports-icon_-football-geZ0fe">
@@ -111,7 +110,6 @@
 const props = defineProps<{
     result_nav_code: string;
 }>();
-const overlayStore = useOverlayStore();
 </script>
 
 <style scoped>

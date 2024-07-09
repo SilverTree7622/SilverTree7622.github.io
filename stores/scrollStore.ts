@@ -168,8 +168,10 @@ export const useScrollStore = defineStore('scrollStore', () => {
     };
 
     const setScroll2Top = () => {
-        window.scrollTo(0, 0);
-        // console.log(`set scroll to top`);
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
     };
 
     const init = (key: string) => {

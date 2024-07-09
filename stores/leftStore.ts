@@ -61,7 +61,13 @@ export const useLeftStore = defineStore('leftStore', () => {
             const sortedLeague = Object.entries(groupedLeague).map((item) => {
                 const [ category, league, ] = item;
                 const leagueList = league as TInitDataLeagueEtc[];
-                const categoryLogo = '';
+                let categoryLogo = '';
+                for (const item of leagueList) {
+                    if (item.catetory_logo) {
+                        categoryLogo = item.catetory_logo;
+                        break;
+                    }
+                }
                 return {
                     category,
                     categoryLogo,

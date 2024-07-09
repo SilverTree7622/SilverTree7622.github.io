@@ -31,6 +31,9 @@
 const props = defineProps<{
     isDisable?: boolean;
 }>();
+
+const scrollStore = useScrollStore();
+
 const $scrollToTopButton = ref();
 
 const opt = reactive({
@@ -39,10 +42,7 @@ const opt = reactive({
 });
 
 const scrollToTop = () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-    });
+    scrollStore.setScroll2Top();
 };
 
 const detectScrollEvt = () => {

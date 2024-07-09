@@ -1,10 +1,7 @@
 <template>
     <div id="overlay-left" class="overlay-base z-10 overflow-hidden">
         <div class="left-header">
-            <img class="btn_-menu cursor-pointer" src="/img/btn-menu@2x.png" alt="Btn_Menu" @click="hide" />
-            <NuxtLink to="/FootBall" @click="go2Link">
-                <div class="oddsnavicom">ODDSNAVI.COM</div>
-            </NuxtLink>
+            <CommonLogo :isHidingMenu="true" />
         </div>
         <div class="left screen overflow-hidden !pt-0">
             <NuxtScrollbar tag="aside" @ps-scroll-y="() => { }" class="overflow-x-hidden">
@@ -33,7 +30,7 @@
                     </div>
                     <template v-for="(item, idx) in opt.etc">
                         <div class="frame-62-2 frame-62-3 cursor-pointer" @click="toggleEtcCategory(item.category)">
-                            <img v-if="item.leagueList[0].catetory_logo" :src="item.leagueList[0].catetory_logo"
+                            <img v-if="item.categoryLogo" :src="item.categoryLogo"
                                 class="w-7 h-5" />
                             <div class="basketball headline3">{{ item.category }}</div>
                         </div>
@@ -61,7 +58,6 @@ import type { TInitDataLeaguePopular } from '~/types/loading';
 
 const overlayStore = useOverlayStore();
 const leftStore = useLeftStore();
-const scrollStore = useScrollStore();
 
 const opt = reactive<TLeftStoreUpdate>({
     popular: <TInitDataLeaguePopular[]>[],
@@ -91,15 +87,6 @@ const toggleEtcCategory = (category: string) => {
     }
 };
 
-const hide = () => {
-    overlayStore.HideOverlay('left', 'animate-appear');
-};
-
-const go2Link = () => {
-    overlayStore.HideOverlay('left', 'animate-appear');
-    scrollStore.setScroll2Top();
-};
-
 const updateList = (
     popular: TInitDataLeaguePopular[],
     etc: TLeftStoreUpdate['etc']
@@ -108,8 +95,8 @@ const updateList = (
     opt.etc = [];
     opt.popular = popular;
     opt.etc = etc;
-    opt.popular.length && console.log('opt popular from left side updateList: ', opt.popular);
-    opt.etc.length && console.log('opt etc from left side updateList: ', opt.etc);
+    // opt.popular.length && console.log('opt popular from left side updateList: ', opt.popular);
+    // opt.etc.length && console.log('opt etc from left side updateList: ', opt.etc);
 };
 
 onMounted(async () => {
@@ -136,26 +123,6 @@ onBeforeUnmount(() => {
     position: relative;
     flex: 0 0 auto;
     width: 225px;
-}
-
-.left-header .btn_-menu {
-    height: 20px;
-    position: relative;
-    width: 22px;
-}
-
-.left-header .oddsnavicom {
-    color: var(--ptyellow);
-    cursor: pointer;
-    font-family: var(--font-family-pretendard-semibold);
-    font-size: var(--font-size-xxl);
-    font-weight: 600;
-    letter-spacing: 0;
-    line-height: normal;
-    margin-top: -1.00px;
-    position: relative;
-    white-space: nowrap;
-    width: fit-content;
 }
 
 .left {
