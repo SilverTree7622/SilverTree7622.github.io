@@ -23,7 +23,7 @@ export const useSportStore = defineStore('sportStore', () => {
         $liveMain,
         sportSection: TCacheStoreSection,
         tab: TCommonTabTypes,
-        // loadSortedContent: (isFilter: boolean, list: any[]) => Promise<{ loadPageIdx: number; loadPageIsPending: boolean; loadSortedList: any[]; }>,
+        // loadSortedContent: (isFilter: boolean, list: any[]) => Promise<{ loadPageIdx: number; loadcontentIsPending: boolean; loadSortedList: any[]; }>,
         callNextContents: (isFilter?: boolean) => Promise<boolean>,
         endCallback: () => void = () => {},
     ): Promise<{
@@ -76,7 +76,7 @@ export const useSportStore = defineStore('sportStore', () => {
         sortedList: TSportScheduleTypes[],
         sortedKickOffList: TSportStoreKickOffList,
         $liveMain,
-        // loadSortedContent: (isFilter: boolean, list: any[]) => Promise<{ loadPageIdx: number; loadPageIsPending: boolean; loadSortedList: any[]; }>,
+        // loadSortedContent: (isFilter: boolean, list: any[]) => Promise<{ loadPageIdx: number; loadcontentIsPending: boolean; loadSortedList: any[]; }>,
         callNextContents: (isFilter?: boolean) => Promise<boolean>,
     ) => {
         const prevSortedList = [ ...sortedList ];
@@ -167,16 +167,16 @@ export const useSportStore = defineStore('sportStore', () => {
      */
     const callNextContents = async (
         pageIdx: number,
-        pageIsPending: boolean,
+        contentIsPending: boolean,
         isOutOfContent: boolean,
         totalList: TSportScheduleTypes[],
         sortedList: TSportScheduleTypes[],
         tab: TCommonTabTypes,
-        loadSortedContent: (isFilter: boolean, list: any[]) => Promise<{ loadPageIdx: number; loadPageIsPending: boolean; loadSortedList: any[]; }>,
+        loadSortedContent: (isFilter: boolean, list: any[]) => Promise<{ loadPageIdx: number; loadcontentIsPending: boolean; loadSortedList: any[]; }>,
         isFilter: boolean = false,
     ): Promise<{
         pageIdx: number;
-        pageIsPending: boolean;
+        contentIsPending: boolean;
         isOutOfContent: boolean;
         sortedList: TSportScheduleTypes[];
     }> => {
@@ -199,21 +199,21 @@ export const useSportStore = defineStore('sportStore', () => {
             isOutOfContent = true;
             return {
                 pageIdx,
-                pageIsPending,
+                contentIsPending,
                 isOutOfContent,
                 sortedList,
             };
         }
         const {
             loadPageIdx,
-            loadPageIsPending,
+            loadcontentIsPending,
             loadSortedList,
         } = await loadSortedContent(isFilter, sortedList);
         sortedList = loadSortedList;
         isOutOfContent = (pagedList.length === sortedList.length);
         return {
             pageIdx: loadPageIdx,
-            pageIsPending: loadPageIsPending,
+            contentIsPending: loadcontentIsPending,
             isOutOfContent,
             sortedList,
         };
@@ -226,41 +226,41 @@ export const useSportStore = defineStore('sportStore', () => {
      */
     const loadSortedContent = async (
         pageIdx: number,
-        pageIsPending: boolean,
+        contentIsPending: boolean,
         isFilter: boolean,
         list: any[],
     ): Promise<{
         loadPageIdx: number;
-        loadPageIsPending: boolean;
+        loadcontentIsPending: boolean;
         loadSortedList: any[];
     }> => {
         if (list.length === 0) {
             return {
-                loadPageIdx: pageIdx, loadPageIsPending: pageIsPending, loadSortedList: list,
+                loadPageIdx: pageIdx, loadcontentIsPending: contentIsPending, loadSortedList: list,
             };
         }
         if (isFilter) {
             return {
                 loadPageIdx: pageIdx,
-                loadPageIsPending: pageIsPending,
+                loadcontentIsPending: contentIsPending,
                 loadSortedList: list.slice(0, MAX_PAGINATION_CONTENT * pageIdx),
             };
         }
         if (list.length < pageIdx) {
             return {
                 loadPageIdx: pageIdx,
-                loadPageIsPending: pageIsPending,
+                loadcontentIsPending: contentIsPending,
                 loadSortedList: list,
             };
         }
-        if (pageIdx !== 0) pageIsPending = true;
+        if (pageIdx !== 0) contentIsPending = true;
         // load next content
         pageIdx++;
         const slicedList = list.slice(0, MAX_PAGINATION_CONTENT * pageIdx);
-        pageIsPending = false;
+        contentIsPending = false;
         return {
             loadPageIdx: pageIdx,
-            loadPageIsPending: pageIsPending,
+            loadcontentIsPending: contentIsPending,
             loadSortedList: slicedList,
         };
     };
@@ -273,7 +273,7 @@ export const useSportStore = defineStore('sportStore', () => {
         $liveMain,
         sportSection: TCacheStoreSection,
         tab: TCommonTabTypes,
-        // loadSortedContent: (isFilter: boolean, list: any[]) => Promise<{ loadPageIdx: number; loadPageIsPending: boolean; loadSortedList: any[]; }>,
+        // loadSortedContent: (isFilter: boolean, list: any[]) => Promise<{ loadPageIdx: number; loadcontentIsPending: boolean; loadSortedList: any[]; }>,
         callNextContents: (isFilter?: boolean) => Promise<boolean>,
         endCallback: () => void = () => {}
     ): Promise<{

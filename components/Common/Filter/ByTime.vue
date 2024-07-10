@@ -1,17 +1,7 @@
 <template>
-    <a @click="toggle">
-        <div class="group-14-ppRdQV">
-            <div class="btn_-round-square-6PjiIf btn_-round-square">
-                <div class="group-24-b9oapg group-24">
-                    <div class="rectangle-13-PHX7OD"></div>
-                    <div class="text-PHX7OD text body">By time</div>
-                </div>
-                <div class="group-25-b9oapg smart-layers-pointers">
-                    <div :class="opt.isToggled ? 'bg-[#315b99]' : 'rectangle-13-989EQc'"></div>
-                    <div class="text-989EQc text body">By time</div>
-                </div>
-            </div>
-        </div>
+    <a class="cursor-pointer w-[60px]" @click="toggle">
+        <img class="btn_-by-time" :src="opt.isToggled ? '/img/Btn_ByTime_toggled.svg' : '/img/Btn_ByTime_disable.svg'">
+        <div class="by-time body centered">By time</div>
     </a>
 </template>
 
@@ -20,7 +10,7 @@
 const filterStore = useFilterStore();
 
 const opt = reactive({
-    isToggled: <boolean> filterStore.getTimeIsToggled(),
+    isToggled: <boolean>filterStore.getTimeIsToggled(),
 });
 
 watch(
@@ -33,5 +23,35 @@ watch(
 const toggle = () => {
     opt.isToggled = filterStore.toggle();
 };
-
 </script>
+
+<style scoped>
+.btn_-by-time {
+    align-items: center;
+    border: 1px solid;
+    border-color: #a2b6f8;
+    border-radius: 3px;
+    display: flex;
+    height: 25px;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.by-time {
+    position: relative;
+    color: var(--wt);
+    font-weight: 400;
+    height: 16px;
+    line-height: normal;
+    margin-top: 1px;
+    text-align: center;
+}
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    transform: translate(20%, -50%);
+}
+</style>

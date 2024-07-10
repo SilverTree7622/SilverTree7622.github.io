@@ -1,8 +1,38 @@
 <template>
     <NuxtLink :to="`/${ ECommonSportSectionValue[ props.name ] }`">
-        <article class="btn_-sports-icon">
-            <img class="icon-1" :src="`/img/${ props.icon }`" :alt="ECommonSportSectionValue[ props.name ]" />
-            <div class="football-1 football-4 smallsportsicon">{{ ECommonSportSectionValue[ props.name ] }}</div>
+        <article 
+            :class="`btn_-sports-icon ${ (props.isToggled || opt.isHover) ? 'bg-[#0C4BA7]' : 'bg-[color:var(--catalina-blue)]' }`"
+            @pointerover="opt.isHover = true"
+            @pointerleave="opt.isHover = false"
+        >
+            <img 
+                v-show="!props.isToggled && !opt.isHover"
+                :class="`icon-1`"
+                :src="`/img/${ props.icon }`"
+                :alt="ECommonSportSectionValue[ props.name ]"
+            />
+            <!-- no hover icon -->
+            <img
+                v-show="!props.hoverIcon && (props.isToggled || opt.isHover)"
+                class="icon-1 text-[color:var(--ptyellow)] !stroke-[color:var(--ptyellow)]"
+                :src="`/img/${ props.icon }`"
+                :alt="ECommonSportSectionValue[ props.name ]"
+            />
+            <!-- hover icon -->
+            <img
+                v-show="props.hoverIcon && (props.isToggled || opt.isHover)"
+                class="icon-1"
+                :src="`/img/${ props.hoverIcon }`"
+                :alt="ECommonSportSectionValue[ props.name ]"
+            />
+            <div
+                :class="`
+                    football-1 football-4 smallsportsicon
+                    ${ (props.isToggled || opt.isHover) && 'text-[color:var(--ptyellow)]' }
+                `"
+            >
+                {{ ECommonSportSectionValue[ props.name ] }}
+            </div>
         </article>
     </NuxtLink>
 </template>
@@ -13,7 +43,14 @@ import { ECommonSportSectionValue, type TCommonSportSection } from '~/types/Comm
 const props = defineProps<{
     name: TCommonSportSection;
     icon: string;
+    hoverIcon?: string;
+    isToggled?: boolean;
 }>();
+
+const opt = reactive({
+    isHover: <boolean> false,
+});
+
 </script>
 
 <style scoped>
@@ -21,11 +58,11 @@ const props = defineProps<{
   height: 30px;
   position: relative;
   width: 30px;
+  /* color: white; */
 }
 
 .btn_-sports-icon {
   align-items: center;
-  background-color: var(--catalina-blue);
   border-radius: 6px;
   cursor: pointer;
   display: flex;
@@ -46,7 +83,6 @@ const props = defineProps<{
 }
 
 .football-1 {
-  color: var(--wt);
   text-align: center;
 }
 

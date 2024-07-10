@@ -1,68 +1,58 @@
 <template>
-    <div class="frmu95mobile screen" style="background: #001226;">
-        <CommonHeaderMain
-            :result_nav_code="props.result.nav_code"
-        />
+    <div class="frmu95mobile screen" style="background: white;">
+        <CommonHeaderMain :result_nav_code="props.result.nav_code" />
         <CommonHeaderTabMain :sName="props.sName" :tab="opt.tab" />
 
-        <div class="live-Mzx5SR live headline2">&nbsp;</div>
+        <div class="pt-[2px]"></div>
 
-        <CommonCarouselLive
-            v-if="props.tab === 'live' && props.sortedList.length !== 0"
-            :list="[]"
-        />
+        <CommonCarouselLive v-if="props.tab === 'live' && props.sortedList.length !== 0" :list="[]" />
         <CommonContentEmptyCarousel
-            v-show="props.tab === 'live' && props.sortedList.length === 0 && !props.isPending"
-        />
+            v-show="props.sortedList.length === 0 && !props.isPending" />
 
-        <div class="sub-tap-Mzx5SR">
-            <div class="rectangle-38-rkUyvw"></div>
-            <div class="frame-279-rkUyvw">
-                <CommonFilterFavorite />
-                <CommonFilterByTime />
-                <!-- <CommonItemStyle /> -->
-                <CommonFilterDate
-                    ref="$date"
-                    :date="new Date()"
-                    @prev-tab="prevDate"
-                    @next-tab="nextDate"
-                />
+        <div class="pt-[2px]"></div>
+
+        <div class="contents_-football_-live">
+            <div class="frame-315">
+                <div class="frame-369">
+                    <div class="frame-5 biggerbody">
+                        <div class="football-3 valign-text-middle football-4">{{ ECommonSportSectionValue[ props.sName ] }}</div>
+                        <div class="text-1 valign-text-middle">({{ props.pagedListLength }})</div>
+                    </div>
+                    <div class="sport-title_-date_-set">
+                        <CommonFilterByTime />
+                        <CommonFilterDate ref="$date" :date="new Date()" @prev-tab="prevDate" @next-tab="nextDate" />
+                    </div>
+                </div>
+                <div class="frame-578">
+                    <!-- init content loading skeletons -->
+                    <div v-show="props.isPending" class="mx-auto mt-10">
+                        <LoadingSkeleton />
+                        <LoadingSkeleton />
+                        <LoadingSkeleton />
+                    </div>
+                    <slot v-if="!props.isPending"></slot>
+                    <!-- center content loading -->
+                    <div v-show="props.contentIsPending" class="mx-auto mt-10">
+                        <LoadingSkeleton />
+                        <LoadingSkeleton />
+                        <LoadingSkeleton />
+                    </div>
+                    <!-- down stroke icon -->
+                    <div v-show="!props.isOutOfContent && !props.isPending && !props.contentIsPending" class="mx-auto">
+                        <svg data-slot="icon" data-darkreader-inline-stroke="" fill="none" stroke-width="1.5"
+                            stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+                            class="mx-auto h-8 w-8 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5"></path>
+                        </svg>
+                    </div>
+                    <!-- display this when slot has no items -->
+                    <div v-show="!props.sortedList.length && !props.isPending" class="w-full text-center mb-16">
+                        <CommonContentEmptyList />
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="py-1"></div>
-
-        <!-- init content loading skeletons -->
-        <LoadingSkeleton v-show="props.isPending" />
-        <LoadingSkeleton v-show="props.isPending" />
-        <LoadingSkeleton v-show="props.isPending" />
-
-        <div class="">
-            <slot v-if="!props.isPending"></slot>
-            <!-- center content loading -->
-            <div v-show="props.pageIsPending" class="mt-10">
-                <LoadingSkeleton />
-                <LoadingSkeleton />
-                <LoadingSkeleton />
-            </div>
-            <!-- down stroke icon -->
-            <div
-                v-show="!props.isOutOfContent && !props.isPending && !props.pageIsPending"
-                class="mx-auto my-4"
-            >
-                <svg
-                    data-slot="icon" data-darkreader-inline-stroke="" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
-                    class="mx-auto h-8 w-8 text-gray-500"
-                >
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5"></path>
-                </svg>
-            </div>
-            <!-- display this when slot has no items -->
-            <div v-show="!props.sortedList.length && !props.isPending" class="w-full text-center mb-16">
-                <CommonContentEmptyList />
-            </div>
-        </div>
-
         <CommonFooterMain />
     </div>
 </template>
@@ -75,12 +65,13 @@ import UtilDate from '~/utils/date';
 
 const props = defineProps<{
     isPending: boolean;
-    pageIsPending: boolean;
+    contentIsPending: boolean;
     isOutOfContent: boolean;
     sName: TCommonSportSection;
     tab: TCommonTabTypes;
     result: any;
     sortedList: TSportScheduleTypes[];
+    pagedListLength: number;
     changeTab: () => Promise<void>;
     changeDate: () => Promise<void>;
     toggleByTime: () => Promise<void>;
@@ -93,8 +84,8 @@ const emit = defineEmits<{
 }>();
 
 const opt = reactive({
-    tab: <TCommonTabTypes> props.tab,
-    useInitForChangingTab: <boolean> true,      // when init date filter section
+    tab: <TCommonTabTypes>props.tab,
+    useInitForChangingTab: <boolean>true,      // when init date filter section
 });
 
 const filterStore = useFilterStore();
@@ -182,7 +173,7 @@ const prevDate = (date: Date) => {
         opt.useInitForChangingTab = false;
     }
     navigateTo({
-        path: `/${ ECommonSportSectionValue[ props.sName ] }`,
+        path: `/${ECommonSportSectionValue[props.sName]}`,
         query: {
             tab: targetTab,
         }
@@ -210,7 +201,7 @@ const nextDate = (date: Date) => {
         opt.useInitForChangingTab = false;
     }
     navigateTo({
-        path: `/${ ECommonSportSectionValue[ props.sName ] }`,
+        path: `/${ECommonSportSectionValue[props.sName]}`,
         query: {
             tab: targetTab,
         }
@@ -228,4 +219,82 @@ onBeforeUnmount(() => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.contents_-football_-live {
+  align-items: flex-start;
+  align-self: stretch;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  padding: 0px 0px 2px;
+  position: relative;
+  width: 100%;
+}
+
+
+.frame-315 {
+  align-items: flex-start;
+  align-self: stretch;
+  background-color: var(--tory-blue);
+  border-radius: 6px;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  padding: 1px 0px 4px;
+  position: relative;
+  width: 100%;
+}
+
+.frame-5 {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 6px;
+  position: relative;
+}
+
+.frame-369 {
+  align-items: center;
+  align-self: stretch;
+  background-color: var(--tory-blue);
+  border-radius: 10px 10px 0px 0px;
+  display: flex;
+  height: 34px;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 4px 6px 4px 13px;
+  position: relative;
+  width: 100%;
+}
+
+.sport-title_-date_-set {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 6px;
+  justify-content: flex-end;
+  position: relative;
+}
+
+
+.frame-578 {
+  align-items: flex-start;
+  align-self: stretch;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  padding: 1px 6px;
+  position: relative;
+  width: 100%;
+}
+
+.text-1 {
+  color: #92b8ef;
+  font-weight: 600;
+  line-height: normal;
+  margin-top: -1.00px;
+  position: relative;
+  white-space: nowrap;
+  width: fit-content;
+}
+</style>

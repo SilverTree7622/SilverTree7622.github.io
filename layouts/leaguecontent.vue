@@ -26,14 +26,14 @@
         <div class="">
             <slot v-if="!props.isPending"></slot>
             <!-- center content loading -->
-            <div v-show="props.pageIsPending" class="mt-10">
+            <div v-show="props.contentIsPending" class="mt-10">
                 <LoadingSkeleton />
                 <LoadingSkeleton />
                 <LoadingSkeleton />
             </div>
             <!-- page scroll guide indicator -->
             <div
-                v-if="!props.isOutOfContent && !props.isPending && !props.pageIsPending"
+                v-if="!props.isOutOfContent && !props.isPending && !props.contentIsPending"
                 class="mx-auto my-4"
             >
                 <svg
@@ -52,7 +52,7 @@
 <script lang="ts" setup>
 const props = defineProps<{
     isPending: boolean;
-    pageIsPending: boolean;
+    contentIsPending: boolean;
     isOutOfContent: boolean;
     sName: string;
     tab: string;

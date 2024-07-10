@@ -2,7 +2,7 @@
     <NuxtLayout
         name="leaguecontent"
         :isPending="opt.isPending"
-        :pageIsPending="page.isPending"
+        :contentIsPending="page.isPending"
         :isOutOfContent="opt.isOutOfContent"
         :sName="'League'"
         :tab="opt.tab"

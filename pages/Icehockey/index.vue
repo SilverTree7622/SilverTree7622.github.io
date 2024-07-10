@@ -2,12 +2,13 @@
     <NuxtLayout
         name="tabcontent"
         :isPending="opt.isPending"
-        :pageIsPending="page.isPending"
+        :contentIsPending="page.isPending"
         :isOutOfContent="opt.isOutOfContent"
         :sName="'IceHockey'"
         :tab="opt.tab"
         :result="opt.result"
         :sortedList="list.sortedList"
+        :pagedListLength="list.pagedList.length"
         :changeTab="changeTab"
         :changeDate="changeDate"
         :toggleByTime="toggleByTime"
@@ -76,6 +77,8 @@ const list = reactive({
     // total list
     totalList: <TIceHockeySchedule[]> [],
     totalKickOffList: <{ idx: number; match_id: string; ai_kickoff_timestamp: number; }[]> [],
+    // paged list
+    pagedList: <TIceHockeySchedule[]> [],
     // sorted list from total list (= visaulized list)
     sortedList: <TIceHockeySchedule[]> [],
     sortedKickOffList: <{ idx: number; match_id: string; ai_kickoff_timestamp: number; }[]> [],
@@ -238,7 +241,7 @@ const loadSortedContent = async (isFilter: boolean, list: any[]) => {
  * @param isFilter 
  */
 const callNextContents = async (isFilter: boolean = false): Promise<boolean> => {
-    const pagedList = filterStore.sortList(
+    list.pagedList = filterStore.sortList(
         list.totalList,
         dateStore.getDate(),
         {
@@ -253,13 +256,13 @@ const callNextContents = async (isFilter: boolean = false): Promise<boolean> => 
         },
         false
     );
-    if ((pagedList.length === list.sortedList.length) && pagedList.length !== 0) {
-        if (isFilter) list.sortedList = pagedList;
+    if ((list.pagedList.length === list.sortedList.length) && list.pagedList.length !== 0) {
+        if (isFilter) list.sortedList = list.pagedList;
         opt.isOutOfContent = true;
         return opt.isOutOfContent;
     }
-    list.sortedList = await loadSortedContent(isFilter, pagedList);
-    opt.isOutOfContent = (pagedList.length === list.sortedList.length);
+    list.sortedList = await loadSortedContent(isFilter, list.pagedList);
+    opt.isOutOfContent = (list.pagedList.length === list.sortedList.length);
     return opt.isOutOfContent;
 };
 
