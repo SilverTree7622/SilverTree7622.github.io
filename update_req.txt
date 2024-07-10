@@ -84,10 +84,11 @@ TODO
 
     상단 ui들
         // - 가장 위 상단에 회원 정보, 찜, 검색, 설정
-        - sport section tab들 ui 적용 (todo: hover animation)
-        - live, fixtures, odds, resut, league 탭들 ui 적용
+        // - sport section tab들 ui 적용 (todo: hover animation)
+        // - live, fixtures, odds, resut, league 탭들 ui 적용
+        - 설정 팝업
         - top scores 활성화시 ui 적용
-        - sport name (숫자), by time, date ui 적용
+        // - sport name (숫자), by time, date ui 적용
 
     테니스 sport
         - ui상 복식은 그냥 팀으로 하나, 매치 홈은 의논 후 결정
