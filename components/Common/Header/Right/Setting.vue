@@ -1,26 +1,31 @@
 <template>
-    <div class="btn_-header_-circle">
+    <div class="btn_-header_-circle" @click="click">
         <img class="btn_-setting-icon cursor-pointer" src="/img/btn-settingicon@2x.svg" alt="Btn_SettingIcon" />
     </div>
 </template>
 
 <script setup lang="ts">
+const settingStore = useSettingStore();
+
+const click = () => {
+    settingStore.show();
+};
 </script>
 
 <style scoped>
 .btn_-setting-icon {
-  height: 20px;
-  left: 2.9px;
-  position: absolute;
-  top: 3.5px;
-  width: 20px;
+    height: 20px;
+    left: 2.9px;
+    position: absolute;
+    top: 3.5px;
+    width: 20px;
 }
 
 .btn_-header_-circle {
-  background-color: var(--catalina-blue);
-  border-radius: 20px;
-  height: 25px;
-  position: relative;
-  width: 25px;
+    background-color: var(--catalina-blue);
+    border-radius: 20px;
+    height: 25px;
+    position: relative;
+    width: 25px;
 }
 </style>

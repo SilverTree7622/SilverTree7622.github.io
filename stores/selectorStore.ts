@@ -4,7 +4,6 @@ import type { TSelectorLang, TSelectorOdds, TSelectorSports, TSelectorTime } fro
 
 
 export const useSelectorStore = defineStore('selectorStore', () => {
-    
     const opt = reactive({
         lang: <TSelectorLang[]> [
             'EN', 'KR', 'CN', 'FR',

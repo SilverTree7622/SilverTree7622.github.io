@@ -94,7 +94,7 @@ TODO
             - result
         // - sport name (숫자), by time, date ui 적용
 
-    list ui들
+    list에 들어있는 item ui들
         - live
         - fixtures
         - odds

@@ -43,8 +43,6 @@ import { ECommonSportSectionValue, ECommonSportValue, type TCommonSportNavCode, 
 import type { TFootBallSchedule } from "~/types/FootBall/schedule";
 import type { TCommonTabTypes } from "~/types/Common/tab";
 import UtilDate from '~/utils/date';
-import UtilObj from '~/utils/obj';
-import UtilArray from '~/utils/array';
 
 const {
     MAX_PAGINATION_CONTENT,

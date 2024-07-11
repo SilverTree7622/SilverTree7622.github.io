@@ -3,8 +3,6 @@
         <div class="frame-container-2">
             <div v-show="!opt.isToggled">
                 <div :class="`frame-411`"><img class="star" src="@/public/img/star@2x.png" alt="Star" /></div>
-                <!-- <div class="frame"><img class="star" src="/img/star-1@2x.png"
-                                alt="Star" /></div> -->
             </div>
             <div v-show="opt.isToggled">
                 <div class="frame-411"><img class="star" src="@/public/img/star@2x.png" alt="Star" /></div>

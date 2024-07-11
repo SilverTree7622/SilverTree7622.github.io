@@ -18,6 +18,7 @@
 		</Body>
 		<SignModal />
 		<CommonBtnTop />
+        <SettingModal />
 	</Html>
 </template>
 

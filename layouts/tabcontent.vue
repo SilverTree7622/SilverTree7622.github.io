@@ -5,9 +5,13 @@
 
         <div class="pt-[2px]"></div>
 
-        <CommonCarouselLive v-if="props.tab === 'live' && props.sortedList.length !== 0" :list="[]" />
-        <CommonContentEmptyCarousel
-            v-show="props.sortedList.length === 0 && !props.isPending" />
+        <!-- carousel section -->
+        <CommonCarouselSport
+            :sName="props.sName"
+            :tab="props.tab"
+            :isPending="props.isPending"
+            :list="props.sortedList"
+        />
 
         <div class="pt-[2px]"></div>
 

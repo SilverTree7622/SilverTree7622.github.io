@@ -1,5 +1,6 @@
 <template>
     <CommonCarouselDefault
+        title="Top Scores"
         :list="props.list"
     />
 </template>

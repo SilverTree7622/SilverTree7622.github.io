@@ -8,7 +8,6 @@
             width: 'w-[350px]',
             height: 'h-full',
             container: '!items-center',
-            
         }"
     >
         <SignIn v-if="authStore.getTab() === 'signin'" :validate="validate" />
