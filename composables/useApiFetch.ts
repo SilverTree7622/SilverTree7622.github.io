@@ -127,7 +127,6 @@ export const useApiFetch = async <T> (
         }
     }
 
-    // console.log('url, reqConfig: ', url, reqConfig);
 
     const opt = reactive({
         trialCnt: <number> 0,

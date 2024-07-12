@@ -36,13 +36,16 @@ watch(
     }
 );
 
-const change = (value: string) => {
+const change = (value: string, isAuto: boolean = true) => {
     const selectedIdx = opt.list.findIndex((item) => item.sp_view === value );
     if (selectedIdx < 0) return;
     opt.idx = selectedIdx;
     settingStore.setConfig({
         lang: opt.idx,
     });
+    if (!isAuto) {
+        odds.value = opt.options[opt.idx];
+    }
 };
 
 onMounted(async () => {

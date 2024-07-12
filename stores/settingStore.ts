@@ -38,10 +38,10 @@ export const useSettingStore = defineStore('settingStore', () => {
         odds?: number;
         isDefault?: boolean;
     }) => {
-        if (newConfig.lang) config.lang = newConfig.lang;
-        if (newConfig.time) config.time = newConfig.time;
-        if (newConfig.odds) config.odds = newConfig.odds;
-        if (newConfig.isDefault) config.isDefault = newConfig.isDefault;
+        if (newConfig.lang !== undefined) config.lang = newConfig.lang;
+        if (newConfig.time !== undefined) config.time = newConfig.time;
+        if (newConfig.odds !== undefined) config.odds = newConfig.odds;
+        if (newConfig.isDefault !== undefined) config.isDefault = newConfig.isDefault;
         save();
     };
 
@@ -50,6 +50,9 @@ export const useSettingStore = defineStore('settingStore', () => {
         localStorage.setItem(
             key,
             JSON.stringify({
+                lang: config.lang ?? 0,
+                time: config.time ?? 0,
+                odds: config.odds ?? 0,
                 isDefault: config.isDefault,
             })
         );
@@ -71,9 +74,9 @@ export const useSettingStore = defineStore('settingStore', () => {
                 isDefault: true,
             }));
         }
-        config.lang = data.lang;
-        config.time = data.time;
-        config.odds = data.odds;
+        config.lang = data.lang ?? 0;
+        config.time = data.time ?? 0;
+        config.odds = data.odds ?? 0;
         config.isDefault = data.isDefault;
         return {
             lang: config.lang,

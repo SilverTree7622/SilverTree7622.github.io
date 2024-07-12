@@ -89,11 +89,11 @@ const show = () => {
     config.time = time;
     config.odds = odds;
     config.isDefault = isDefault;
+    opt.isOpen = true;
     setTimeout(() => {
-        if ($lang.value) $lang.value.change(selectorStore.getLang()[ config.lang ]);
-        if ($time.value) $time.value.change(selectorStore.getTime()[ config.time ]);
-        if ($odds.value) $odds.value.change(selectorStore.getOdds()[ config.odds ]);
-        opt.isOpen = true;
+        if ($lang.value) $lang.value.change(selectorStore.getLang()[ config.lang ], false);
+        if ($time.value) $time.value.change(selectorStore.getTime()[ config.time ]['sp_name'], false);
+        if ($odds.value) $odds.value.change(selectorStore.getOdds()[ config.odds ]['sp_name'], false);
     }, 0);
 };
 
@@ -112,7 +112,6 @@ onMounted(async () => {
     await nextTick();
     settingStore.register(show, hide);
 });
-
 </script>
 
 <style scoped>

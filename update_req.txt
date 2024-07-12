@@ -81,12 +81,17 @@ TODO
 담주   (피그마 맞춰서 적용)
     // 왼쪽 메뉴
     left menu 로딩 중 표시 ui 적용
+    
+    team home page
+        - 팀 전체 page 완성
+        (팀 클릭이 가능한 경우) https://www.aiscore.com/ko/cricket/team-vizag-warriors/ndkz1hwnreie73z
+        (팀 클릭이 불가능한 경우) https://www.aiscore.com/ko/esports/match-dplus-challengers-t1-academy/4kgg6se3x5mueko
 
     상단 ui들
         // - 가장 위 상단에 회원 정보, 찜, 검색, 설정
         // - sport section tab들 ui 적용 (todo: hover animation)
         // - live, fixtures, odds, resut, league 탭들 ui 적용
-        - 설정 팝업
+        // - 설정 팝업
         - top scores 활성화시 ui 적용
             - live
             - fixtures

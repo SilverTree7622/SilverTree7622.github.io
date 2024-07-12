@@ -34,7 +34,9 @@ export const useLiveIntervalLoadingStore = defineStore('liveIntervalLoadingStore
             },
         );
         opt.realTimeData = res['data']['data']['data'];
-        console.log('cnt, res from interval loading: ', tmp.cnt, opt.realTimeData.length, res);
+        if (opt.realTimeData.length) {
+            console.log('cnt, res from interval loading: ', tmp.cnt, opt.realTimeData.length, res);
+        }
         opt.isPending = false;
         opt.timeOutInstance = setTimeout(async () => {
             if (!opt.isOnLiveTab) return;

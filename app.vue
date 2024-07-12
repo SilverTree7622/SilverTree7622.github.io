@@ -63,7 +63,6 @@ const getInitData = async () => {
 			{ method: 'GET', },
 		);
 	}
-	console.log('res: ', res);
 	if (UtilObj.chckIsEmpty(res)) {
 		return;
 	}
