@@ -1,5 +1,5 @@
 <template>
-    <div class="top_-scores_-content h-[183px]">
+    <div class="top_-scores_-content h-[181px]">
         <div class="top-scores_-top">
             <div class="frame-594">
                 <img class="premier_-league_logo-1" :src="`/img/premier-league-logo-1@2x.png`" />
@@ -8,7 +8,8 @@
                 </div>
             </div>
             <div class="top-scores_-latest_-reply caption">
-                <div class="text-1 text">{{ props.commentId }}</div>
+                <!-- <div class="text-1 text">{{ props.commentId }}</div> -->
+                <div class="text-1 text">영구23456</div>
                 <div class="rectangle-21063"></div>
                 <p class="text-2 text">
                     <!-- {{ props.commentContext }} -->
@@ -95,8 +96,22 @@ const props = defineProps<{
     time2?: string;
 }>();
 
-const clickLiveCenter = () => {
+const goStore = useGoStore();
 
+const clickLiveCenter = () => {
+    // const config: TMatchUpStoreConfig = {
+    //     match_id: props.match_id,
+    //     leagueName: props.ai_competition_name,
+    //     timestamp: props.ai_match_time,
+    //     homeLogo: props.ai_home_team_img,
+    //     homeName: props.ai_home_team_name,
+    //     homeScore: props.ai_home_scores[0],
+    //     awayLogo: props.ai_away_team_img,
+    //     awayName: props.ai_away_team_name,
+    //     awayScore: props.ai_away_scores[0],
+    //     matchStatus: props.ai_status_id,
+    // };
+    // goStore.go_livetraker(props.match_id ?? '', config);
 };
 
 onMounted(async () => {
@@ -118,6 +133,7 @@ onBeforeUnmount(() => {
     background-image: url(../img/top-scores-content-football@2x.png);
     background-position: 50% 50%;
     background-size: cover;
+    object-fit: contain;
     border-radius: 6px;
     display: flex;
     flex: 1;

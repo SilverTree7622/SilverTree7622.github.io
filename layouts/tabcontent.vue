@@ -10,7 +10,7 @@
             :sName="props.sName"
             :tab="props.tab"
             :isPending="props.isPending"
-            :list="props.sortedList"
+            :list="[ { name: 'wtf' }, { name: 'wtf2' } ]"
         />
 
         <div class="pt-[2px]"></div>

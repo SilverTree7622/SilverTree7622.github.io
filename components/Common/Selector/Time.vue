@@ -24,28 +24,29 @@ const time = ref(opt.options[0] ?? '');
 
 const update = (data: TSelectorTime[]) => {
     opt.options = data.map( item => `${ item.sp_name } ${ item.sp_timestamp_view }` );
-    time.value = opt.options[0];
-    opt.idx = 0;
+    const { time: timeIdx } = settingStore.getData();
+    time.value = opt.options[timeIdx];
+    opt.idx = timeIdx;
     opt.list = data;
 };
 
-watch(
-    () => selectorStore.getTime(),
-    async (p) => {
-        update(p);
-    }
-);
-
-const change = (value: string, isAuto: boolean = true) => {
+const change = (value: string) => {
     const selectedIdx = opt.list.findIndex((item) => item.sp_name === value.split(' ')[0]);
-    if (selectedIdx < 0) return;
+    if (selectedIdx < 0) {
+        opt.idx = 0
+        settingStore.setConfig({
+            time: 0
+        }); 
+        return;
+    }
     opt.idx = selectedIdx;
     settingStore.setConfig({
-        lang: opt.idx,
+        time: opt.idx,
     });
-    if (!isAuto) {
-        time.value = opt.options[opt.idx];
-    }
+};
+
+const updateValue = (idx: number) => {
+    time.value = opt.options[idx];
 };
 
 onMounted(async () => {
@@ -54,6 +55,6 @@ onMounted(async () => {
 });
 
 defineExpose({
-    change,
+    updateValue,
 });
 </script>

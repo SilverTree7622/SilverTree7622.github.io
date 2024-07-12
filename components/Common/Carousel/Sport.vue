@@ -4,12 +4,20 @@
             v-show="props.list.length === 0 && !props.isPending"
             :title="getTitle(props.tab)"
         />
-        <!-- football -->
+        <!-- football live, fixtures, odds, result, league -->
         <CommonCarouselDefault
             v-if="props.sName === 'football' && props.tab === 'live' && props.list.length !== 0"
             :title="getTitle(props.tab)"
+            :tab="props.tab"
             :list="props.list"
         />
+        <CommonCarouselDefault
+            v-if="props.sName === 'football' && props.tab === 'fixtures' && props.list.length !== 0"
+            :title="getTitle(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+
         <!-- <CommonCarouselLiveFootBall
             v-if="props.sName === 'football' && props.tab === 'live' && props.list.length !== 0"
             :list="props.list"

@@ -24,28 +24,29 @@ const odds = ref(opt.options[0] ?? '');
 
 const update = (data: TSelectorOdds[]) => {
     opt.options = data.map( item => `${ item.sp_view }` );
-    odds.value = opt.options[0];
-    opt.idx = 0;
+    const { odds: oddsIdx } = settingStore.getData();
+    odds.value = opt.options[oddsIdx];
+    opt.idx = oddsIdx;
     opt.list = data;
 };
 
-watch(
-    () => selectorStore.getOdds(),
-    async (p) => {
-        update(p);
-    }
-);
-
-const change = (value: string, isAuto: boolean = true) => {
+const change = (value: string) => {
     const selectedIdx = opt.list.findIndex((item) => item.sp_view === value );
-    if (selectedIdx < 0) return;
+    if (selectedIdx < 0) {
+        opt.idx = 0
+        settingStore.setConfig({
+            odds: 0
+        }); 
+        return;
+    }
     opt.idx = selectedIdx;
     settingStore.setConfig({
-        lang: opt.idx,
+        odds: opt.idx,
     });
-    if (!isAuto) {
-        odds.value = opt.options[opt.idx];
-    }
+};
+
+const updateValue = (idx: number) => {
+    odds.value = opt.options[idx];
 };
 
 onMounted(async () => {
@@ -54,6 +55,6 @@ onMounted(async () => {
 });
 
 defineExpose({
-    change,
+    updateValue,
 });
 </script>

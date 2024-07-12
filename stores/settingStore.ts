@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import type { TSelectorLang, TSelectorOdds, TSelectorTime } from "~/types/Selector";
+import UtilObj from "~/utils/obj";
 
 
 export const useSettingStore = defineStore('settingStore', () => {
@@ -50,12 +51,13 @@ export const useSettingStore = defineStore('settingStore', () => {
         localStorage.setItem(
             key,
             JSON.stringify({
-                lang: config.lang ?? 0,
-                time: config.time ?? 0,
-                odds: config.odds ?? 0,
+                lang: config.lang,
+                time: config.time,
+                odds: config.odds,
                 isDefault: config.isDefault,
             })
         );
+        const tmpData = localStorage.getItem(key);
     };
 
     const getData = (): {
@@ -66,17 +68,18 @@ export const useSettingStore = defineStore('settingStore', () => {
     } => {
         const key = `${ INIT_DATA }_setting`;
         let data = JSON.parse(localStorage.getItem(key) ?? '{}');
-        if (!data) {
+        if (UtilObj.chckIsEmpty(data)) {
             localStorage.setItem(key, JSON.stringify({
                 lang: 0,
                 time: 0,
                 odds: 0,
                 isDefault: true,
             }));
+            data = JSON.parse(localStorage.getItem(key) ?? '{}');
         }
-        config.lang = data.lang ?? 0;
-        config.time = data.time ?? 0;
-        config.odds = data.odds ?? 0;
+        config.lang = data.lang;
+        config.time = data.time;
+        config.odds = data.odds;
         config.isDefault = data.isDefault;
         return {
             lang: config.lang,

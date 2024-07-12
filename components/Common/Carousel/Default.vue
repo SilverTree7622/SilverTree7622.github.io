@@ -8,27 +8,36 @@
                 <div id="carousel-example" class="relative w-full z-10">
                     <!-- Carousel wrapper -->
                     <div class="relative overflow-hidden rounded-lg h-[183px]">
-                        <!-- Item 1 -->
-                        <div id="carousel-item-1" class="hidden ease-in-out" :class="`duration-${opt.animationDuration}`">
-                            <CommonCarouselLiveItem />
+                        <div
+                            v-for="(item, idx) in props.list"
+                            :id="`carousel-item-${ idx + 1 }`"
+                            class="hidden ease-in-out"
+                            :class="`duration-${opt.animationDuration}`"
+                        >
+                            <CommonCarouselLiveItem
+                                v-if="props.tab === 'live'"
+                                :item="item"
+                            />
+                            <CommonCarouselFixturesItem
+                                v-if="props.tab === 'fixtures'"
+                                :item="item"
+                            />
                         </div>
-                        <!-- <div id="carousel-item-2" class="hidden ease-in-out" :class="`duration-${opt.animationDuration}`">
-                            <CommonCarouselItem />
-                        </div> -->
                     </div>
                     <!-- Slider indicators -->
-                    <div class="absolute bottom-5 left-1/2 z-300 flex -translate-x-1/2 space-x-3 rtl:space-x-reverse">
-                        <button id="carousel-indicator-1" type="button" class="h-3 w-3 rounded-full" aria-current="true"
-                            aria-label="Slide 1" data-carousel-slide-to="0"></button>
-                        <button id="carousel-indicator-2" type="button" class="h-3 w-3 rounded-full"
-                            aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-                        <button id="carousel-indicator-3" type="button" class="h-3 w-3 rounded-full"
-                            aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
-                        <button id="carousel-indicator-4" type="button" class="h-3 w-3 rounded-full"
-                            aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
+                    <div class="absolute bottom-3 left-1/2 z-30 flex -translate-x-1/2 space-x-3 rtl:space-x-reverse">
+                        <button 
+                            v-for="(item, idx) in props.list"
+                            :id="`carousel-indicator-${ idx + 1 }`"
+                            type="button"
+                            class="h-[6px] w-[6px] rounded-full bg-transparent"
+                            :aria-current="idx === 0"
+                            :aria-label="`Slide ${ idx + 1 }`"
+                            :data-carousel-slide-to="`${ idx }`"
+                        ></button>
                     </div>
                     <!-- Slider controls -->
-                    <button id="data-carousel-prev" type="button"
+                    <button v-if="props.list.length >= 2" id="data-carousel-prev" type="button"
                         class="group absolute left-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none">
                         <span
                             class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50 group-focus:outline-none group-focus:ring-4 group-focus:ring-white dark:bg-gray-800/30 dark:group-hover:bg-gray-800/60 dark:group-focus:ring-gray-800/70">
@@ -40,7 +49,7 @@
                             <span class="hidden">Previous</span>
                         </span>
                     </button>
-                    <button id="data-carousel-next" type="button"
+                    <button v-if="props.list.length >= 2" id="data-carousel-next" type="button"
                         class="group absolute right-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none">
                         <span
                             class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50 group-focus:outline-none group-focus:ring-4 group-focus:ring-white dark:bg-gray-800/30 dark:group-hover:bg-gray-800/60 dark:group-focus:ring-gray-800/70">
@@ -61,17 +70,14 @@
 <script setup lang="ts">
 import { Carousel } from 'flowbite';
 import { useFlowbite } from '~/composables/useFlowbite';
-import type { CarouselItem, CarouselOptions, CarouselInterface, } from 'flowbite';
+import type { CarouselItem, CarouselOptions, CarouselInterface, IndicatorItem, } from 'flowbite';
+import type { TCommonSportTab } from '~/types/Common/tab';
 
 const props = defineProps<{
     title: string;
+    tab: TCommonSportTab;
     list: any[];
-    background?: string;
 }>();
-
-const {
-    CAROUSEL_INTERVAL_DURAITON,
-} = useRuntimeConfig().public.CONSTANTS;
 
 const opt = reactive({
     touchstartX: <number>0,
@@ -99,7 +105,7 @@ const mouseOver = () => {
 
 const mouseLeave = () => {
     if (!carousel.value) return;
-    carousel.value.cycle();
+    // carousel.value.cycle();
 };
 
 const touchStart = (e) => {
@@ -148,32 +154,31 @@ onMounted(async () => {
     await nextTick();
     useFlowbite(() => {
         carouselEle.value = document.getElementById('carousel-example');
-        const items: CarouselItem[] = [
-            {
-                position: 0,
-                el: document.getElementById('carousel-item-1') as HTMLElement,
-            },
-            // {
-            //     position: 1,
-            //     el: document.getElementById('carousel-item-2') as HTMLElement,
-            // },
-            // {
-            //     position: 2,
-            //     el: document.getElementById('carousel-item-3') as HTMLElement,
-            // },
-            // {
-            //     position: 3,
-            //     el: document.getElementById('carousel-item-4') as HTMLElement,
-            // },
-        ];
+        const items: CarouselItem[] = [];
+        const indicatorList: IndicatorItem[] = [];
+        props.list.map((item, idx) => {
+            items.push(
+                {
+                    position: idx,
+                    el: document.getElementById(`carousel-item-${ idx + 1 }`) as HTMLElement,
+                }
+            );
+            indicatorList.push(
+                {
+                    position: idx,
+                    el: document.getElementById(`carousel-indicator-${ idx + 1 }`) as HTMLElement,
+                }
+            );
+        });
+
         // set modal options
         const carouselOptions: CarouselOptions = {
             defaultPosition: 1,
-            interval: CAROUSEL_INTERVAL_DURAITON,
+            // interval: -1,
             indicators: {
-                activeClasses: 'bg-white dark:bg-gray-800',
-                inactiveClasses: 'bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800',
-                items,
+                activeClasses: 'bg-white',
+                inactiveClasses: 'bg-white/50 hover:bg-white',
+                items: indicatorList,
             },
             onNext: () => { actAnim(); },
             onPrev: () => { actAnim(); },
@@ -199,7 +204,7 @@ onMounted(async () => {
         carousel.value = new Carousel(
             carouselEle.value, items, carouselOptions, instanceOptions
         );
-        carousel.value.cycle();
+        // carousel.value.cycle();
 
         // set event listeners for prev and next buttons
         const $prevButton = document.getElementById('data-carousel-prev');

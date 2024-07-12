@@ -63,7 +63,6 @@
 </template>
 
 <script setup lang="ts">
-const selectorStore = useSelectorStore();
 const settingStore = useSettingStore();
 
 const $lang = ref();
@@ -81,7 +80,7 @@ const config = reactive({
     isDefault: <boolean> true,
 });
 
-const show = () => {
+const update = () => {
     const {
         lang, time, odds, isDefault,
     } = settingStore.getData();
@@ -89,11 +88,15 @@ const show = () => {
     config.time = time;
     config.odds = odds;
     config.isDefault = isDefault;
+};
+
+const show = () => {
+    update();
     opt.isOpen = true;
     setTimeout(() => {
-        if ($lang.value) $lang.value.change(selectorStore.getLang()[ config.lang ], false);
-        if ($time.value) $time.value.change(selectorStore.getTime()[ config.time ]['sp_name'], false);
-        if ($odds.value) $odds.value.change(selectorStore.getOdds()[ config.odds ]['sp_name'], false);
+        if ($lang.value) $lang.value.updateValue(config.lang);
+        if ($time.value) $time.value.updateValue(config.time);
+        if ($odds.value) $odds.value.updateValue(config.odds);
     }, 0);
 };
 
@@ -111,6 +114,7 @@ const toggleScoreboardFormat = () => {
 onMounted(async () => {
     await nextTick();
     settingStore.register(show, hide);
+    update();
 });
 </script>
 

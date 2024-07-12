@@ -92,18 +92,20 @@ TODO
         // - sport section tab들 ui 적용 (todo: hover animation)
         // - live, fixtures, odds, resut, league 탭들 ui 적용
         // - 설정 팝업
-        - top scores 활성화시 ui 적용
-            - live
-            - fixtures
-            - odds
-            - result
+        - top scores 활성화시 ui 적용 (sport별)
+            - live      (f, b, b, v, t, i)
+            - fixtures  (f, b, b, v, t, i)
+            - odds      (f, b, b, v, t, i)
+            - result    (f, b, b, v, t, i)
         // - sport name (숫자), by time, date ui 적용
 
     list에 들어있는 item ui들
-        - live
-        - fixtures
-        - odds
-        - result
+        - live      (f, b, b, v, t, i)
+        - fixtures  (f, b, b, v, t, i)
+        - odds      (f, b, b, v, t, i)
+        - result    (f, b, b, v, t, i)
+
+    default, classic style 각자 적용 후 설정 기능까지 연결
 
     테니스 sport
         - ui상 복식은 그냥 팀으로 하나, 매치 홈은 의논 후 결정

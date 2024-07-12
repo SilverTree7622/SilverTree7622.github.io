@@ -20,32 +20,33 @@ const opt = reactive({
     list: <TSelectorLang[]> selectorStore.getLang(),
 });
 
-const lang = ref(opt.options[0] ?? '');
+const lang = ref(opt.options[ opt.idx ] ?? '');
 
 const update = (data: TSelectorLang[]) => {
     opt.options = data;
-    lang.value = opt.options[0];
-    opt.idx = 0;
+    const { lang: langIdx } = settingStore.getData();
+    lang.value = opt.options[langIdx];
+    opt.idx = langIdx;
     opt.list = data;
 };
 
-watch(
-    () => selectorStore.getLang(),
-    async (p) => {
-        update(p);
-    }
-);
-
-const change = (value: string, isAuto: boolean = true) => {
+const change = (value: string) => {
     const selectedIdx = opt.list.findIndex((item) => item === value);
-    if (selectedIdx < 0) return;
+    if (selectedIdx < 0) {
+        opt.idx = 0
+        settingStore.setConfig({
+            lang: 0
+        }); 
+        return;
+    }
     opt.idx = selectedIdx;
     settingStore.setConfig({
         lang: opt.idx,
     });
-    if (!isAuto) {
-        lang.value = opt.options[opt.idx];
-    }
+};
+
+const updateValue = (idx: number) => {
+    lang.value = opt.options[idx];
 };
 
 onMounted(async () => {
@@ -54,7 +55,7 @@ onMounted(async () => {
 });
 
 defineExpose({
-    change,
+    updateValue,
 });
 </script>
 

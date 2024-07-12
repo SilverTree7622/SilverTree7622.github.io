@@ -46,7 +46,7 @@ export default defineNuxtConfig({
 				ONE_DAY_MILLISECOND: 24 * 60 * 60 * 1000,
 				MAX_PAGINATION_CONTENT: 10,
 
-				CAROUSEL_INTERVAL_DURAITON: 3 * 1000,
+				// CAROUSEL_INTERVAL_DURAITON: 3 * 1000,
 			},
 		},
 	},

@@ -1,0 +1,391 @@
+/* screen - fixturesu95carouselu95contentu95latest */
+
+.fixturesu95carouselu95contentu95latest {
+  align-items: flex-start;
+  background-color: var(--wt);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+}
+
+.fixturesu95carouselu95contentu95latest .top_-scores_-content {
+  align-items: center;
+  align-self: stretch;
+  background-color: var(--wt);
+  border-radius: 6px;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 8px;
+  overflow: hidden;
+  padding: 12px 0px;
+  position: relative;
+  width: 100%;
+}
+
+.fixturesu95carouselu95contentu95latest .top-scores_-top {
+  align-self: stretch;
+  flex: 0 0 auto;
+  gap: 8px;
+  padding: 0px 10px;
+  width: 100%;
+}
+
+.fixturesu95carouselu95contentu95latest .frame-594 {
+  align-items: center;
+  align-self: stretch;
+  border-radius: 3px;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 2px;
+  justify-content: center;
+  padding: 3px 4px;
+  position: relative;
+}
+
+.fixturesu95carouselu95contentu95latest .premier_-league_logo-1 {
+  background-image: url(../img/premier-league-logo-1@2x.png);
+  background-size: 100% 100%;
+  height: 15px;
+  position: relative;
+  width: 15.75px;
+}
+
+.fixturesu95carouselu95contentu95latest .top-scores_-league {
+  justify-content: center;
+  width: 21px;
+}
+
+.fixturesu95carouselu95contentu95latest .epl {
+  color: var(--bk);
+  font-weight: 600;
+  line-height: normal;
+  margin-top: -2.00px;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.fixturesu95carouselu95contentu95latest .top-scores_-latest_-reply {
+  align-items: center;
+  align-self: stretch;
+  border-radius: 3px;
+  display: flex;
+  flex: 1;
+  flex-grow: 1;
+  gap: 5px;
+  padding: 3px 4px;
+  position: relative;
+}
+
+.fixturesu95carouselu95contentu95latest .text-1 {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  font-weight: 500;
+  height: 12px;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  width: 41px;
+}
+
+.fixturesu95carouselu95contentu95latest .rectangle-21063 {
+  background-color: #e0e4ea;
+  height: 15px;
+  position: relative;
+  width: 1px;
+}
+
+.fixturesu95carouselu95contentu95latest .text-2 {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  flex: 1;
+  font-weight: 500;
+  height: 12px;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+}
+
+.fixturesu95carouselu95contentu95latest .btn_reply {
+  border-radius: 3px;
+  height: 14px;
+  overflow: hidden;
+  position: relative;
+  width: 47px;
+}
+
+.fixturesu95carouselu95contentu95latest .frame-571 {
+  align-items: flex-start;
+  display: flex;
+  gap: 5px;
+  height: 14px;
+  min-width: 47px;
+}
+
+.fixturesu95carouselu95contentu95latest .icon_-reply {
+  height: 13px;
+  width: 13px;
+}
+
+.fixturesu95carouselu95contentu95latest .x00-m {
+  color: #b7bbc0;
+  font-weight: 500;
+  line-height: normal;
+  margin-top: -1px;
+  min-height: 12px;
+  min-width: 26px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.fixturesu95carouselu95contentu95latest .frame-576 {
+  align-items: center;
+  align-self: stretch;
+  display: flex;
+  flex: 0 0 auto;
+  gap: 2px;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+}
+
+.fixturesu95carouselu95contentu95latest .top-matchup_-favourite_-right-team {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 2px;
+  margin-left: -3.00px;
+  padding: 0px 0px 0px 10px;
+  position: relative;
+}
+
+.fixturesu95carouselu95contentu95latest .icon_-favourite_-default {
+  height: 22px;
+  position: relative;
+  width: 22px;
+}
+
+.fixturesu95carouselu95contentu95latest .icon_-favourite_-default-1 {
+  top: 0;
+}
+
+.fixturesu95carouselu95contentu95latest .top-scores_-right-team {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+}
+
+.fixturesu95carouselu95contentu95latest .chelsea {
+  background-image: url(../img/chelsea@2x.png);
+  background-size: 100% 100%;
+  height: 64.66px;
+  position: relative;
+  width: 98px;
+}
+
+.fixturesu95carouselu95contentu95latest .name {
+  color: var(--bk);
+  font-weight: 600;
+  height: 28px;
+  line-height: normal;
+  position: relative;
+  text-align: center;
+  width: 98px;
+}
+
+.fixturesu95carouselu95contentu95latest .top-matchup_-fixture {
+  flex-direction: column;
+  gap: 4px;
+  height: 108px;
+  padding: 11px 0px 9px;
+  width: 86px;
+}
+
+.fixturesu95carouselu95contentu95latest .top-matchup_-time {
+  align-self: stretch;
+  height: 14px;
+  width: 100%;
+}
+
+.fixturesu95carouselu95contentu95latest .frame-573 {
+  align-items: center;
+  background: conic-gradient(from 180deg at 50% 50%, rgb(204, 92, 92) 0deg, rgb(221, 224, 227) 360deg);
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  justify-content: center;
+  padding: 0px 10px 0px 2px;
+  position: relative;
+}
+
+.fixturesu95carouselu95contentu95latest .today {
+  color: var(--wt);
+  font-weight: 600;
+  line-height: normal;
+  margin-top: -1.00px;
+  position: relative;
+  text-align: right;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.fixturesu95carouselu95contentu95latest .frame-574 {
+  align-items: center;
+  background-color: #dde0e3;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  justify-content: center;
+  padding: 0px 2px 0px 0px;
+  position: relative;
+}
+
+.fixturesu95carouselu95contentu95latest .text-3 {
+  font-weight: 600;
+  margin-top: -1.00px;
+  width: fit-content;
+}
+
+.fixturesu95carouselu95contentu95latest .vs {
+  align-self: stretch;
+  color: var(--bk);
+  font-weight: 600;
+  line-height: normal;
+  position: relative;
+  text-align: center;
+}
+
+.fixturesu95carouselu95contentu95latest .top-matchup_-favourite_-right-team-1 {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 2px;
+  margin-right: -3.00px;
+  padding: 0px 0px 0px 10px;
+  position: relative;
+  transform: rotate(180deg);
+}
+
+.fixturesu95carouselu95contentu95latest .icon_-favourite_-default-2 {
+  top: 2px;
+  transform: rotate(-180deg);
+}
+
+.fixturesu95carouselu95contentu95latest .top-scores_-right-team-1 {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+  transform: rotate(180deg);
+}
+
+.fixturesu95carouselu95contentu95latest .manchester-city {
+  height: 64.66px;
+  position: relative;
+  width: 98px;
+}
+
+.fixturesu95carouselu95contentu95latest .manchester-city-1 {
+  height: 65px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transform: rotate(-180deg);
+  width: 98px;
+}
+
+.fixturesu95carouselu95contentu95latest .manchester-city-2 {
+  color: var(--bk);
+  font-weight: 600;
+  height: 28px;
+  line-height: normal;
+  margin-top: -1.00px;
+  position: relative;
+  text-align: center;
+  width: 98px;
+}
+
+.fixturesu95carouselu95contentu95latest .btn_-veiw-matchup {
+  background: conic-gradient(from 180deg at 50% 50%, rgb(129, 154, 236) 0deg, rgb(72, 97, 179) 180deg);
+  background-image: url(../img/livecenter-mask@2x.png);
+  background-size: 100% 100%;
+  border: 1px solid;
+  border-color: #a2b7f9;
+  border-radius: 3px;
+  height: 22px;
+  overflow: hidden;
+  position: relative;
+  width: 186px;
+}
+
+.fixturesu95carouselu95contentu95latest .view-matchup {
+  color: var(--wt);
+  font-weight: 600;
+  left: 42px;
+  line-height: normal;
+  position: absolute;
+  text-align: center;
+  top: 2px;
+}
+
+.fixturesu95carouselu95contentu95latest .btn_-goround_-set {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 4px;
+  position: relative;
+}
+
+.fixturesu95carouselu95contentu95latest .btn_-goround-1 {
+  background-color: var(--tory-blue);
+  border-radius: 3px;
+  height: 6px;
+  position: relative;
+  width: 6px;
+}
+
+.fixturesu95carouselu95contentu95latest .btn_-goround {
+  border: 1px solid;
+  border-color: var(--tory-blue);
+  border-radius: 3px;
+  height: 6px;
+  position: relative;
+  width: 6px;
+}
+
+.fixturesu95carouselu95contentu95latest .icon_-favourite_-default-3 {
+  height: 20px;
+  left: 1px;
+  position: absolute;
+  width: 21px;
+}
+
+.fixturesu95carouselu95contentu95latest .text {
+  color: var(--bk);
+  line-height: normal;
+  position: relative;
+  white-space: nowrap;
+}
+
+.fixturesu95carouselu95contentu95latest .top-matchup_ {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.fixturesu95carouselu95contentu95latest .top-scores_ {
+  align-items: center;
+  display: flex;
+  position: relative;
+}
