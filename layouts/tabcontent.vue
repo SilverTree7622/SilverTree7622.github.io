@@ -10,7 +10,7 @@
             :sName="props.sName"
             :tab="props.tab"
             :isPending="props.isPending"
-            :list="[ { name: 'wtf' }, { name: 'wtf2' } ]"
+            :list="[ { name: 'wtf' }, { name: 'wtf2' }, { name: 'wtf2' } ]"
         />
 
         <div class="pt-[2px]"></div>

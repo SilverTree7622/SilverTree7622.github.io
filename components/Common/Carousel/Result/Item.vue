@@ -1,32 +1,7 @@
 <template>
     <div class="top_-scores_-content h-[181px]">
-        <div class="top-scores_-top top-scores_">
-            <div class="frame-594">
-                <div class="premier_-league_logo-1"></div>
-                <div class="top-scores_-league top-scores_">
-                    <div class="epl body2">
-                        {{ props.item.name }}
-                    </div>
-                </div>
-            </div>
-            <div class="top-scores_-latest_-reply caption">
-                <div class="text-1 text">
-                    영구23456
-                </div>
-                <div class="rectangle-21063"></div>
-                <p class="text-2 text">
-                    심판 편파 오지네 ㅋㅋㅋㅋㅋㅋ드럽다정말 돈을얼마나 바른거야 ㅋㅋㅋㅋㅋㅋㅋㅋㅋ
-                </p>
-            </div>
-            <div class="btn_reply">
-                <div class="frame-571">
-                    <img class="icon_-reply" draggable="false" src="/img/Icon_Reply_Grey.svg" alt="Icon_Reply" />
-                    <div class="x00-m caption">0.0 M</div>
-                </div>
-            </div>
-        </div>
         <div class="frame-576">
-            <div class="top-matchup_-favourite_-right-team">
+            <div class="top-matchup_-favourite_-right-team mr-5">
                 <CommonFavoriteStar class="pr-7" />
                 <div class="top-scores_-right-team">
                     <div class="manchester-city">
@@ -37,18 +12,21 @@
                     </div>
                 </div>
             </div>
-            <div class="top-matchup_-fixture top-matchup_">
-                <div class="top-matchup_-time top-matchup_">
-                    <div class="frame-573">
-                        <div class="today body2">Today</div>
-                    </div>
-                    <div class="frame-574">
-                        <div class="text-3 text body2">18:00</div>
-                    </div>
+            <div class="div top-matchup_">
+                <div class="frame-matchup-league">
+                    {{ props.item.name }}
                 </div>
-                <div class="vs valign-text-middle midbold">VS</div>
+                <div class="div-3">
+                    <div class="div-4">FINISHED</div>
+                    <div class="div-5">FT</div>
+                </div>
+                <div class="div-6">
+                    <div class="div-7">00</div>
+                    <div class="div-8">:</div>
+                    <div class="div-9">00</div>
+                </div>
             </div>
-            <div class="top-matchup_-favourite_-right-team-1">
+            <div class="top-matchup_-favourite_-right-team-1 ml-5">
                 <CommonFavoriteStar class="pr-7" />
                 <div class="top-scores_-right-team-1">
                     <div class="manchester-city">
@@ -60,7 +38,7 @@
                 </div>
             </div>
         </div>
-        <img class="btn_-veiw-matchup cursor-pointer" src="/img/Btn_VeiwMatchup.svg" @click="clickViewMatchUp" />
+        <img class="btn_-veiw-matchup cursor-pointer" src="~/public/img/Btn_Statistics.svg" @click="clickStatistics" />
     </div>
 </template>
 
@@ -84,7 +62,7 @@ const props = defineProps<{
 
 const goStore = useGoStore();
 
-const clickViewMatchUp = () => {
+const clickStatistics = () => {
     // goStore.go_matchup();
 };
 
@@ -268,7 +246,7 @@ onBeforeUnmount(() => {
     display: inline-flex;
     flex: 0 0 auto;
     flex-direction: column;
-    gap: 4px;
+    gap: 30px;
     position: relative;
 }
 
@@ -293,9 +271,32 @@ onBeforeUnmount(() => {
 .top-matchup_-fixture {
     flex-direction: column;
     gap: 4px;
-    height: 108px;
-    padding: 11px 0px 9px;
+    height: 118px;
+    /* padding: 11px 0px 9px; */
     width: 86px;
+}
+
+.top-matchup_ {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.frame-matchup-league {
+    width: auto;
+    max-width: 80px;
+    justify-content: center;
+    border-color: #6C6E71;
+    border-style: solid;
+    border-bottom-width: 4px;
+    color: #000;
+    text-align: center;
+    text-transform: uppercase;
+    font: 600 12px Pretendard, sans-serif;
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .top-matchup_-time {
@@ -304,53 +305,12 @@ onBeforeUnmount(() => {
     width: 100%;
 }
 
-.frame-573 {
-    align-items: center;
-    background: conic-gradient(from 180deg at 50% 50%, rgb(204, 92, 92) 0deg, rgb(221, 224, 227) 360deg);
-    display: inline-flex;
-    flex: 0 0 auto;
-    gap: 10px;
-    justify-content: center;
-    padding: 0px 10px 0px 2px;
-    position: relative;
-}
-
-.today {
-    color: var(--wt);
-    font-weight: 600;
-    line-height: normal;
-    margin-top: -1.00px;
-    position: relative;
-    text-align: right;
-    white-space: nowrap;
-    width: fit-content;
-}
-
-.frame-574 {
-    align-items: center;
-    background-color: #dde0e3;
-    display: inline-flex;
-    flex: 0 0 auto;
-    gap: 10px;
-    justify-content: center;
-    padding: 0px 2px 0px 0px;
-    position: relative;
-}
-
 .text-3 {
     font-weight: 600;
     margin-top: -1.00px;
     width: fit-content;
 }
 
-.vs {
-    align-self: stretch;
-    color: var(--bk);
-    font-weight: 600;
-    line-height: normal;
-    position: relative;
-    text-align: center;
-}
 
 .top-matchup_-favourite_-right-team-1 {
     align-items: center;
@@ -373,7 +333,7 @@ onBeforeUnmount(() => {
     display: inline-flex;
     flex: 0 0 auto;
     flex-direction: column;
-    gap: 4px;
+    gap: 30px;
     position: relative;
     transform: rotate(180deg);
 }
@@ -385,7 +345,7 @@ onBeforeUnmount(() => {
 }
 
 .manchester-city-1 {
-    height: 65px;
+    height: 86px;
     left: 0;
     position: relative;
     top: 0;
@@ -407,7 +367,6 @@ onBeforeUnmount(() => {
     height: 20px;
     position: relative;
     width: 172px;
-    bottom: 10px;
 }
 
 .view-matchup {
@@ -470,5 +429,129 @@ onBeforeUnmount(() => {
     align-items: center;
     display: flex;
     position: relative;
+}
+
+
+.top-scores_-scoreboard {
+    background-size: 100% 100%;
+    height: 30px;
+    position: relative;
+    width: 75px;
+}
+
+.flex-row {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    position: relative;
+    /* gap: 7px;
+    height: 19px;
+    left: 8px;
+    min-width: 60px;
+    top: 4px; */
+}
+
+.number {
+    color: var(--bk);
+}
+
+.text-4 {
+    color: var(--bk);
+    font-weight: 600;
+    margin-top: 1.0px;
+    min-height: 14px;
+    min-width: 4px;
+    text-align: center;
+}
+
+.number-1 {
+    color: #6a6a6a;
+}
+
+.number-2 {
+    font-weight: 600;
+    line-height: normal;
+    min-height: 19px;
+    min-width: 21px;
+    text-align: center;
+    white-space: nowrap;
+    font-size: xx-large;
+}
+
+
+.div {
+    display: flex;
+    max-width: 84px;
+    flex-direction: column;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    padding: 11px 0 9px;
+}
+
+.div-2 {
+    font-family: Pretendard, sans-serif;
+    justify-content: center;
+    border-color: rgba(108, 110, 113, 1);
+    border-style: solid;
+    border-bottom-width: 2px;
+    align-self: center;
+    color: #000;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 0 20px;
+}
+
+.div-3 {
+    justify-content: center;
+    display: flex;
+    margin-top: 4px;
+    gap: 0px;
+    padding: 0 1px;
+}
+
+.div-4 {
+    font-family: Pretendard, sans-serif;
+    justify-content: center;
+    background: conic-gradient(from 187deg at 103.08% -71.43%,
+            #6b6d6f 0deg,
+            #dde0e3 360deg);
+    color: #fff;
+    text-align: right;
+    text-transform: capitalize;
+    padding: 0 10px 0 2px;
+}
+
+.div-5 {
+    font-family: Pretendard, sans-serif;
+    justify-content: center;
+    background-color: #dde0e3;
+    color: #000;
+    text-transform: uppercase;
+    padding: 0 2px 0 20px;
+}
+
+.div-6 {
+    justify-content: center;
+    display: flex;
+    margin-top: 4px;
+    gap: 10px;
+    font-size: 24px;
+    color: #000;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.div-7 {
+    color: #6a6a6a;
+    font-family: Pretendard, sans-serif;
+}
+
+.div-8 {
+    font-family: Pretendard, sans-serif;
+}
+
+.div-9 {
+    font-family: Pretendard, sans-serif;
 }
 </style>

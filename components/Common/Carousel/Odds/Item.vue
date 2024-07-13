@@ -1,30 +1,5 @@
 <template>
-    <div class="top_-scores_-content h-[181px]">
-        <div class="top-scores_-top top-scores_">
-            <div class="frame-594">
-                <div class="premier_-league_logo-1"></div>
-                <div class="top-scores_-league top-scores_">
-                    <div class="epl body2">
-                        {{ props.item.name }}
-                    </div>
-                </div>
-            </div>
-            <div class="top-scores_-latest_-reply caption">
-                <div class="text-1 text">
-                    영구23456
-                </div>
-                <div class="rectangle-21063"></div>
-                <p class="text-2 text">
-                    심판 편파 오지네 ㅋㅋㅋㅋㅋㅋ드럽다정말 돈을얼마나 바른거야 ㅋㅋㅋㅋㅋㅋㅋㅋㅋ
-                </p>
-            </div>
-            <div class="btn_reply">
-                <div class="frame-571">
-                    <img class="icon_-reply" draggable="false" src="/img/Icon_Reply_Grey.svg" alt="Icon_Reply" />
-                    <div class="x00-m caption">0.0 M</div>
-                </div>
-            </div>
-        </div>
+    <div class="top_-scores_-content h-[202px]">
         <div class="frame-576">
             <div class="top-matchup_-favourite_-right-team">
                 <CommonFavoriteStar class="pr-7" />
@@ -38,6 +13,9 @@
                 </div>
             </div>
             <div class="top-matchup_-fixture top-matchup_">
+                <div class="frame-matchup-league">
+                    {{ props.item.name }}
+                </div>
                 <div class="top-matchup_-time top-matchup_">
                     <div class="frame-573">
                         <div class="today body2">Today</div>
@@ -59,6 +37,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="div">
+            <div class="div-2">1.55</div>
+            <div class="div-3">1.55</div>
+            <div class="div-4">1.55</div>
         </div>
         <img class="btn_-veiw-matchup cursor-pointer" src="/img/Btn_VeiwMatchup.svg" @click="clickViewMatchUp" />
     </div>
@@ -304,6 +287,22 @@ onBeforeUnmount(() => {
     width: 100%;
 }
 
+.frame-matchup-league {
+    width: auto;
+    max-width: 80px;
+    justify-content: center;
+    border-color: rgba(204, 94, 94, 1);
+    border-style: solid;
+    border-bottom-width: 4px;
+    color: #000;
+    text-align: center;
+    text-transform: uppercase;
+    font: 600 12px Pretendard, sans-serif;
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
 .frame-573 {
     align-items: center;
     background: conic-gradient(from 180deg at 50% 50%, rgb(204, 92, 92) 0deg, rgb(221, 224, 227) 360deg);
@@ -407,7 +406,7 @@ onBeforeUnmount(() => {
     height: 20px;
     position: relative;
     width: 172px;
-    bottom: 10px;
+    /* bottom: 10px; */
 }
 
 .view-matchup {
@@ -470,5 +469,41 @@ onBeforeUnmount(() => {
     align-items: center;
     display: flex;
     position: relative;
+}
+
+.div {
+    display: flex;
+    gap: 8px;
+    font-size: 12px;
+    color: #000;
+    font-weight: 600;
+    white-space: nowrap;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.div-2 {
+    font-family: Pretendard, sans-serif;
+    justify-content: center;
+    border-radius: 3px;
+    background-color: #e7e7e7;
+    padding: 2px 40px;
+}
+
+.div-3 {
+    font-family: Pretendard, sans-serif;
+    justify-content: center;
+    border-radius: 3px;
+    background-color: #e7e7e7;
+    padding: 2px 40px;
+}
+
+.div-4 {
+    font-family: Pretendard, sans-serif;
+    justify-content: center;
+    border-radius: 3px;
+    background-color: #e7e7e7;
+    padding: 2px 40px;
 }
 </style>

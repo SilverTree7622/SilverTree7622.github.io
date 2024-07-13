@@ -4,29 +4,52 @@
             v-show="props.list.length === 0 && !props.isPending"
             :title="getTitle(props.tab)"
         />
+        <CommonCarouselSkeleton
+            v-show="props.isPending"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+        />
         <!-- football live, fixtures, odds, result, league -->
         <CommonCarouselDefault
-            v-if="props.sName === 'football' && props.tab === 'live' && props.list.length !== 0"
+            v-if="getShowCondition('football', 'live')"
             :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
             :tab="props.tab"
             :list="props.list"
         />
         <CommonCarouselDefault
-            v-if="props.sName === 'football' && props.tab === 'fixtures' && props.list.length !== 0"
+            v-if="getShowCondition('football', 'fixtures')"
             :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
             :tab="props.tab"
             :list="props.list"
         />
-
-        <!-- <CommonCarouselLiveFootBall
-            v-if="props.sName === 'football' && props.tab === 'live' && props.list.length !== 0"
+        <CommonCarouselDefault
+            v-if="getShowCondition('football', 'odds')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
             :list="props.list"
-        /> -->
-
+        />
+        <CommonCarouselDefault
+            v-if="getShowCondition('football', 'result')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        <CommonCarouselDefault
+            v-if="getShowCondition('football', 'league')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
     </div>
 </template>
 
 <script setup lang="ts">
+import { getTitle } from '~/types/Common/Carousel';
 import type { TCommonSportSection } from '~/types/Common/sport';
 import type { TCommonTabTypes } from '~/types/Common/tab';
 
@@ -37,13 +60,12 @@ const props = defineProps<{
     list: any[];
 }>();
 
-const getTitle = (tab: TCommonTabTypes): string => {
-    if (tab === 'live') return 'Top Scores';
-    if (tab === 'fixtures') return 'Top Matchup';
-    if (tab === 'odds') return 'Top Matchup';
-    if (tab === 'result') return 'Result';
-    if (tab === 'league') return 'Best League';
-    return '';
+const getShowCondition = (sName: TCommonSportSection, tab: TCommonTabTypes) => {
+    return !props.isPending && props.sName === sName && props.tab === tab && props.list.length !== 0;
+};
+
+const getHeight = (tab: TCommonTabTypes): number => {
+    return tab === 'odds' ? 202 : 181;
 };
 
 onMounted(async () => {

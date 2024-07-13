@@ -5,14 +5,21 @@
                 <div class="frame-572">
                     <div class="top-scores biggerbody">{{ props.title }}</div>
                 </div>
-                <div id="carousel-example" class="relative w-full z-10">
+                <div
+                    v-if="props.tab !== 'league'"
+                    id="carousel-example"
+                    class="relative w-full z-10"
+                >
                     <!-- Carousel wrapper -->
-                    <div class="relative overflow-hidden rounded-lg h-[183px]">
+                    <div 
+                        class="relative overflow-hidden rounded-lg"
+                        :class="`h-[${ props.height ?? 181 }px]`"
+                    >
                         <div
                             v-for="(item, idx) in props.list"
                             :id="`carousel-item-${ idx + 1 }`"
                             class="hidden ease-in-out"
-                            :class="`duration-${opt.animationDuration}`"
+                            :class="`duration-${ opt.animationDuration }`"
                         >
                             <CommonCarouselLiveItem
                                 v-if="props.tab === 'live'"
@@ -22,25 +29,38 @@
                                 v-if="props.tab === 'fixtures'"
                                 :item="item"
                             />
+                            <CommonCarouselOddsItem
+                                v-if="props.tab === 'odds'"
+                                :item="item"
+                            />
+                            <CommonCarouselResultItem
+                                v-if="props.tab === 'result'"
+                                :item="item"
+                            />
                         </div>
                     </div>
                     <!-- Slider indicators -->
-                    <div class="absolute bottom-3 left-1/2 z-30 flex -translate-x-1/2 space-x-3 rtl:space-x-reverse">
+                    <div class="absolute bottom-[4px] left-1/2 z-30 flex -translate-x-1/2 space-x-3 rtl:space-x-reverse">
                         <button 
                             v-for="(item, idx) in props.list"
                             :id="`carousel-indicator-${ idx + 1 }`"
                             type="button"
-                            class="h-[6px] w-[6px] rounded-full bg-transparent"
-                            :aria-current="idx === 0"
+                            class="h-[8px] w-[8px] rounded-full bg-transparent"
+                            :aria-current="(idx === 0)"
                             :aria-label="`Slide ${ idx + 1 }`"
                             :data-carousel-slide-to="`${ idx }`"
                         ></button>
                     </div>
                     <!-- Slider controls -->
-                    <button v-if="props.list.length >= 2" id="data-carousel-prev" type="button"
-                        class="group absolute left-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none">
+                    <button 
+                        v-if="props.list.length >= 2"
+                        id="data-carousel-prev"
+                        type="button"
+                        class="group absolute left-0 top-0 z-30 flex h-[50%] mt-[8%] cursor-pointer justify-center px-4 focus:outline-none"
+                    >
                         <span
-                            class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50 group-focus:outline-none group-focus:ring-4 group-focus:ring-white dark:bg-gray-800/30 dark:group-hover:bg-gray-800/60 dark:group-focus:ring-gray-800/70">
+                            class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50"
+                        >
                             <svg class="h-4 w-4 text-white dark:text-gray-800" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -49,10 +69,15 @@
                             <span class="hidden">Previous</span>
                         </span>
                     </button>
-                    <button v-if="props.list.length >= 2" id="data-carousel-next" type="button"
-                        class="group absolute right-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none">
+                    <button
+                        v-if="props.list.length >= 2"
+                        id="data-carousel-next"
+                        type="button"
+                        class="group absolute right-0 top-0 z-30 flex h-[50%] mt-[8%] cursor-pointer justify-center px-4 focus:outline-none"
+                    >
                         <span
-                            class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50 group-focus:outline-none group-focus:ring-4 group-focus:ring-white dark:bg-gray-800/30 dark:group-hover:bg-gray-800/60 dark:group-focus:ring-gray-800/70">
+                            class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50"
+                        >
                             <svg class="h-4 w-4 text-white dark:text-gray-800" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -62,6 +87,11 @@
                         </span>
                     </button>
                 </div>
+                <!-- league content -->
+                <CommonCarouselLeagueFrame
+                    v-else
+                    :list="props.list"
+                />
             </div>
         </div>
     </div>
@@ -71,12 +101,14 @@
 import { Carousel } from 'flowbite';
 import { useFlowbite } from '~/composables/useFlowbite';
 import type { CarouselItem, CarouselOptions, CarouselInterface, IndicatorItem, } from 'flowbite';
-import type { TCommonSportTab } from '~/types/Common/tab';
+import type { TCommonTabTypes } from '~/types/Common/tab';
+import type { TCarouselTitle } from '~/types/Common/Carousel';
 
 const props = defineProps<{
-    title: string;
-    tab: TCommonSportTab;
+    title: TCarouselTitle;
+    tab: TCommonTabTypes;
     list: any[];
+    height?: number;
 }>();
 
 const opt = reactive({
@@ -174,10 +206,9 @@ onMounted(async () => {
         // set modal options
         const carouselOptions: CarouselOptions = {
             defaultPosition: 1,
-            // interval: -1,
             indicators: {
-                activeClasses: 'bg-white',
-                inactiveClasses: 'bg-white/50 hover:bg-white',
+                activeClasses: 'bg-[#0C4ba7] border-[#0C4ba7] border-2',
+                inactiveClasses: 'border-[#0C4ba7] border-2',
                 items: indicatorList,
             },
             onNext: () => { actAnim(); },
@@ -204,7 +235,7 @@ onMounted(async () => {
         carousel.value = new Carousel(
             carouselEle.value, items, carouselOptions, instanceOptions
         );
-        // carousel.value.cycle();
+        carousel.value.slideTo(0);
 
         // set event listeners for prev and next buttons
         const $prevButton = document.getElementById('data-carousel-prev');

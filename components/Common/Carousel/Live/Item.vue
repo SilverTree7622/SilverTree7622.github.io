@@ -4,14 +4,16 @@
             <div class="frame-594">
                 <img class="premier_-league_logo-1" :src="`/img/premier-league-logo-1@2x.png`" />
                 <div class="top-scores_-league">
-                    <div class="epl body2">EPL</div>
+                    <div class="epl body2">
+                        {{ props.item.name }}
+                    </div>
                 </div>
             </div>
             <div class="top-scores_-latest_-reply caption">
                 <!-- <div class="text-1 text">{{ props.commentId }}</div> -->
                 <div class="text-1 text">영구23456</div>
                 <div class="rectangle-21063"></div>
-                <p class="text-2 text">
+                <p class="text-2 text-item">
                     <!-- {{ props.commentContext }} -->
                     심판 편파 오지네 ㅋㅋㅋㅋㅋㅋ드럽다정말 돈을얼마나 바른거야 ㅋㅋㅋㅋㅋㅋㅋㅋㅋ
                 </p>
@@ -81,19 +83,20 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-    leagueLogo?: string;
-    commentId?: string;
-    commentContext?: string;
-    commentLength?: number;
-    homeLogo?: string;
-    homeName?: string;
-    homeScore?: string;
-    awayLogo?: string;
-    awayName?: string;
-    awayScore?: string;
-    match_id?: string;
-    time1?: string;
-    time2?: string;
+    item: any;
+    // leagueLogo?: string;
+    // commentId?: string;
+    // commentContext?: string;
+    // commentLength?: number;
+    // homeLogo?: string;
+    // homeName?: string;
+    // homeScore?: string;
+    // awayLogo?: string;
+    // awayName?: string;
+    // awayScore?: string;
+    // match_id?: string;
+    // time1?: string;
+    // time2?: string;
 }>();
 
 const goStore = useGoStore();
@@ -170,11 +173,12 @@ onBeforeUnmount(() => {
 }
 
 .premier_-league_logo-1 {
-    /* background-image: url(../img/premier-league-logo-1@2x.png); */
+    background-image: url(../img/premier-league-logo-1@2x.png);
     background-size: 100% 100%;
     height: 15px;
     position: relative;
     width: 15.75px;
+    color: black;
 }
 
 .top-scores_-league {
@@ -220,7 +224,7 @@ onBeforeUnmount(() => {
     position: relative;
     text-align: center;
     text-overflow: ellipsis;
-    width: 41px;
+    width: auto;
 }
 
 .rectangle-21063 {
@@ -242,6 +246,7 @@ onBeforeUnmount(() => {
     position: relative;
     text-align: center;
     text-overflow: ellipsis;
+    width: 100%;
 }
 
 .btn_reply {
@@ -582,8 +587,8 @@ onBeforeUnmount(() => {
   white-space: nowrap;
 }
 
-.text {
+.text-item {
     line-height: normal;
-    white-space: nowrap;
+    /* white-space: nowrap; */
 }
 </style>
