@@ -10,14 +10,15 @@
             :sName="props.sName"
             :tab="props.tab"
             :isPending="props.isPending"
-            :list="[ { name: 'wtf' }, { name: 'wtf2' }, { name: 'wtf2' } ]"
+            :list="[ { name: 'wth' }, { name: 'wth2' }, { name: 'wth3' } ]"
         />
 
         <div class="pt-[2px]"></div>
 
         <div class="contents_-football_-live">
             <div class="frame-315">
-                <div class="frame-369">
+                <!-- sport, filter options section -->
+                <div v-if="props.tab !== 'league'" class="frame-369">
                     <div class="frame-5 biggerbody">
                         <div class="football-3 valign-text-middle football-4">{{ ECommonSportSectionValue[ props.sName ] }}</div>
                         <div class="text-1 valign-text-middle">({{ props.pagedListLength }})</div>
@@ -25,6 +26,12 @@
                     <div class="sport-title_-date_-set">
                         <CommonFilterByTime />
                         <CommonFilterDate ref="$date" :date="new Date()" @prev-tab="prevDate" @next-tab="nextDate" />
+                    </div>
+                </div>
+                <!-- league tab exclusive section -->
+                <div v-else class="frame-369">
+                    <div class="frame-5 biggerbody">
+                        POPULAR COUNTRIES
                     </div>
                 </div>
                 <div class="frame-578">

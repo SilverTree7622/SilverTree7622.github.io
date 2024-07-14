@@ -5,25 +5,26 @@
         <button
             type="button"
             class="
-                flex items-center justify-between w-full p-5 font-medium rtl:text-right
-                border border-b-0 border-gray-200 text-gray-900 bg-[#e0e4ea]
+                flex items-center justify-between w-full p-1 font-medium rtl:text-right
+                border border-[#bcc1c8] text-gray-900 bg-[#e0e4ea] h-[35px]
             "
             :class="props.idx === 0 ? 'rounded-t-xl' : ((props.idx + 1 === props.length) && 'rounded-b-xl')"
             aria-expanded="true"
             aria-controls="accordion-example-body-1"
         >
-            <div class="w-full h-full">
+            <div class="w-full h-auto flex items-center">
+                <!-- :src="props.logo"   -->
                 <img
-                    :src="props.logo"
-                    class=""
+                    src="/img/flag-circle-eng@2x.png"
+                    class="w-[20px] h-[20px] ml-1"
                 />
-                <span>
+                <div class="ml-2 font-bold">
                     {{ props.title }}
-                </span>
+                </div>
             </div>
             <svg
                 data-accordion-icon
-                class="w-6 h-6 rotate-180 shrink-0"
+                class="w-6 h-6 -rotate-90 shrink-0"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -38,15 +39,17 @@
     </h2>
     <div
         :id="`accordion-example-body-${ idx + 1 }`"
-        class="hidden border border-gray-200"
+        class="hidden border border-gray-200 bg-[#f8f8f8] text-black font-bold pl-8 h-[35px] py-auto"
         :class="(props.idx + 1 === props.length) ? 'rounded-b-xl' : ''"
         :aria-labelledby="`accordion-example-heading-${ idx + 1 }`"
     >
         <div
-            class="p-5 border border-gray-200"
+            class="border border-gray-200 text-wrap overflow-hidden"
             :class="(props.idx + 1 === props.length) ? 'rounded-b-xl' : ''"
         >
-            <slot />
+            <div>
+                <slot />
+            </div>
         </div>
     </div>
 </template>
@@ -57,6 +60,7 @@ const props = defineProps<{
     logo: string;
     title: string;
     length: number;
+    isOpen: boolean;
 }>();
 
 onMounted(async () => {

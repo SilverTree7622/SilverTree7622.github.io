@@ -6,6 +6,7 @@
             :logo="''"
             :title="item.name"
             :length="props.list.length"
+            :isOpen="false"
         >
             {{ `context: ${ item.name }` }}
         </CommonCarouselLeagueItem>
@@ -23,7 +24,7 @@ onMounted(async () => {
     await nextTick();
     if (!props.list.length) return;
     const accordionElement = document.getElementById("accordion-example");
-    const accordionItems = [];
+    const accordionItems: any[] = [];
     props.list.map((item, idx) => {
         accordionItems.push({
             id: `accordion-example-heading-${ idx + 1 }`,
@@ -35,10 +36,11 @@ onMounted(async () => {
 
     // options with default values
     const options = {
-        alwaysOpen: true,
+        alwaysOpen: false,
         // activeClasses: "text-gray-900 bg-[#e0e4ea]",
         // inactiveClasses: "text-gray-900 bg-[#e0e4ea]",
-        onOpen: (item) => {
+        onOpen: (item, idx) => {
+            console.log('idx: ', idx);
             console.log("accordion item has been shown");
             console.log(item);
         },
