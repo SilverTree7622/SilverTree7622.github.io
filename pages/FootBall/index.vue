@@ -34,6 +34,7 @@
         />
         <FootBallLeagueMain
             v-if="opt.tab === 'league'"
+            :list="[ { name: 'context1' }, { name: 'context2' }, { name: 'context3' } ]"
         />
     </NuxtLayout>
 </template>

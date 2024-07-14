@@ -1,5 +1,8 @@
 <template>
-    <div class="contents_-football_-live-Mzx5SR" id="contents_-football_-live">
+    <CommonCarouselLeagueFrame
+        :list="props.list"
+    />
+    <!-- <div class="contents_-football_-live-Mzx5SR" id="contents_-football_-live">
         <div class="leagueFrame">
             <div class="group-17">
                 <div class="rectangle-28-lE9kB9 rectangle-28"></div>
@@ -21,9 +24,6 @@
                 </ul>
 
             </div>
-            <!--
-        <img class="line-1" src="img/line-1@2x.png" alt="Line 1" />
-        -->
 
             <div class="group-17">
                 <div class="rectangle-28-lE9kB9 rectangle-28"></div>
@@ -47,11 +47,14 @@
             </div>
 
         </div>
-    </div>
+    </div> -->
 </template>
 
 
 <script setup lang="ts">
+const props = defineProps<{
+    list: any[];
+}>();
 
 </script>
 

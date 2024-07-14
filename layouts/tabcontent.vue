@@ -30,7 +30,7 @@
                 </div>
                 <!-- league tab exclusive section -->
                 <div v-else class="frame-369">
-                    <div class="frame-5 biggerbody">
+                    <div class="frame-5 biggerbody text-white">
                         POPULAR COUNTRIES
                     </div>
                 </div>
@@ -41,7 +41,9 @@
                         <LoadingSkeleton />
                         <LoadingSkeleton />
                     </div>
+
                     <slot v-if="!props.isPending"></slot>
+
                     <!-- center content loading -->
                     <div v-show="props.contentIsPending" class="mx-auto mt-10">
                         <LoadingSkeleton />
@@ -113,7 +115,7 @@ watch(
     async (p) => {
         filterStore.init();
         if (opt.useInitForChangingTab) {
-            $date.value.init();
+            $date.value && $date.value.init();
         }
         opt.tab = route.query['tab'] as TCommonTabTypes;
         if (opt.useInitForChangingTab) {

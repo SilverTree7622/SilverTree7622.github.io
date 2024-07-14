@@ -1,12 +1,12 @@
 <template>
-    <div id="accordion-example" class="w-full h-auto rounded-full">
+    <div ref="$accordion" id="accordion-example" class="w-full h-auto rounded-xl">
         <CommonCarouselLeagueItem
             v-for="(item, idx) in props.list"
             :idx="idx"
             :logo="''"
             :title="item.name"
             :length="props.list.length"
-            :isOpen="false"
+            :isOpen="opt.openList[idx]"
         >
             {{ `context: ${ item.name }` }}
         </CommonCarouselLeagueItem>
@@ -16,14 +16,22 @@
 <script setup lang="ts">
 import { Accordion } from "flowbite";
 
+const $accordion = ref();
+
 const props = defineProps<{
     list: any[];
 }>();
 
+const opt = reactive({
+    openList: <boolean[]> [],
+});
+
 onMounted(async () => {
     await nextTick();
     if (!props.list.length) return;
-    const accordionElement = document.getElementById("accordion-example");
+    if (!$accordion.value) return;
+    // const accordionElement = document.getElementById("accordion-example");
+    
     const accordionItems: any[] = [];
     props.list.map((item, idx) => {
         accordionItems.push({
@@ -32,25 +40,21 @@ onMounted(async () => {
             targetEl: document.querySelector(`#accordion-example-body-${ idx + 1 }`),
             active: false,
         });
+        opt.openList.push(false);
     });
 
     // options with default values
     const options = {
         alwaysOpen: false,
-        // activeClasses: "text-gray-900 bg-[#e0e4ea]",
-        // inactiveClasses: "text-gray-900 bg-[#e0e4ea]",
-        onOpen: (item, idx) => {
-            console.log('idx: ', idx);
-            console.log("accordion item has been shown");
-            console.log(item);
+        onOpen: (obj, ele) => {
+            const idx = obj._items.findIndex( item => item.id === ele.id );
+            if (idx < 0) return;
+            opt.openList[idx] = true;
         },
-        onClose: (item) => {
-            console.log("accordion item has been hidden");
-            console.log(item);
-        },
-        onToggle: (item) => {
-            console.log("accordion item has been toggled");
-            console.log(item);
+        onClose: (obj, ele) => {
+            const idx = obj._items.findIndex( item => item.id === ele.id );
+            if (idx < 0) return;
+            opt.openList[idx] = false;
         },
     };
 
@@ -61,7 +65,7 @@ onMounted(async () => {
     };
 
     const accordion = new Accordion(
-        accordionElement,
+        $accordion.value,
         accordionItems,
         options,
         instanceOptions

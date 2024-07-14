@@ -1,6 +1,7 @@
 <template>
     <h2
         :id="`accordion-example-heading-${ props.idx + 1 }`"
+        :class="getRoundedClassHead()"
     >
         <button
             type="button"
@@ -8,12 +9,14 @@
                 flex items-center justify-between w-full p-1 font-medium rtl:text-right
                 border border-[#bcc1c8] text-gray-900 bg-[#e0e4ea] h-[35px]
             "
-            :class="props.idx === 0 ? 'rounded-t-xl' : ((props.idx + 1 === props.length) && 'rounded-b-xl')"
+            :class="getRoundedClassTitle()"
             aria-expanded="true"
             aria-controls="accordion-example-body-1"
         >
-            <div class="w-full h-auto flex items-center">
-                <!-- :src="props.logo"   -->
+            <div
+                class="w-full flex items-center"
+            >
+                <!-- :src="props.logo" -->
                 <img
                     src="/img/flag-circle-eng@2x.png"
                     class="w-[20px] h-[20px] ml-1"
@@ -24,7 +27,8 @@
             </div>
             <svg
                 data-accordion-icon
-                class="w-6 h-6 -rotate-90 shrink-0"
+                class="w-6 h-6 shrink-0"
+                :class="getRotation()"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -39,17 +43,15 @@
     </h2>
     <div
         :id="`accordion-example-body-${ idx + 1 }`"
-        class="hidden border border-gray-200 bg-[#f8f8f8] text-black font-bold pl-8 h-[35px] py-auto"
-        :class="(props.idx + 1 === props.length) ? 'rounded-b-xl' : ''"
+        class="hidden border border-gray-200 bg-[#f8f8f8] text-black font-bold pl-9 pt-2 h-[35px]"
+        :class="getRoundedClassContext()"
         :aria-labelledby="`accordion-example-heading-${ idx + 1 }`"
     >
         <div
-            class="border border-gray-200 text-wrap overflow-hidden"
-            :class="(props.idx + 1 === props.length) ? 'rounded-b-xl' : ''"
+            class="border border-gray-200"
+            :class="getRoundedClassContext()"
         >
-            <div>
-                <slot />
-            </div>
+            <slot />
         </div>
     </div>
 </template>
@@ -62,6 +64,47 @@ const props = defineProps<{
     length: number;
     isOpen: boolean;
 }>();
+
+const getRoundedClassHead = (): string => {
+    if (props.idx === 0) {
+        return 'rounded-t-xl';
+    }
+    if ((props.idx + 1) === props.length) {
+        return 'rounded-b-xl';
+    }
+    return '';
+};
+
+const getRoundedClassTitle = (): string => {
+    // first
+    if (props.idx === 0) {
+        return 'rounded-t-xl';
+    }
+    // last
+    if ((props.idx + 1) === props.length) {
+        if (props.isOpen) {
+            return '';
+        }
+        return 'rounded-b-xl';
+    }
+    // middle
+    return '';
+};
+
+const getRotation = (): string => {
+    if (props.isOpen) {
+        return 
+    }
+    return '-rotate-90';
+};
+
+const getRoundedClassContext = (): string => {
+    // last
+    if (props.idx + 1 === props.length) {
+        return 'rounded-b-xl';
+    }
+    return '';
+};
 
 onMounted(async () => {
     await nextTick();
