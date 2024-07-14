@@ -61,7 +61,7 @@
                         <span
                             class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50"
                         >
-                            <svg class="h-4 w-4 text-white dark:text-gray-800" aria-hidden="true"
+                            <svg class="h-4 w-4 text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="M5 1 1 5l4 4" />
@@ -78,7 +78,7 @@
                         <span
                             class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50"
                         >
-                            <svg class="h-4 w-4 text-white dark:text-gray-800" aria-hidden="true"
+                            <svg class="h-4 w-4 text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="m1 9 4-4-4-4" />

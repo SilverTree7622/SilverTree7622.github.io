@@ -1,19 +1,26 @@
 <template>
-    <h2 :id="`accordion-example-heading-${ props.idx + 1 }`">
+    <h2
+        :id="`accordion-example-heading-${ props.idx + 1 }`"
+    >
         <button
             type="button"
-            class="flex items-center justify-between w-full p-5 font-medium rtl:text-right border border-b-0 border-gray-200 focus:ring-4 focus:ring-gray-200 text-gray-900 bg-[#e0e4ea]"
-            :class="props.idx === 0 ? 'rounded-t-xl' : ''"
+            class="
+                flex items-center justify-between w-full p-5 font-medium rtl:text-right
+                border border-b-0 border-gray-200 text-gray-900 bg-[#e0e4ea]
+            "
+            :class="props.idx === 0 ? 'rounded-t-xl' : ((props.idx + 1 === props.length) && 'rounded-b-xl')"
             aria-expanded="true"
             aria-controls="accordion-example-body-1"
         >
-            <img
-                :src="props.logo"
-                class=""
-            />
-            <span>
-                {{ props.title }}
-            </span>
+            <div class="w-full h-full">
+                <img
+                    :src="props.logo"
+                    class=""
+                />
+                <span>
+                    {{ props.title }}
+                </span>
+            </div>
             <svg
                 data-accordion-icon
                 class="w-6 h-6 rotate-180 shrink-0"
@@ -36,7 +43,7 @@
         :aria-labelledby="`accordion-example-heading-${ idx + 1 }`"
     >
         <div
-            class="p-5 border border-gray-200 dark:border-gray-700 dark:bg-gray-900"
+            class="p-5 border border-gray-200"
             :class="(props.idx + 1 === props.length) ? 'rounded-b-xl' : ''"
         >
             <slot />

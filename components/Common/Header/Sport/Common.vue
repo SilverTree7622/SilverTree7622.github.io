@@ -11,14 +11,14 @@
                 :src="`/img/${ props.icon }`"
                 :alt="ECommonSportSectionValue[ props.name ]"
             />
-            <!-- no hover icon -->
+            <!-- hover icon -->
             <img
                 v-show="!props.hoverIcon && (props.isToggled || opt.isHover)"
                 class="icon-1 text-[color:var(--ptyellow)] !stroke-[color:var(--ptyellow)]"
                 :src="`/img/${ props.icon }`"
                 :alt="ECommonSportSectionValue[ props.name ]"
             />
-            <!-- hover icon -->
+            <!-- no hover icon -->
             <img
                 v-show="props.hoverIcon && (props.isToggled || opt.isHover)"
                 class="icon-1"
@@ -28,7 +28,7 @@
             <div
                 :class="`
                     football-1 football-4 smallsportsicon
-                    ${ (props.isToggled || opt.isHover) && 'text-[color:var(--ptyellow)]' }
+                    ${ (props.isToggled || opt.isHover) ? 'text-[color:var(--ptyellow)]' : 'text-white' }
                 `"
             >
                 {{ ECommonSportSectionValue[ props.name ] }}

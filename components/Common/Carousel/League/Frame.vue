@@ -1,5 +1,5 @@
 <template>
-    <div id="accordion-example" class="w-full h-auto">
+    <div id="accordion-example" class="w-full h-auto rounded-full">
         <CommonCarouselLeagueItem
             v-for="(item, idx) in props.list"
             :idx="idx"
@@ -7,7 +7,7 @@
             :title="item.name"
             :length="props.list.length"
         >
-            {{ item.name }}
+            {{ `context: ${ item.name }` }}
         </CommonCarouselLeagueItem>
     </div>
 </template>
@@ -21,13 +21,9 @@ const props = defineProps<{
 
 onMounted(async () => {
     await nextTick();
-    console.log('props.list.length: ', props.list.length);
     if (!props.list.length) return;
-
     const accordionElement = document.getElementById("accordion-example");
-    // create an array of objects with the id, trigger element (eg. button), and the content element
     const accordionItems = [];
-
     props.list.map((item, idx) => {
         accordionItems.push({
             id: `accordion-example-heading-${ idx + 1 }`,
