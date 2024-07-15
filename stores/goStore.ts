@@ -14,9 +14,9 @@ export const useGoStore = defineStore('goStore', () => {
 
     const go_league = (loc?: string) => {
         if (loc === 'home'){
-            navigateTo('/Matchup?tab=stats');
+            navigateTo('/League?id=stats');
         } else{
-            navigateTo('/Matchup?tab=stats');
+            navigateTo('/League?id=stats');
         }
     };
     

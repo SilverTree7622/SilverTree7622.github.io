@@ -10,6 +10,7 @@
     />
     <!-- match content via conditions -->
     <div v-if="hasSlot('default')">
+        <!-- custom default style -->
         <slot
             :idx="props.idx"
             :homeLogo="contentStore.getParticipantSrc(props.league, 0)"
@@ -28,10 +29,28 @@
             :isFavorite="false"
         />
     </div>
-    <div v-else-if="useItemStyleStore().getStyle() === 'classic'">
-        
+    <div v-else-if="!useSettingStore().getData().isDefault">
+        <!-- classic style -->
+        <CommonContentSportStyleLiveClassic
+            :idx="props.idx"
+            :homeLogo="contentStore.getParticipantSrc(props.league, 0)"
+            :homeName="contentStore.getParticipantName(props.league, 0)"
+            :homeScore="contentStore.getLeagueScore(opt, 0)"
+            :time="getLeagueTime(opt.ai_match_status, opt.ai_kickoff_timestamp)"
+            :awayLogo="contentStore.getParticipantSrc(props.league, 1)"
+            :awayName="contentStore.getParticipantName(props.league, 1)"
+            :awayScore="contentStore.getLeagueScore(opt, 1)"
+            :goLiveTracker="() => goLiveTracker(props.league)"
+            :updateOpt="{
+                time: updateOpt.time,
+                score1: updateOpt.score1,
+                score2: updateOpt.score2,
+            }"
+            :isFavorite="false"
+        />
     </div>
     <div v-else>
+        <!-- default style item -->
         <CommonContentSportStyleLiveDefault
             :idx="props.idx"
             :homeLogo="contentStore.getParticipantSrc(props.league, 0)"

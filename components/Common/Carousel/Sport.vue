@@ -1,5 +1,6 @@
 <template>
     <div class="w-full h-auto">
+        <!-- empty or loading components -->
         <CommonCarouselEmpty
             v-show="props.list.length === 0 && !props.isPending"
             :title="getTitle(props.tab)"
@@ -9,6 +10,7 @@
             :title="getTitle(props.tab)"
             :height="getHeight(props.tab)"
         />
+
         <!-- football live, fixtures, odds, result, league -->
         <CommonCarouselDefault
             v-if="getShowCondition('football', 'live')"
@@ -40,6 +42,191 @@
         />
         <CommonCarouselDefault
             v-if="getShowCondition('football', 'league')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+
+        <!-- basketball live, fixtures, odds, result, league -->
+        <CommonCarouselDefault
+            v-if="getShowCondition('basketball', 'live')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        <CommonCarouselDefault
+            v-if="getShowCondition('basketball', 'fixtures')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        <CommonCarouselDefault
+            v-if="getShowCondition('basketball', 'odds')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        <CommonCarouselDefault
+            v-if="getShowCondition('basketball', 'result')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        <CommonCarouselDefault
+            v-if="getShowCondition('basketball', 'league')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        
+        <!-- baseball live, fixtures, odds, result, league -->
+        <CommonCarouselDefault
+            v-if="getShowCondition('baseball', 'live')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        <CommonCarouselDefault
+            v-if="getShowCondition('baseball', 'fixtures')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        <CommonCarouselDefault
+            v-if="getShowCondition('baseball', 'odds')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        <CommonCarouselDefault
+            v-if="getShowCondition('baseball', 'result')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        <CommonCarouselDefault
+            v-if="getShowCondition('baseball', 'league')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        
+        <!-- volleyball live, fixtures, odds, result, league -->
+        <CommonCarouselDefault
+            v-if="getShowCondition('volleyball', 'live')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        <CommonCarouselDefault
+            v-if="getShowCondition('volleyball', 'fixtures')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        <CommonCarouselDefault
+            v-if="getShowCondition('volleyball', 'odds')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        <CommonCarouselDefault
+            v-if="getShowCondition('volleyball', 'result')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        <CommonCarouselDefault
+            v-if="getShowCondition('volleyball', 'league')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        
+        <!-- tennis live, fixtures, odds, result, league -->
+        <CommonCarouselDefault
+            v-if="getShowCondition('tennis', 'live')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        <CommonCarouselDefault
+            v-if="getShowCondition('tennis', 'fixtures')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        <CommonCarouselDefault
+            v-if="getShowCondition('tennis', 'odds')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        <CommonCarouselDefault
+            v-if="getShowCondition('tennis', 'result')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        <CommonCarouselDefault
+            v-if="getShowCondition('tennis', 'league')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        
+        <!-- icehockey live, fixtures, odds, result, league -->
+        <CommonCarouselDefault
+            v-if="getShowCondition('icehockey', 'live')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        <CommonCarouselDefault
+            v-if="getShowCondition('icehockey', 'fixtures')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        <CommonCarouselDefault
+            v-if="getShowCondition('icehockey', 'odds')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        <CommonCarouselDefault
+            v-if="getShowCondition('icehockey', 'result')"
+            :title="getTitle(props.tab)"
+            :height="getHeight(props.tab)"
+            :tab="props.tab"
+            :list="props.list"
+        />
+        <CommonCarouselDefault
+            v-if="getShowCondition('icehockey', 'league')"
             :title="getTitle(props.tab)"
             :height="getHeight(props.tab)"
             :tab="props.tab"
