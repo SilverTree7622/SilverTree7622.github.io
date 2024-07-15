@@ -1,5 +1,5 @@
 <template>
-  <div class="div">
+  <div class="div-one-x-two">
     <div class="div-2 cursor-pointer" @click="click">
       <div class="div-3">1</div>
       <div class="div-4">{{ props.value[0] }}</div>
@@ -27,28 +27,29 @@ const click = () => {
 </script>
 
 <style scoped>
-.div {
+.div-one-x-two {
   display: flex;
   gap: 2px;
   color: #000;
-  font-weight: 600;
+  font-weight: bolder;
   white-space: nowrap;
   text-align: center;
   text-transform: uppercase;
   display: flex;
   flex-direction: row;
   width: auto;
+  
 }
 .div-2 {
   display: flex;
   flex-direction: column;
-  /* padding: 2px 20px; */
   margin-top: auto;
   margin-bottom: auto;
 }
 .div-3 {
   letter-spacing: -0.56px;
   font: 14px Pretendard, sans-serif;
+  font-weight: bolder;
 }
 .div-4 {
   justify-content: center;
@@ -57,6 +58,7 @@ const click = () => {
   margin-top: 4px;
   padding: 2px 7px;
   font: 12px Pretendard, sans-serif;
+  font-weight: bolder;
 }
 .div-5 {
   display: flex;
@@ -67,6 +69,7 @@ const click = () => {
 .div-6 {
   letter-spacing: -0.56px;
   font: 14px Pretendard, sans-serif;
+  font-weight: bolder;
 }
 .div-7 {
   justify-content: center;
@@ -75,6 +78,7 @@ const click = () => {
   margin-top: 4px;
   padding: 2px 7px;
   font: 12px Pretendard, sans-serif;
+  font-weight: bolder;
 }
 .div-8 {
   display: flex;
@@ -85,6 +89,7 @@ const click = () => {
 .div-9 {
   letter-spacing: -0.56px;
   font: 14px Pretendard, sans-serif;
+  font-weight: bolder;
 }
 .div-10 {
   justify-content: center;
@@ -93,5 +98,6 @@ const click = () => {
   margin-top: 4px;
   padding: 2px 7px;
   font: 12px Pretendard, sans-serif;
+  font-weight: bolder;
 }
 </style>

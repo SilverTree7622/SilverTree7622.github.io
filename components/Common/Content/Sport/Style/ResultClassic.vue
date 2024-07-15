@@ -1,8 +1,8 @@
 <template>
-  <div class="div-odds-classic">
+  <div class="div-result-classic">
     <div class="div-4">
-      <div class="div-5" :class="props.isLiving ? 'text-[#b14646]' : 'text-black'">
-        {{ props.time }}
+      <div class="div-5">
+        FT
       </div>
       <div class="div-6">
         <div class="div-7">
@@ -38,9 +38,11 @@
           </div>
         </div>
       </div>
-      <CommonBetOneXTwo
-        :value="[ 1.55, 1.55, 1.55 ]"
-        class="my-auto"
+      <img
+        loading="lazy"
+        src="/img/Btn_Statistics_Short.svg"
+        class="img-6 ml-2 cursor-pointer"
+        @click="props.goLiveTracker()"
       />
     </div>
   </div>
@@ -54,7 +56,7 @@ const props = defineProps<{
   time: string;
   awayLogo: string;
   awayName: string;
-  isLiving: boolean;
+  goLiveTracker: () => void;
   isFavorite?: boolean;
 }>();
 
@@ -64,16 +66,15 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.div-odds-classic {
+.div-result-classic {
   align-self: stretch;
   border-color: rgba(224, 228, 234, 1);
   border-style: solid;
   border-bottom-width: 1px;
   background-color: #f8f8f8;
   display: flex;
-  min-height: 64px;
   flex-direction: column;
-  justify-items: center;
+  min-height: 64px;
 }
 .div-2 {
   justify-content: center;
@@ -112,6 +113,7 @@ onMounted(async () => {
   margin-bottom: auto;
 }
 .div-5 {
+  color: #b14646;
   font-family: Pretendard, sans-serif;
   align-self: stretch;
   margin: auto 0;
@@ -129,8 +131,6 @@ onMounted(async () => {
   flex-direction: column;
   flex: 1;
   padding: 0 8px;
-  margin-top: auto;
-  margin-bottom: auto;
 }
 .div-7 {
   justify-content: space-between;
@@ -222,7 +222,6 @@ onMounted(async () => {
   aspect-ratio: 2.33;
   object-fit: auto;
   object-position: center;
-  width: 64px;
   align-self: stretch;
   margin: auto 0;
 }

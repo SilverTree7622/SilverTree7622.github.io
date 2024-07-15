@@ -126,22 +126,22 @@ export const useContentStore = defineStore('contentStore', () => {
 
     const getOddsTime = (
         sportSection: TCommonSportSection,
-        ai_match_status: TCommonMatchStatus,
-        ai_kickoff_timestamp: number,
+        league: TSportScheduleTypes,
     ): {
         isLiving: boolean;
         time: string;
     } => {
+const { ai_match_status } = league;
         const isLiving = Types.isLive(sportSection, ai_match_status);
-        if (isLiving) {
+        if (isLiving && league['ai_kickoff_timestamp'] !== undefined) {
             return {
                 isLiving,
-                time: getLeagueTime(0, sportSection, ai_match_status, ai_kickoff_timestamp).matchUpTime,
+                time: getLeagueTime(0, sportSection, ai_match_status, league['ai_kickoff_timestamp']).matchUpTime,
             };
         } else {
             return {
                 isLiving,
-                time: getTime(sportSection, ai_match_status, ai_kickoff_timestamp),
+                time: getMatchTime(league),
             };
         }
     };

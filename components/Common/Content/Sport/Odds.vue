@@ -92,8 +92,7 @@ const getIsLiving = () => {
         isLiving,
     } = contentStore.getOddsTime(
         'football',
-        props.league.ai_status_id,
-        props.league['ai_kickoff_timestamp'] ?? props.league.ai_match_time,
+        props.league,
     );
     return isLiving;
 };
@@ -103,8 +102,7 @@ const getTime = () => {
         time,
     } = contentStore.getOddsTime(
         'football',
-        props.league.ai_status_id,
-        props.league['ai_kickoff_timestamp'] ?? props.league.ai_match_time,
+        props.league,
     );
     return time;
 };
