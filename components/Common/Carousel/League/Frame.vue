@@ -7,6 +7,7 @@
             :title="item.name"
             :length="props.list.length"
             :isOpen="opt.openList[idx]"
+            :name="props.name ?? 'example'"
         >
             {{ `context: ${ item.name }` }}
         </CommonCarouselLeagueItem>
@@ -20,6 +21,7 @@ const $accordion = ref();
 
 const props = defineProps<{
     list: any[];
+    name?: string;
 }>();
 
 const opt = reactive({
@@ -30,14 +32,13 @@ onMounted(async () => {
     await nextTick();
     if (!props.list.length) return;
     if (!$accordion.value) return;
-    // const accordionElement = document.getElementById("accordion-example");
     
     const accordionItems: any[] = [];
     props.list.map((item, idx) => {
         accordionItems.push({
             id: `accordion-example-heading-${ idx + 1 }`,
-            triggerEl: document.querySelector(`#accordion-example-heading-${ idx + 1 }`),
-            targetEl: document.querySelector(`#accordion-example-body-${ idx + 1 }`),
+            triggerEl: document.querySelector(`#accordion-${ props.name ?? 'example' }-heading-${ idx + 1 }`),
+            targetEl: document.querySelector(`#accordion-${ props.name ?? 'example' }-body-${ idx + 1 }`),
             active: false,
         });
         opt.openList.push(false);

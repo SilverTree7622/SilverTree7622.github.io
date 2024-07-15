@@ -1,6 +1,7 @@
 <template>
     <CommonCarouselLeagueFrame
         :list="props.list"
+        :name="'item'"
     />
     <!-- <div class="contents_-football_-live-Mzx5SR" id="contents_-football_-live">
         <div class="leagueFrame">

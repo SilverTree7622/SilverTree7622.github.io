@@ -1,6 +1,6 @@
 <template>
     <h2
-        :id="`accordion-example-heading-${ props.idx + 1 }`"
+        :id="`accordion-${ props.name ?? 'example' }-heading-${ props.idx + 1 }`"
         :class="getRoundedClassHead()"
     >
         <button
@@ -42,7 +42,7 @@
         </button>
     </h2>
     <div
-        :id="`accordion-example-body-${ idx + 1 }`"
+        :id="`accordion-${ props.name ?? 'example' }-body-${ idx + 1 }`"
         class="hidden border border-gray-200 bg-[#f8f8f8] text-black font-bold pl-9 pt-2 h-[35px]"
         :class="getRoundedClassContext()"
         :aria-labelledby="`accordion-example-heading-${ idx + 1 }`"
@@ -63,6 +63,7 @@ const props = defineProps<{
     title: string;
     length: number;
     isOpen: boolean;
+    name?: string;
 }>();
 
 const getRoundedClassHead = (): string => {
