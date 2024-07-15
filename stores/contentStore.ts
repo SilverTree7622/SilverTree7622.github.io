@@ -2,6 +2,8 @@ import { defineStore } from "pinia";
 import type { TCommonLiveRealTime } from "~/types/Common/Live";
 import type { TSportScheduleTypes } from "~/types/schedule";
 import UtilDate from "~/utils/date";
+import * as Types from '~/types';
+import type { TCommonSportSection } from "~/types/Common/sport";
 
 
 export type TContentStorePrefix = '' | 'home' | 'away';
@@ -70,6 +72,57 @@ export const useContentStore = defineStore('contentStore', () => {
         return time;
     };
 
+    // get score & time via custom function
+    const getScore = (
+        sportSection: TCommonSportSection,
+        prefix: TContentStorePrefix, 
+        schedule,
+    ): number[] => {
+        return [ Types.getScore(sportSection, prefix, schedule) ];
+    };
+    
+    const getTime = (
+        sportSection: TCommonSportSection,
+        ai_match_status: number,
+        ai_kickoff_timestamp: number,
+    ): string => {
+        return Types.getTime(sportSection, ai_match_status, ai_kickoff_timestamp);
+    };
+
+    const getPrefix = (
+        sportSection: TCommonSportSection,
+        ai_match_status: TCommonLiveRealTime['ai_match_status'],
+        ai_kickoff_timestamp: number,
+    ): string => {
+        return Types.getPrefix(sportSection, ai_match_status, ai_kickoff_timestamp);
+    };
+
+    const getLeagueTime = (
+        idx: number,
+        sportSection: TCommonSportSection,
+        ai_match_status: TCommonLiveRealTime['ai_match_status'],
+        ai_kickoff_timestamp: number,
+    ): {
+        prevTimestamp: number;
+        matchUpTime: string;
+    } => {
+        const kickOffTime = ai_kickoff_timestamp;
+        let dateTime: string = `0`;
+        if (kickOffTime !== 0) {
+            dateTime = getTime(sportSection, ai_match_status, ai_kickoff_timestamp);
+        } else {
+            // dateTime = currentTime - props.league.ai_match_time;
+        }
+
+        if (idx === 0) {
+            // console.log('kickOffTime, dateTime, props.league.ai_match_time: ', kickOffTime, dateTime, props.league.ai_match_time);
+        }
+        return {
+            prevTimestamp: kickOffTime,
+            matchUpTime: dateTime,
+        };
+    };
+
     return {
         setLeagueGroup,
         getLeagueFlag,
@@ -80,5 +133,9 @@ export const useContentStore = defineStore('contentStore', () => {
         getParticipantSrc,
         getLeagueScoreResult,
         getMatchTime,
+        getScore,
+        getTime,
+        getPrefix,
+        getLeagueTime,
     };
 });

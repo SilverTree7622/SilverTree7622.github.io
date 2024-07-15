@@ -123,7 +123,33 @@ export const getScore = (sportSection: TCommonSportSection, prefix: TContentStor
     return 0;
 };
 
-export const getTime = (sportSection: TCommonSportSection, ai_match_status: number, ai_kickoff_timestamp: number): string => {
+export const getPrefix = (
+    sportSection: TCommonSportSection, ai_match_status: number, ai_kickoff_timestamp: number
+): string => {
+    if (sportSection === 'football') {
+        return football.getPrefix(ai_match_status, ai_kickoff_timestamp);
+    }
+    if (sportSection === 'basketball') {
+        return basketball.getTime(ai_match_status, ai_kickoff_timestamp);
+    }
+    if (sportSection === 'baseball') {
+        return baseball.getTime(ai_match_status, ai_kickoff_timestamp);
+    }
+    if (sportSection === 'volleyball') {
+        return volleyball.getTime(ai_match_status, ai_kickoff_timestamp);
+    }
+    if (sportSection === 'tennis') {
+        return tennis.getTime(ai_match_status, ai_kickoff_timestamp);
+    }
+    if (sportSection === 'icehockey') {
+        return icehockey.getTime(ai_match_status, ai_kickoff_timestamp);
+    }
+    return `00`;
+};
+
+export const getTime = (
+    sportSection: TCommonSportSection, ai_match_status: number, ai_kickoff_timestamp: number
+): string => {
     if (sportSection === 'football') {
         return football.getTime(ai_match_status, ai_kickoff_timestamp);
     }

@@ -16,7 +16,7 @@
             :homeLogo="contentStore.getParticipantSrc(props.league, 0)"
             :homeName="contentStore.getParticipantName(props.league, 0)"
             :homeScore="contentStore.getLeagueScore(opt, 0)"
-            :time="getLeagueTime(opt.ai_match_status, opt.ai_kickoff_timestamp)"
+            :time="getLeagueTime()"
             :awayLogo="contentStore.getParticipantSrc(props.league, 1)"
             :awayName="contentStore.getParticipantName(props.league, 1)"
             :awayScore="contentStore.getLeagueScore(opt, 1)"
@@ -36,7 +36,7 @@
             :homeLogo="contentStore.getParticipantSrc(props.league, 0)"
             :homeName="contentStore.getParticipantName(props.league, 0)"
             :homeScore="contentStore.getLeagueScore(opt, 0)"
-            :time="getLeagueTime(opt.ai_match_status, opt.ai_kickoff_timestamp)"
+            :time="getLeagueTime()"
             :awayLogo="contentStore.getParticipantSrc(props.league, 1)"
             :awayName="contentStore.getParticipantName(props.league, 1)"
             :awayScore="contentStore.getLeagueScore(opt, 1)"
@@ -56,7 +56,8 @@
             :homeLogo="contentStore.getParticipantSrc(props.league, 0)"
             :homeName="contentStore.getParticipantName(props.league, 0)"
             :homeScore="contentStore.getLeagueScore(opt, 0)"
-            :time="getLeagueTime(opt.ai_match_status, opt.ai_kickoff_timestamp)"
+            :time="getLeagueTime()"
+            :prefix="contentStore.getPrefix(props.sportSection, opt.ai_match_status, opt.ai_kickoff_timestamp)"
             :awayLogo="contentStore.getParticipantSrc(props.league, 1)"
             :awayName="contentStore.getParticipantName(props.league, 1)"
             :awayScore="contentStore.getLeagueScore(opt, 1)"
@@ -72,69 +73,32 @@
 </template>
 
 <script setup lang="ts">
-import UtilDate from "~/utils/date";
 import type { TCommonLiveRealTime } from "~/types/Common/Live";
 import type { TMatchUpStoreConfig } from "~/types/matchUp";
 import type { TCommonSchedule } from "~/types/Common/schedule";
+import type { TCommonSportSection } from "~/types/Common/sport";
 
 const props = defineProps<{
     idx: number;
+    sportSection: TCommonSportSection;
     league: TCommonSchedule;
-    getScore?: (prefix: TContentStorePrefix, schedule) => number;
-    getTime?: (ai_match_status: number, ai_kickoff_timestamp: number) => string;
 }>();
 
 const prev = reactive({
     timestamp: <TCommonLiveRealTime['ai_kickoff_timestamp']> 0,
 });
 
-const getScore = (prefix: TContentStorePrefix, schedule): number[] => {
-    if (props?.getScore) {
-        return [ props.getScore(prefix, schedule) ];
-    } else {
-        // default scores from schedule item
-        return schedule[`ai_${ prefix }_scores`];
-    }
-};
-
-const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): string => {
-    if (props?.getTime) {
-        return props.getTime(ai_match_status, ai_kickoff_timestamp);
-    } else {
-        // default time calculation via match status
-        const currentTime = UtilDate.getWithOutMillisecond();
-        const kickOffTime = ai_kickoff_timestamp;
-        const gapTime = currentTime - kickOffTime;
-        let dateTime = 0;
-        if (ai_match_status === 2) {
-            dateTime = gapTime / 60 + 1;
-        }
-        if (ai_match_status === 3) {
-            dateTime = 45;
-        }
-        if (
-            ai_match_status === 4 ||
-            ai_match_status === 5 ||
-            ai_match_status === 6 ||
-            ai_match_status === 7
-        ) {
-            dateTime = gapTime / 60 + 45 + 1;
-        }
-        const matchUpTime = `${ UtilDate.syncDigit(~~(dateTime)) }’`;
-        return matchUpTime;
-    }
-};
+const contentStore = useContentStore();
 
 const opt = reactive({
-    ai_away_scores: <TCommonLiveRealTime['ai_away_scores']> getScore('away', props.league),
-    ai_home_scores: <TCommonLiveRealTime['ai_home_scores']> getScore('home', props.league),
+    ai_away_scores: <TCommonLiveRealTime['ai_away_scores']> contentStore.getScore(props.sportSection, 'away', props.league),
+    ai_home_scores: <TCommonLiveRealTime['ai_home_scores']> contentStore.getScore(props.sportSection, 'home', props.league),
     ai_kickoff_timestamp: <TCommonLiveRealTime['ai_kickoff_timestamp']> props.league.ai_kickoff_timestamp ?? 0,
     ai_match_status: <TCommonLiveRealTime['ai_match_status']> props.league.ai_status_id,
     match_id: <TCommonLiveRealTime['match_id']> props.league.match_id,
 });
 
 const goStore = useGoStore();
-const contentStore = useContentStore();
 const slots = useSlots();
 
 const updateOpt = reactive({
@@ -147,24 +111,14 @@ const hasSlot = (name) => {
     return !!slots[name];
 };
 
-const getLeagueTime = (
-    ai_match_status: TCommonLiveRealTime['ai_match_status'],
-    ai_kickoff_timestamp: number,
-): string => {
-    const kickOffTime = ai_kickoff_timestamp;
-    let dateTime: string = `0`;
-    if (kickOffTime !== 0) {
-        dateTime = getTime(ai_match_status, ai_kickoff_timestamp);
-    } else {
-        // dateTime = currentTime - props.league.ai_match_time;
-    }
-
-    if (props.idx === 0) {
-        // console.log('kickOffTime, dateTime, props.league.ai_match_time: ', kickOffTime, dateTime, props.league.ai_match_time);
-    }
-
-    const matchUpTime = dateTime;
-    prev.timestamp = kickOffTime;
+const getLeagueTime = () => {
+    const {
+        prevTimestamp,
+        matchUpTime,
+    } = contentStore.getLeagueTime(
+        props.idx, props.sportSection, opt.ai_match_status, opt.ai_kickoff_timestamp,
+    );
+    prev.timestamp = prevTimestamp;
     return matchUpTime;
 };
 
@@ -218,10 +172,10 @@ const goLiveTracker = (league: TCommonSchedule) => {
         timestamp: league.ai_match_time,
         homeLogo: league.ai_home_team_img,
         homeName: league.ai_home_team_name,
-        homeScore: getScore('home', league)[0],
+        homeScore: contentStore.getScore(props.sportSection, 'home', league)[0],
         awayLogo: league.ai_away_team_img,
         awayName: league.ai_away_team_name,
-        awayScore: getScore('away', league)[0],
+        awayScore: contentStore.getScore(props.sportSection, 'away', league)[0],
         matchStatus: league.ai_status_id,
     };
     goStore.go_livetraker(league.match_id, config);

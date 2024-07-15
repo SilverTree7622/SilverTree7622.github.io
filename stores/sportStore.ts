@@ -6,6 +6,7 @@ import { ECommonSportSectionValue, ECommonSportValue } from "~/types/Common/spor
 import UtilObj from "~/utils/obj";
 import type { TSportScheduleTypes } from "~/types/schedule";
 import UtilArray from "~/utils/array";
+import type { TCommonLiveRealTime } from "~/types/Common/Live";
 
 
 export type TSportStoreKickOffList = { idx: number; match_id: string; ai_kickoff_timestamp: number; }[];
