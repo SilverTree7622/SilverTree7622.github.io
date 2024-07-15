@@ -4,6 +4,7 @@ import type { TSportScheduleTypes } from "~/types/schedule";
 import UtilDate from "~/utils/date";
 import * as Types from '~/types';
 import type { TCommonSportSection } from "~/types/Common/sport";
+import type { TCommonMatchStatus } from "~/types/Common/status";
 
 
 export type TContentStorePrefix = '' | 'home' | 'away';
@@ -83,7 +84,7 @@ export const useContentStore = defineStore('contentStore', () => {
     
     const getTime = (
         sportSection: TCommonSportSection,
-        ai_match_status: number,
+        ai_match_status: TCommonMatchStatus,
         ai_kickoff_timestamp: number,
     ): string => {
         return Types.getTime(sportSection, ai_match_status, ai_kickoff_timestamp);
@@ -123,6 +124,28 @@ export const useContentStore = defineStore('contentStore', () => {
         };
     };
 
+    const getOddsTime = (
+        sportSection: TCommonSportSection,
+        ai_match_status: TCommonMatchStatus,
+        ai_kickoff_timestamp: number,
+    ): {
+        isLiving: boolean;
+        time: string;
+    } => {
+        const isLiving = Types.isLive(sportSection, ai_match_status);
+        if (isLiving) {
+            return {
+                isLiving,
+                time: getLeagueTime(0, sportSection, ai_match_status, ai_kickoff_timestamp).matchUpTime,
+            };
+        } else {
+            return {
+                isLiving,
+                time: getTime(sportSection, ai_match_status, ai_kickoff_timestamp),
+            };
+        }
+    };
+
     return {
         setLeagueGroup,
         getLeagueFlag,
@@ -137,5 +160,6 @@ export const useContentStore = defineStore('contentStore', () => {
         getTime,
         getPrefix,
         getLeagueTime,
+        getOddsTime,
     };
 });

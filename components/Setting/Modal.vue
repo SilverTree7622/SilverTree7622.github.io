@@ -36,20 +36,20 @@
             <div class="div-20"></div>
             <div class="div-21">select scoreboard format</div>
             <div class="div-22">
-                <div class="div-23">
-                    <div class="div-24">Default</div>
+                <div class="div-23 cursor-pointer" @click="!config.isDefault && toggleScoreboardFormat()">
+                    <div class="div-24" >Default</div>
                     <img v-if="config.isDefault" loading="lazy"
                         src="https://cdn.builder.io/api/v1/image/assets/TEMP/e6d22a9698f6d15e1ac4912354886c20595f9f2a34f0061a77beb539396200cc?"
                         class="img-5" />
-                    <div v-else class="div-25" @click="toggleScoreboardFormat">
+                    <div v-else class="div-25">
                         <div class="div-26"></div>
                     </div>
                 </div>
             </div>
             <div class="div-27">
-                <div class="div-28">
+                <div class="div-28 cursor-pointer" @click="config.isDefault && toggleScoreboardFormat()">
                     <div class="div-29">Classic</div>
-                    <div v-if="config.isDefault" class="div-25" @click="toggleScoreboardFormat">
+                    <div v-if="config.isDefault" class="div-25">
                         <div class="div-26"></div>
                     </div>
                     <img v-else loading="lazy"

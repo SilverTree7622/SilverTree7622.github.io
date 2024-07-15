@@ -4,6 +4,7 @@
             <template v-for="(league, idx) in props.result_league_list">
                 <CommonContentSportOdds 
                     :idx="idx"
+                    :sportSection="'football'"
                     :isLast="chckIsLast(idx)"
                     :league="league"
                 />

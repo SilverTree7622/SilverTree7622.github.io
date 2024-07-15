@@ -9,7 +9,7 @@
             {{ props.title }}
         </div>
     </div>
-    <img v-else class="line-1-head" src="/img/line-1@2x.png" alt="Line 1" />
+    <!-- <img v-else class="line-1-head" src="/img/line-1@2x.png" alt="Line 1" /> -->
 </template>
 
 <script setup lang="ts">
@@ -29,7 +29,7 @@ const goStore = useGoStore();
 .frame-384 {
     align-items: center;
     align-self: stretch;
-    background-color: var(--ctgray);
+    background-color: #e0e4ea;
     border-radius: 10px 10px 0px 0px;
     display: flex;
     gap: 6px;
@@ -42,7 +42,7 @@ const goStore = useGoStore();
 .frame-17 {
     align-items: center;
     align-self: stretch;
-    background-color: var(--ctgray);
+    background-color: #e0e4ea;
     display: flex;
     gap: 6px;
     height: 34px;

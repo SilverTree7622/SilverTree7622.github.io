@@ -49,6 +49,7 @@
         </div>
         <div class="div-7">
           <div class="div-8">
+            <!-- src="/img/Scoreboard_Time.svg" -->
             <div class="div-9">{{ props.prefix }}</div>
             <div class="div-10">{{ props.time }}</div>
           </div>
@@ -207,7 +208,6 @@ onMounted(async () => {
   display: flex;
   gap: 0px;
   font-size: 12px;
-  text-transform: uppercase;
 }
 .div-9 {
   font-family: Pretendard, sans-serif;

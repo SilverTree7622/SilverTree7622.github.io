@@ -6,7 +6,7 @@
         :src="contentStore.getLeagueFlag(props.league)"
         :alt="contentStore.getLeagueAlt(props.league)"
     />
-    <div class="live_-match">
+    <!-- <div class="live_-match">
         <CommonContentCountry :title="contentStore.getParticipantName(props.league, 0)" :src="contentStore.getParticipantSrc(props.league, 0)" />
         <CommonContentMatch :time="contentStore.getMatchTime(props.league)" />
         <CommonContentCountry :title="contentStore.getParticipantName(props.league, 1)" :src="contentStore.getParticipantSrc(props.league, 1)" />
@@ -19,56 +19,116 @@
         :draw="13.5"
         :low="1.05"
         :value="25"
-    />
+    /> -->
+    
+    <!-- match content via conditions -->
+    <div v-if="hasSlot('default')">
+        <!-- custom default style -->
+        <slot
+            :idx="props.idx"
+            :homeLogo="contentStore.getParticipantSrc(props.league, 0)"
+            :homeName="contentStore.getParticipantName(props.league, 0)"
+            :time="contentStore.getMatchTime(props.league)"
+            :awayLogo="contentStore.getParticipantSrc(props.league, 1)"
+            :awayName="contentStore.getParticipantName(props.league, 1)"
+            :goLiveTracker="() => goLiveTracker(props.league)"
+            :isFavorite="false"
+        />
+    </div>
+    <div v-else-if="!useSettingStore().getData().isDefault">
+        <!-- classic style -->
+        <CommonContentSportStyleOddsClassic
+            :idx="props.idx"
+            :homeLogo="contentStore.getParticipantSrc(props.league, 0)"
+            :homeName="contentStore.getParticipantName(props.league, 0)"
+            :time="getTime()"
+            :awayLogo="contentStore.getParticipantSrc(props.league, 1)"
+            :awayName="contentStore.getParticipantName(props.league, 1)"
+            :goLiveTracker="() => goLiveTracker(props.league)"
+            :isLiving="getIsLiving()"
+            :isFavorite="false"
+        />
+    </div>
+    <div v-else>
+        <!-- default style item -->
+        <CommonContentSportStyleOddsDefault
+            :idx="props.idx"
+            :homeLogo="contentStore.getParticipantSrc(props.league, 0)"
+            :homeName="contentStore.getParticipantName(props.league, 0)"
+            :time="getTime()"
+            :awayLogo="contentStore.getParticipantSrc(props.league, 1)"
+            :awayName="contentStore.getParticipantName(props.league, 1)"
+            :goLiveTracker="() => goLiveTracker(props.league)"
+            :isFavorite="false"
+            :isToday="getIsToday()"
+        />
+    </div>
 </template>
 
 <script setup lang="ts">
+import type { TCommonSchedule } from "~/types/Common/schedule";
+import type { TCommonSportSection } from "~/types/Common/sport";
 import type { TFootBallSchedule } from "~/types/FootBall/schedule";
+import type { TMatchUpStoreConfig } from "~/types/matchUp";
+import UtilDate from "~/utils/date";
 
 const props = defineProps<{
     idx: number;
-    isLast?: boolean;
+    sportSection: TCommonSportSection;
     league: TFootBallSchedule;
+    isLast: boolean;
 }>();
 
+const goStore = useGoStore();
 const contentStore = useContentStore();
+const slots = useSlots();
+
+const hasSlot = (name) => {
+    return !!slots[name];
+};
+
+const getIsLiving = () => {
+    const {
+        isLiving,
+    } = contentStore.getOddsTime(
+        'football',
+        props.league.ai_status_id,
+        props.league['ai_kickoff_timestamp'] ?? props.league.ai_match_time,
+    );
+    return isLiving;
+};
+
+const getTime = () => {
+    const {
+        time,
+    } = contentStore.getOddsTime(
+        'football',
+        props.league.ai_status_id,
+        props.league['ai_kickoff_timestamp'] ?? props.league.ai_match_time,
+    );
+    return time;
+};
+
+const getIsToday = () => {
+    return UtilDate.chckDateIsToday(new Date(Date.now()));
+};
+
+const goLiveTracker = (league: TCommonSchedule) => {
+    const config: TMatchUpStoreConfig = {
+        match_id: league.match_id,
+        leagueName: league.ai_competition_name,
+        timestamp: league.ai_match_time,
+        homeLogo: league.ai_home_team_img,
+        homeName: league.ai_home_team_name,
+        homeScore: contentStore.getScore(props.sportSection, 'home', league)[0],
+        awayLogo: league.ai_away_team_img,
+        awayName: league.ai_away_team_name,
+        awayScore: contentStore.getScore(props.sportSection, 'away', league)[0],
+        matchStatus: league.ai_status_id,
+    };
+    goStore.go_livetraker(league.match_id, config);
+};
 </script>
 
 <style scoped>
-@import '@/public/css/styleguide.css';
-@import '@/public/css/globals.css';
-@import '@/public/css/addStyle.css';
-
-.frame-317 {
-  align-items: flex-start;
-  align-self: stretch;
-  background-color: var(--bggray);
-  border-radius: 10px 10px 0px 0px;
-  display: flex;
-  flex: 0 0 auto;
-  flex-direction: column;
-  gap: 10px;
-  position: relative;
-  width: 100%;
-}
-
-.live_-match {
-  align-items: center;
-  align-self: stretch;
-  display: flex;
-  flex: 0 0 auto;
-  gap: 20px;
-  justify-content: center;
-  padding: 0px 10px;
-  position: relative;
-  /* width: 100%; */
-}
-
-.line {
-  align-self: stretch;
-  height: 1px;
-  object-fit: cover;
-  position: relative;
-  width: 100%;
-}
 </style>

@@ -8,9 +8,8 @@
                 <CommonContentSportFixtures
                     ref="$fixtures"
                     :idx="idx"
+                    :sportSection="'football'"
                     :league="league"
-                    :getScore="(prefix, schedule) => Types.getScore('football', prefix, schedule)"
-                    :getTime="(ai_match_status: number, ai_kickoff_timestamp: number) => Types.getTime('football', ai_match_status, ai_kickoff_timestamp)"
                 />
             </template>
         </div>
@@ -18,7 +17,6 @@
 </template>
 
 <script setup lang="ts">
-import * as Types from '~/types';
 import type { TFootBallSchedule } from "~/types/FootBall/schedule";
 
 const props = defineProps<{

@@ -38,11 +38,10 @@
                 </div>
             </div>
         </div>
-        <div class="div">
-            <div class="div-2">1.55</div>
-            <div class="div-3">1.55</div>
-            <div class="div-4">1.55</div>
-        </div>
+        <CommonBetGroupOdds
+            :value="[ 1.55, 1.55, 1.55 ]"
+            class="mb-[6px]"
+        />
         <img class="btn_-veiw-matchup cursor-pointer" src="/img/Btn_VeiwMatchup.svg" @click="clickViewMatchUp" />
     </div>
 </template>
@@ -469,41 +468,5 @@ onBeforeUnmount(() => {
     align-items: center;
     display: flex;
     position: relative;
-}
-
-.div {
-    display: flex;
-    gap: 8px;
-    font-size: 12px;
-    color: #000;
-    font-weight: 600;
-    white-space: nowrap;
-    text-align: center;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-}
-
-.div-2 {
-    font-family: Pretendard, sans-serif;
-    justify-content: center;
-    border-radius: 3px;
-    background-color: #e7e7e7;
-    padding: 2px 40px;
-}
-
-.div-3 {
-    font-family: Pretendard, sans-serif;
-    justify-content: center;
-    border-radius: 3px;
-    background-color: #e7e7e7;
-    padding: 2px 40px;
-}
-
-.div-4 {
-    font-family: Pretendard, sans-serif;
-    justify-content: center;
-    border-radius: 3px;
-    background-color: #e7e7e7;
-    padding: 2px 40px;
 }
 </style>

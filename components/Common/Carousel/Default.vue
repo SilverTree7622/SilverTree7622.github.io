@@ -45,7 +45,7 @@
                             v-for="(item, idx) in props.list"
                             :id="`carousel-indicator-${ idx + 1 }`"
                             type="button"
-                            class="h-[8px] w-[8px] rounded-full bg-transparent"
+                            class="h-[8px] w-[8px] rounded-full"
                             :aria-current="(idx === 0)"
                             :aria-label="`Slide ${ idx + 1 }`"
                             :data-carousel-slide-to="`${ idx }`"
@@ -208,7 +208,7 @@ onMounted(async () => {
             defaultPosition: 1,
             indicators: {
                 activeClasses: 'bg-[#0C4ba7] border-[#0C4ba7] border-2',
-                inactiveClasses: 'border-[#0C4ba7] border-2',
+                inactiveClasses: 'border-[#0C4ba7] border-2 bg-transparent',
                 items: indicatorList,
             },
             onNext: () => { actAnim(); },

@@ -1,6 +1,4 @@
-
 <template>
-    <!-- <div class="live-match-default"> -->
   <div class="div">
     <div class="div-2 mr-4">
       <img
@@ -10,7 +8,7 @@
       />
       <div class="div-3">0.0 M</div>
     </div>
-    <div class="div-4 mr-2">
+    <div class="div-4">
       <div class="div-5">
         {{ props.time }}
       </div>
@@ -28,13 +26,7 @@
             </div>
           </div>
           <div class="div-10">
-            <div class="div-11">
-              {{ props.homeScore }}
-            </div>
-            <CommonFavoriteStar
-              :isFavorite="false"
-              class="mr-2"
-            />
+            <CommonFavoriteStar :isFavorite="false" class="mr-2" />
           </div>
         </div>
         <div class="div-12">
@@ -50,65 +42,38 @@
             </div>
           </div>
           <div class="div-15">
-            <div class="div-16">
-              {{ props.awayScore }}
-            </div>
-            <CommonFavoriteStar
-              :isFavorite="false"
-              class="mr-2"
-            />
+            <CommonFavoriteStar :isFavorite="false" class="mr-2" />
           </div>
         </div>
       </div>
       <img
         loading="lazy"
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/dcfc3d3b9f672dda4a04926881018ca0991d53f999c04d40a2bd7594a6984eff?"
-        class="img-6 ml-2"
+        src="/img/Btn_Matchup_Default.svg"
+        class="img-6 ml-2 cursor-pointer"
+        @click="props.goLiveTracker()"
       />
     </div>
   </div>
-  <!-- </div> -->
 </template>
 
 <script setup lang="ts">
 const props = defineProps<{
-    idx: number;
-    homeLogo: string;
-    homeName: string;
-    homeScore: number;
-    time: string;
-    awayLogo: string;
-    awayName: string;
-    awayScore: number;
-    goLiveTracker: () => void;
-    updateOpt: {
-        time: boolean;
-        score1: boolean;
-        score2: boolean;
-    };
-    isFavorite?: boolean;
+  idx: number;
+  homeLogo: string;
+  homeName: string;
+  time: string;
+  awayLogo: string;
+  awayName: string;
+  goLiveTracker: () => void;
+  isFavorite?: boolean;
 }>();
 
 onMounted(async () => {
-    await nextTick();
+  await nextTick();
 });
 </script>
 
 <style scoped>
-
-.live-match-default {
-  align-items: center;
-  align-self: stretch;
-  display: flex;
-  flex: 0 0 auto;
-  flex-wrap: wrap;
-  gap: 4px 0px;
-  justify-content: center;
-  padding: 0px 4px;
-  position: relative;
-  width: 100%;
-}
-
 .div {
   align-self: stretch;
   border-color: rgba(224, 228, 234, 1);
@@ -116,7 +81,7 @@ onMounted(async () => {
   border-bottom-width: 1px;
   background-color: #f8f8f8;
   display: flex;
-  
+
   flex-direction: column;
 }
 .div-2 {
@@ -158,8 +123,9 @@ onMounted(async () => {
   font-family: Pretendard, sans-serif;
   align-self: stretch;
   margin: auto 0;
-  width: 32px;
+  width: 46px;
   text-align: center;
+  padding-right: 4px;
 }
 .div-6 {
   border-color: rgba(224, 228, 234, 1);
@@ -262,13 +228,8 @@ onMounted(async () => {
   aspect-ratio: 2.33;
   object-fit: auto;
   object-position: center;
-  width: 60px;
+  width: 64px;
   align-self: stretch;
-  /*
-  border-color: rgba(162, 183, 249, 1);
-  border-style: solid;
-  border-width: 1px;
-  */
   margin: auto 0;
 }
 </style>

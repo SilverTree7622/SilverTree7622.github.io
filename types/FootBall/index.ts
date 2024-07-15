@@ -30,7 +30,6 @@ export const getScore = (prefix: TContentStorePrefix, schedule: TFootBallSchedul
 };
 
 export const getPrefix = (ai_match_status: number, ai_kickoff_timestamp: number) => {
-    console.log('ai_match_status from football getprefix: ', ai_match_status);
     if (ai_match_status === 2) {
         return '1H';
     }
