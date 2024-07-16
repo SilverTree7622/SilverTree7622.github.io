@@ -29,11 +29,22 @@ export const getScore = (prefix: TContentStorePrefix, schedule: TVolleyBallSched
     return schedule['ai_scores']['ft'][ prefix === 'home' ? 0 : 1 ];
 };
 
+export const getPrefix = (ai_match_status: number, ai_kickoff_timestamp: number): string => {
+    return 'SET';
+};
+
 export const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): string => {
-    const currentTime = UtilDate.getWithOutMillisecond();
-    const kickOffTime = ai_kickoff_timestamp;
-    const gapTime = currentTime - kickOffTime;
-    let dateTime = gapTime / 60 + 1;
-    const matchUpTime = `${ UtilDate.syncDigit(~~(dateTime)) }’`;
-    return matchUpTime;
+    if (ai_match_status === 432) {
+        return '1';
+    }
+    if (ai_match_status === 434) {
+        return '2';
+    }
+    if (ai_match_status === 436) {
+        return '3';
+    }
+    if (ai_match_status === 438) {
+        return '4';
+    }
+    return '5'
 };

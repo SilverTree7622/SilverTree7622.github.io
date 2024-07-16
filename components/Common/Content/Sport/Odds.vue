@@ -106,8 +106,16 @@ const getTime = () => {
     return time;
 };
 
-const getIsToday = () => {
-    return UtilDate.chckDateIsToday(new Date(Date.now()));
+const getIsToday = (): number => {
+    const measureDate = UtilDate.addMillisecond(props.league.ai_match_time);
+    const isToday = UtilDate.chckDateIsToday(measureDate);
+    if (isToday) {
+        return 0;
+    }
+    if (UtilDate.chckIsYesterday(measureDate)) {
+        return -1;
+    }
+    return 1;
 };
 
 const goLiveTracker = (league: TCommonSchedule) => {

@@ -133,13 +133,13 @@ export const getPrefix = (
         return basketball.getPrefix(ai_match_status, ai_kickoff_timestamp);
     }
     if (sportSection === 'baseball') {
-        return baseball.getTime(ai_match_status, ai_kickoff_timestamp);
+        return baseball.getPrefix(ai_match_status, ai_kickoff_timestamp);
     }
     if (sportSection === 'volleyball') {
-        return volleyball.getTime(ai_match_status, ai_kickoff_timestamp);
+        return volleyball.getPrefix(ai_match_status, ai_kickoff_timestamp);
     }
     if (sportSection === 'tennis') {
-        return tennis.getTime(ai_match_status, ai_kickoff_timestamp);
+        return tennis.getPrefix(ai_match_status, ai_kickoff_timestamp);
     }
     if (sportSection === 'icehockey') {
         return icehockey.getTime(ai_match_status, ai_kickoff_timestamp);

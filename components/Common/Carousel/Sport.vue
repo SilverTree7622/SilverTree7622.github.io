@@ -92,6 +92,8 @@
             v-if="getShowCondition('baseball', 'live')"
             :title="getTitle(props.tab)"
             :height="getHeight(props.tab)"
+            :background="'TopScore_BG_Baseball.svg'"
+            :arrow="`TopScore_Left_TEAM_Baseball.svg`"
             :tab="props.tab"
             :list="props.list"
         />
@@ -129,6 +131,8 @@
             v-if="getShowCondition('volleyball', 'live')"
             :title="getTitle(props.tab)"
             :height="getHeight(props.tab)"
+            :background="'TopScore_BG_Volleyball.svg'"
+            :arrow="`TopScore_Left_TEAM_Volleyball.svg`"
             :tab="props.tab"
             :list="props.list"
         />
@@ -166,6 +170,8 @@
             v-if="getShowCondition('tennis', 'live')"
             :title="getTitle(props.tab)"
             :height="getHeight(props.tab)"
+            :background="'TopScore_BG_Tennis.svg'"
+            :arrow="`TopScore_Left_TEAM_Tennis.svg`"
             :tab="props.tab"
             :list="props.list"
         />
@@ -203,6 +209,8 @@
             v-if="getShowCondition('icehockey', 'live')"
             :title="getTitle(props.tab)"
             :height="getHeight(props.tab)"
+            :background="'TopScore_BG_IceHockey.svg'"
+            :arrow="`TopScore_Left_TEAM_Icehockey.svg`"
             :tab="props.tab"
             :list="props.list"
         />

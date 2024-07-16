@@ -22,8 +22,16 @@ const UtilDate = {
         d1.getUTCDate() === d2.getUTCDate();
     },
 
-    chckDateIsToday: (d: Date) => {
+    chckDateIsToday: (d: Date): boolean => {
         return UtilDate.chckSameDay(d, new Date(Date.now()));
+    },
+
+    chckIsYesterday: (d: Date): boolean => {
+        const isToday = UtilDate.chckDateIsToday(d);
+        if (isToday) {
+            return false;
+        }
+        return new Date(d).getTime() < new Date(Date.now()).getTime();
     },
 
     getWithOutMillisecond: (timestamp?: number): number => {

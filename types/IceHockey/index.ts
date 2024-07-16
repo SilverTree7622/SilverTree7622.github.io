@@ -35,6 +35,16 @@ export const getScore = (prefix: TContentStorePrefix, schedule: TIceHockeySchedu
     return schedule['ai_scores']['ft'][ prefix === 'home' ? 0 : 1 ];
 };
 
+export const getPrefix = (ai_match_status: number, ai_kickoff_timestamp: number): string => {
+    if (ai_match_status === 30 || ai_match_status === 331) {
+        return '1PER';
+    }
+    if (ai_match_status === 31 || ai_match_status === 332) {
+        return '2PER';
+    }
+    return '3PER';
+};
+
 export const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): string => {
     const currentTime = UtilDate.getWithOutMillisecond();
     const kickOffTime = ai_kickoff_timestamp;

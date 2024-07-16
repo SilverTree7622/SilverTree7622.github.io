@@ -18,12 +18,16 @@
                     </div>
                 </div>
                 <div class="div-7">
-                    <div v-show="props.isToday" class="div-8">
+                    <div v-if="props.isToday < 0" class="div-8">
+                        <div class="div-9-finished">FINISHED</div>
+                        <div class="div-10">{{ props.time }}</div>
+                    </div>
+                    <div v-if="props.isToday === 0" class="div-8">
                         <div class="div-9">TODAY</div>
                         <div class="div-10">{{ props.time }}</div>
                     </div>
-                    <div v-show="!props.isToday" class="div-8">
-                        <div class="div-9-not-today">Fixtures</div>
+                    <div v-if="props.isToday > 0" class="div-8">
+                        <div class="div-9-fixtures">Fixtures</div>
                         <div class="div-10">{{ props.time }}</div>
                     </div>
                     <div class="vs-fixtures headline">VS</div>
@@ -60,7 +64,7 @@ const props = defineProps<{
   awayName: string;
   goLiveTracker: () => void;
   isFavorite?: boolean;
-  isToday?: boolean;
+  isToday: number;
 }>();
 
 onMounted(async () => {
@@ -177,6 +181,21 @@ onMounted(async () => {
   font-size: 12px;
   text-transform: uppercase;
 }
+
+.div-9-finished {
+  font-family: Pretendard, sans-serif;
+  justify-content: center;
+  background: conic-gradient(
+    from 191deg at 112.82% -69.44%,
+    #6B6D6F 0deg,
+    #dde0e3 360deg
+  );
+  color: #fff;
+  text-align: right;
+  padding: 0 10px 0 2px;
+  padding-left: 4px;
+}
+
 .div-9 {
   font-family: Pretendard, sans-serif;
   justify-content: center;
@@ -191,7 +210,7 @@ onMounted(async () => {
   padding-left: 4px;
 }
 
-.div-9-not-today {
+.div-9-fixtures {
   font-family: Pretendard, sans-serif;
   justify-content: center;
   background: conic-gradient(
