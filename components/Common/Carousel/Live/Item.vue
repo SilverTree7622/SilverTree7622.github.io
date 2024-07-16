@@ -2,7 +2,7 @@
     <div class="top_-scores_-content h-[181px]">
         <div class="top-scores_-top">
             <div class="frame-594">
-                <img class="premier_-league_logo-1" :src="`/img/premier-league-logo-1@2x.png`" />
+                <img class="premier_-league_logo-1" :src="props.background ? `/img/${ props.background }` : `/img/premier-league-logo-1@2x.png`" />
                 <div class="top-scores_-league">
                     <div class="epl body2">
                         {{ props.item.name }}
@@ -27,7 +27,7 @@
         </div>
         <div class="frame-576">
             <div class="top-score">
-                <img class="top-scores_-team-bg" draggable="false" src="/img/topscores-teambg@2x.png" alt="TopScores_TeamBG" />
+                <img class="top-scores_-team-bg" draggable="false" :src="props.arrow ? `/img/${ props.arrow }` : `/img/topscores-teambg@2x.png`" alt="TopScores_TeamBG" />
                 <div class="top-scores_-left_-team -mt-[88px]">
                     <div class="top-scores_-favourite_-left-team">
                         <CommonFavoriteStar class="pr-7" />
@@ -59,7 +59,7 @@
                 </div>
             </div>
             <div class="top-score">
-                <img class="top-scores_-team-bg" draggable="false" src="/img/topscores-teambg-1@2x.png" alt="TopScores_TeamBG" />
+                <img class="top-scores_-team-bg" draggable="false" :src="props.arrow ? `/img/${ props.arrow }` : `/img/topscores-teambg@2x.png`" alt="TopScores_TeamBG" style="transform:rotate(180deg);" />
                 <div class="top-scores_-right_-team -mt-[88px]">
                     <div class="top-scores_-favourite_-right-team">
                         <CommonFavoriteStar class="pr-7" />
@@ -84,6 +84,8 @@
 <script setup lang="ts">
 const props = defineProps<{
     item: any;
+    background?: string;
+    arrow?: string;
     // leagueLogo?: string;
     // commentId?: string;
     // commentContext?: string;

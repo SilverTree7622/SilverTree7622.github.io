@@ -4,7 +4,7 @@
             <template v-for="(league, idx) in props.result_league_list">
                 <CommonContentSportOdds 
                     :idx="idx"
-                    :isLast="chckIsLast(idx)"
+                    :sportSection="'icehockey'"
                     :league="league"
                 />
             </template>
@@ -18,10 +18,6 @@ import type { TIceHockeySchedule } from '~/types/IceHockey/schedule';
 const props = defineProps<{
     result_league_list: TIceHockeySchedule[];
 }>();
-
-const chckIsLast = (idx: number) => {
-    return idx === (props.result_league_list.length - 1);
-};
 
 </script>
 

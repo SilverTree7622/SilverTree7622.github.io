@@ -76,7 +76,6 @@ const props = defineProps<{
     idx: number;
     sportSection: TCommonSportSection;
     league: TFootBallSchedule;
-    isLast: boolean;
 }>();
 
 const goStore = useGoStore();

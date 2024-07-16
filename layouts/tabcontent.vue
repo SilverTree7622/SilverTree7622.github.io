@@ -10,7 +10,7 @@
             :sName="props.sName"
             :tab="props.tab"
             :isPending="props.isPending"
-            :list="[ { name: 'wth' }, { name: 'wth2' }, { name: 'wth3' } ]"
+            :list="props.pagedListLength ? [ { name: 'wth' }, { name: 'wth2' }, { name: 'wth3' } ] : []"
         />
 
         <div class="pt-[2px]"></div>
@@ -20,8 +20,12 @@
                 <!-- sport, filter options section -->
                 <div v-if="props.tab !== 'league'" class="frame-369">
                     <div class="frame-5 biggerbody">
-                        <div class="football-3 valign-text-middle football-4">{{ ECommonSportSectionValue[ props.sName ] }}</div>
-                        <div class="text-1 valign-text-middle">({{ props.pagedListLength }})</div>
+                        <div class="football-3 valign-text-middle football-4">
+                            {{ ECommonSportSectionValue[ props.sName ] }}
+                        </div>
+                        <div class="text-1 valign-text-middle">
+                            ({{ props.pagedListLength }})
+                        </div>
                     </div>
                     <div class="sport-title_-date_-set">
                         <CommonFilterByTime />
@@ -225,6 +229,7 @@ onMounted(async () => {
     await nextTick();
     await props.updateLiveRealTime();
     leftStore.onMountedSport(props.sName);
+    console.log('props.sName: ', props, props.sName);
 });
 
 onBeforeUnmount(() => {

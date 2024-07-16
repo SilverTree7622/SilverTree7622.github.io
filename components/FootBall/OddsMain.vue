@@ -5,7 +5,6 @@
                 <CommonContentSportOdds 
                     :idx="idx"
                     :sportSection="'football'"
-                    :isLast="chckIsLast(idx)"
                     :league="league"
                 />
             </template>
@@ -19,11 +18,6 @@ import type { TFootBallSchedule } from '~/types/FootBall/schedule';
 const props = defineProps<{
     result_league_list: TFootBallSchedule[];
 }>();
-
-const chckIsLast = (idx: number) => {
-    return idx === (props.result_league_list.length - 1);
-};
-
 </script>
 
 <style scoped></style>

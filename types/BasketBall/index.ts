@@ -30,6 +30,24 @@ export const getScore = (prefix: TContentStorePrefix, schedule: TBasketBallSched
     return schedule[`ai_${ prefix }_scores`][0];
 };
 
+export const getPrefix = (ai_match_status: number, ai_kickoff_timestamp: number) => {
+    if (ai_match_status === 2 || ai_match_status === 3) {
+        return 'Q1';
+    }
+    else if (ai_match_status === 4 || ai_match_status === 5) {
+        return 'Q2';
+    }
+    else if (ai_match_status === 6 || ai_match_status === 7) {
+        return 'Q3';
+    }
+    else if (ai_match_status === 7 || ai_match_status === 8) {
+        return 'Q4';
+    }
+    else {
+        return 'Q4';
+    }
+};
+
 export const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): string => {
     // default time calculation via match status
     const currentTime = UtilDate.getWithOutMillisecond();

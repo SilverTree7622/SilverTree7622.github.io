@@ -103,6 +103,7 @@ onMounted(async () => {
   padding: 0px 4px;
   position: relative;
   width: 100%;
+  min-height: 108px;
 }
 
 .div {

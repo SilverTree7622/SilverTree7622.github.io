@@ -1,5 +1,5 @@
 <template>
-  <div class="div-odds-classic">
+  <div class="div-odds-classic" :class="props.isLast ? 'rounded-b-lg' : ''">
     <div class="div-4">
       <div class="div-5" :class="props.isLiving ? 'text-[#b14646]' : 'text-black'">
         {{ props.time }}
@@ -56,6 +56,7 @@ const props = defineProps<{
   awayName: string;
   isLiving: boolean;
   isFavorite?: boolean;
+  isLast?: boolean;
 }>();
 
 onMounted(async () => {
@@ -66,10 +67,10 @@ onMounted(async () => {
 <style scoped>
 .div-odds-classic {
   align-self: stretch;
-  border-color: rgba(224, 228, 234, 1);
+  /* border-color: rgba(224, 228, 234, 1);
   border-style: solid;
   border-bottom-width: 1px;
-  background-color: #f8f8f8;
+  background-color: #f8f8f8; */
   display: flex;
   min-height: 64px;
   flex-direction: column;

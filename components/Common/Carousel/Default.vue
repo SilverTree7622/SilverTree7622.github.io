@@ -24,18 +24,23 @@
                             <CommonCarouselLiveItem
                                 v-if="props.tab === 'live'"
                                 :item="item"
+                                :background="props.background"
+                                :arrow="props.arrow"
                             />
                             <CommonCarouselFixturesItem
                                 v-if="props.tab === 'fixtures'"
                                 :item="item"
+                                :background="props.background"
                             />
                             <CommonCarouselOddsItem
                                 v-if="props.tab === 'odds'"
                                 :item="item"
+                                :background="props.background"
                             />
                             <CommonCarouselResultItem
                                 v-if="props.tab === 'result'"
                                 :item="item"
+                                :background="props.background"
                             />
                         </div>
                     </div>
@@ -91,6 +96,7 @@
                 <CommonCarouselLeagueFrame
                     v-else
                     :list="props.list"
+                    :name="`carousel`"
                 />
             </div>
         </div>
@@ -108,6 +114,8 @@ const props = defineProps<{
     title: TCarouselTitle;
     tab: TCommonTabTypes;
     list: any[];
+    background?: string;
+    arrow?: string;
     height?: number;
 }>();
 

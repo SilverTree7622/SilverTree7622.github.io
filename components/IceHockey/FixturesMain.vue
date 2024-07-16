@@ -8,6 +8,7 @@
                 <CommonContentSportFixtures
                     ref="$fixtures"
                     :idx="idx"
+                    :sportSection="'icehockey'"
                     :league="league"
                 />
             </template>

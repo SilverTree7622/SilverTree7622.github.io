@@ -8,9 +8,8 @@
                 <CommonContentSportLive
                     ref="$live"
                     :idx="idx"
+                    :sportSection="'volleyball'"
                     :league="league"
-                    :getScore="(prefix, schedule) => Types.getScore('volleyball', prefix, schedule)"
-                    :getTime="(ai_match_status: number, ai_kickoff_timestamp: number) => Types.getTime('volleyball', ai_match_status, ai_kickoff_timestamp)"
                 />
             </template>
         </div>

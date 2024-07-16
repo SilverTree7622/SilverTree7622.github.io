@@ -74,7 +74,10 @@ const hasSlot = (name) => {
 };
 
 const getIsToday = () => {
-    return UtilDate.chckDateIsToday(new Date(Date.now()));
+    const isToday = UtilDate.chckDateIsToday(
+        UtilDate.addMillisecond(props.league.ai_match_time)
+    );
+    return isToday;
 };
 
 const goLiveTracker = (league: TCommonSchedule) => {

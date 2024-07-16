@@ -4,8 +4,8 @@
             <template v-for="(league, idx) in props.result_league_list">
                 <CommonContentSportResult
                     :idx="idx"
+                    :sportSection="'baseball'"
                     :league="league"
-                    :getScore="(prefix, schedule) => Types.getScore('baseball', prefix, schedule)"
                 />
             </template>
         </div>

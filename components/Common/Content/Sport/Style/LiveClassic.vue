@@ -111,10 +111,10 @@ onMounted(async () => {
 
 .div {
   align-self: stretch;
-  border-color: rgba(224, 228, 234, 1);
+  /* border-color: rgba(224, 228, 234, 1);
   border-style: solid;
   border-bottom-width: 1px;
-  background-color: #f8f8f8;
+  background-color: #f8f8f8; */
   display: flex;
   
   flex-direction: column;

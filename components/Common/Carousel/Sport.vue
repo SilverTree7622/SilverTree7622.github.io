@@ -53,6 +53,8 @@
             v-if="getShowCondition('basketball', 'live')"
             :title="getTitle(props.tab)"
             :height="getHeight(props.tab)"
+            :background="'TopScore_BG_Basketball.svg'"
+            :arrow="`TopScore_Left_TEAM_Basketball.svg`"
             :tab="props.tab"
             :list="props.list"
         />
@@ -257,6 +259,7 @@ const getHeight = (tab: TCommonTabTypes): number => {
 
 onMounted(async () => {
     await nextTick();
+    console.log('props.list.length: ', props.list.length);
 });
 
 onBeforeUnmount(() => {

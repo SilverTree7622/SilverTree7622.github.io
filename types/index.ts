@@ -130,7 +130,7 @@ export const getPrefix = (
         return football.getPrefix(ai_match_status, ai_kickoff_timestamp);
     }
     if (sportSection === 'basketball') {
-        return basketball.getTime(ai_match_status, ai_kickoff_timestamp);
+        return basketball.getPrefix(ai_match_status, ai_kickoff_timestamp);
     }
     if (sportSection === 'baseball') {
         return baseball.getTime(ai_match_status, ai_kickoff_timestamp);

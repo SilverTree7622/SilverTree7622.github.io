@@ -4,8 +4,8 @@
             <template v-for="(league, idx) in props.result_league_list">
                 <CommonContentSportResult
                     :idx="idx"
+                    :sportSection="'volleyball'"
                     :league="league"
-                    :getScore="(prefix, schedule) => Types.getScore('volleyball', prefix, schedule)"
                 />
             </template>
         </div>
@@ -13,7 +13,6 @@
 </template>
 
 <script setup lang="ts">
-import * as Types from '~/types/';
 import type { TVolleyBallSchedule } from "~/types/VolleyBall/schedule";
 
 const props = defineProps<{

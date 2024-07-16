@@ -4,7 +4,7 @@
         :isPending="opt.isPending"
         :contentIsPending="page.isPending"
         :isOutOfContent="opt.isOutOfContent"
-        :sName="'BasketBall'"
+        :sName="'basketball'"
         :tab="opt.tab"
         :result="opt.result"
         :sortedList="list.sortedList"
@@ -34,6 +34,7 @@
         />
         <BasketBallLeagueMain
             v-if="opt.tab === 'league'"
+            :list="[ { name: 'context1' }, { name: 'context2' }, { name: 'context3' } ]"
         />
     </NuxtLayout>
 </template>

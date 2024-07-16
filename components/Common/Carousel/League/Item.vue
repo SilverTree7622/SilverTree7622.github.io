@@ -68,10 +68,10 @@ const props = defineProps<{
 
 const getRoundedClassHead = (): string => {
     if (props.idx === 0) {
-        return 'rounded-t-xl';
+        return 'rounded-t-lg';
     }
     if ((props.idx + 1) === props.length) {
-        return 'rounded-b-xl';
+        return 'rounded-b-lg';
     }
     return '';
 };
@@ -79,14 +79,14 @@ const getRoundedClassHead = (): string => {
 const getRoundedClassTitle = (): string => {
     // first
     if (props.idx === 0) {
-        return 'rounded-t-xl';
+        return 'rounded-t-lg';
     }
     // last
     if ((props.idx + 1) === props.length) {
         if (props.isOpen) {
             return '';
         }
-        return 'rounded-b-xl';
+        return 'rounded-b-lg';
     }
     // middle
     return '';
@@ -94,7 +94,7 @@ const getRoundedClassTitle = (): string => {
 
 const getRotation = (): string => {
     if (props.isOpen) {
-        return 
+        return '';
     }
     return '-rotate-90';
 };
@@ -102,7 +102,7 @@ const getRotation = (): string => {
 const getRoundedClassContext = (): string => {
     // last
     if (props.idx + 1 === props.length) {
-        return 'rounded-b-xl';
+        return 'rounded-b-lg';
     }
     return '';
 };
