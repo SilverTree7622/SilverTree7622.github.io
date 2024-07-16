@@ -58,10 +58,15 @@
             <div class="div-13">:</div>
             <div class="div-14">{{ props.awayScore }}</div>
           </div>
+          
+          <div class="my-4">
+            <slot />
+          </div>
+
           <img
             loading="lazy"
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/dcfc3d3b9f672dda4a04926881018ca0991d53f999c04d40a2bd7594a6984eff?"
-            class="img-4 cursor-pointer"
+            class="img-4 cursor-pointer mb-2"
             @click="props.goLiveTracker()"
           />
         </div>

@@ -267,7 +267,6 @@ const getHeight = (tab: TCommonTabTypes): number => {
 
 onMounted(async () => {
     await nextTick();
-    console.log('props.list.length: ', props.list.length);
 });
 
 onBeforeUnmount(() => {

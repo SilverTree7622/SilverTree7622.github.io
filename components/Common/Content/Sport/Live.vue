@@ -47,7 +47,9 @@
                 score2: updateOpt.score2,
             }"
             :isFavorite="false"
-        />
+        >
+            <slot name="inning" />
+        </CommonContentSportStyleLiveClassic>
     </div>
     <div v-else>
         <!-- default style item -->
@@ -68,7 +70,9 @@
                 score2: updateOpt.score2,
             }"
             :isFavorite="false"
-        />
+        >
+            <slot name="inning" />
+        </CommonContentSportStyleLiveDefault>
     </div>
 </template>
 
@@ -77,11 +81,12 @@ import type { TCommonLiveRealTime } from "~/types/Common/Live";
 import type { TMatchUpStoreConfig } from "~/types/matchUp";
 import type { TCommonSchedule } from "~/types/Common/schedule";
 import type { TCommonSportSection } from "~/types/Common/sport";
+import type { TSportScheduleTypes } from "~/types/schedule";
 
 const props = defineProps<{
     idx: number;
     sportSection: TCommonSportSection;
-    league: TCommonSchedule;
+    league: TSportScheduleTypes;
 }>();
 
 const prev = reactive({

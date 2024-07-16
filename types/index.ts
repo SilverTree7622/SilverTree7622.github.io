@@ -8,6 +8,7 @@ import type { TCommonSportSection } from "./Common/sport";
 import type { TAuthGuest, TAuthUser } from "./Auth";
 import type { TCommonSchedule } from "./Common/schedule";
 import type { TSelectorTime } from "./Selector";
+import type { TSportScheduleTypes } from './schedule';
 
 // export enum EError {
 //     SUCCESS = { code: 0, type: null, title: '', message: '', },
@@ -101,7 +102,7 @@ export const isResult = (sportSection: TCommonSportSection, ai_status_id: number
 };
 
 
-export const getScore = (sportSection: TCommonSportSection, prefix: TContentStorePrefix, schedule: TCommonSchedule): number => {
+export const getScore = (sportSection: TCommonSportSection, prefix: TContentStorePrefix, schedule: TSportScheduleTypes): number => {
     if (sportSection === 'football') {
         return football.getScore(prefix, schedule);
     }

@@ -33,8 +33,8 @@ export type TCommonSchedulePropsCompetition = {
 
 export type TCommonSchedulePropsCountry = {
     "ai_country_id": string;
-    "ai_country_img": string;
-    "ai_country_name": TCommonLocationCountry;
+    "ai_country_img": string | null;
+    "ai_country_name": TCommonLocationCountry | null;
 };
 
 export type TCommonSchedulePropsMatch = {

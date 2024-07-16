@@ -229,7 +229,6 @@ onMounted(async () => {
     await nextTick();
     await props.updateLiveRealTime();
     leftStore.onMountedSport(props.sName);
-    console.log('props.sName: ', props, props.sName);
 });
 
 onBeforeUnmount(() => {
