@@ -35,7 +35,53 @@ export const getScore = (prefix: TContentStorePrefix, schedule: TIceHockeySchedu
     return schedule['ai_scores']['ft'][ prefix === 'home' ? 0 : 1 ];
 };
 
-export const getPrefix = (ai_match_status: number, ai_kickoff_timestamp: number): string => {
+export const getScoreViaIdx = (
+    prefix: TContentStorePrefix,
+    schedule: TIceHockeySchedule,
+    idx: number | string = 0,
+): number => {
+    if (typeof idx === 'string') {
+        return schedule['ai_scores'][idx][ prefix === 'home' ? 0 : 1 ];
+    }
+    if (idx === 0) return schedule['ai_scores']['ft'][ prefix === 'home' ? 0 : 1 ];
+    if (idx === 1) return schedule['ai_scores']['p1'][ prefix === 'home' ? 0 : 1 ];
+    if (idx === 2) return schedule['ai_scores']['p2'][ prefix === 'home' ? 0 : 1 ];
+    if (idx === 3) return schedule['ai_scores']['p3'][ prefix === 'home' ? 0 : 1 ];
+    if (idx === 4) return schedule['ai_scores']['p4'][ prefix === 'home' ? 0 : 1 ];
+    if (idx === 5) return schedule['ai_scores']['p5'][ prefix === 'home' ? 0 : 1 ];
+    if (idx === 6) return schedule['ai_scores']['p6'][ prefix === 'home' ? 0 : 1 ];
+    if (idx === 7) return schedule['ai_scores']['p7'][ prefix === 'home' ? 0 : 1 ];
+    if (idx === 8) return schedule['ai_scores']['p8'][ prefix === 'home' ? 0 : 1 ];
+    if (idx === 9) return schedule['ai_scores']['p9'][ prefix === 'home' ? 0 : 1 ];
+    return 0;
+};
+
+export const getCurrentInningSpotlightIdx = (
+    schedule: TIceHockeySchedule,
+): number => {
+    const timeStr = getPrefix(schedule.ai_match_status);
+    if (timeStr === '1PER') return 0;
+    if (timeStr === '2PER') return 1;
+    if (timeStr === '3PER') return 2;
+    else return 2;
+};
+
+export const getScoreList = (
+    prefix: TContentStorePrefix,
+    schedule: TIceHockeySchedule,
+): number[] => {
+    const inningList = [ 'ft', 'p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8', 'p9', ];
+    const returnList: number[] = [];
+    for (const item of inningList) {
+        if (schedule['ai_scores'][item]) {
+            returnList.push(schedule['ai_scores'][item][ prefix === 'home' ? 0 : 1 ]);
+        }
+        break;
+    }
+    return returnList;
+};
+
+export const getPrefix = (ai_match_status: number): string => {
     if (ai_match_status === 30 || ai_match_status === 331) {
         return '1PER';
     }

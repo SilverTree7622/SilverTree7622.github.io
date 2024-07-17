@@ -62,17 +62,63 @@ export const getScore = (prefix: TContentStorePrefix, schedule: TBaseBallSchedul
     return schedule['ai_scores']['ft'][ prefix === 'home' ? 0 : 1 ];
 };
 
-export const getPrefix = (ai_match_status: number, ai_kickoff_timestamp: number) => {
+export const getScoreViaIdx = (
+    prefix: TContentStorePrefix,
+    schedule: TBaseBallSchedule,
+    idx: number | string = 0,
+): number => {
+    if (typeof idx === 'string') {
+        return schedule['ai_scores'][idx][ prefix === 'home' ? 0 : 1 ];
+    }
+    if (idx === 0) return schedule['ai_scores']['ft'][ prefix === 'home' ? 0 : 1 ];
+    if (idx === 1) return schedule['ai_scores']['p1'][ prefix === 'home' ? 0 : 1 ];
+    if (idx === 2) return schedule['ai_scores']['p2'][ prefix === 'home' ? 0 : 1 ];
+    if (idx === 3) return schedule['ai_scores']['p3'][ prefix === 'home' ? 0 : 1 ];
+    if (idx === 4) return schedule['ai_scores']['p4'][ prefix === 'home' ? 0 : 1 ];
+    if (idx === 5) return schedule['ai_scores']['p5'][ prefix === 'home' ? 0 : 1 ];
+    if (idx === 6) return schedule['ai_scores']['p6'][ prefix === 'home' ? 0 : 1 ];
+    if (idx === 7) return schedule['ai_scores']['p7'][ prefix === 'home' ? 0 : 1 ];
+    if (idx === 8) return schedule['ai_scores']['p8'][ prefix === 'home' ? 0 : 1 ];
+    if (idx === 9) return schedule['ai_scores']['p9'][ prefix === 'home' ? 0 : 1 ];
+    return 0;
+};
+
+export const getCurrentInningSpotlightIdx = (
+    schedule: TBaseBallSchedule,
+): number => {
+    const timeStr = getTime(schedule.ai_match_status, 0);
+    if (timeStr === '1th') return 0;
+    if (timeStr === '2nd') return 1;
+    if (timeStr === '3rd') return 2;
+    if (timeStr === '4th') return 3;
+    if (timeStr === '5th') return 4;
+    if (timeStr === '6th') return 5;
+    if (timeStr === '7th') return 6;
+    if (timeStr === '8th') return 7;
+    else return 8;
+    // if (timeStr === '9th') return 8;
+};
+
+export const getScoreList = (
+    prefix: TContentStorePrefix,
+    schedule: TBaseBallSchedule,
+): number[] => {
+    const inningList = [ 'ft', 'p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8', 'p9' ];
+    const returnList: number[] = [];
+    for (const item of inningList) {
+        if (schedule['ai_scores'][item]) {
+            returnList.push(schedule['ai_scores'][item][ prefix === 'home' ? 0 : 1 ]);
+        }
+        break;
+    }
+    return returnList;
+};
+
+export const getPrefix = (ai_match_status: number) => {
     return 'INN';
 };
 
 export const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): string => {
-    // const currentTime = UtilDate.getWithOutMillisecond();
-    // const kickOffTime = ai_kickoff_timestamp;
-    // const gapTime = currentTime - kickOffTime;
-    // let dateTime = gapTime / 60 + 1;
-    // const matchUpTime = `${ UtilDate.syncDigit(~~(dateTime)) }’`;
-    // return matchUpTime;
 
     // 432 |                                       // FIRST_INNING_TOP
     // 452 |                                       // BREAK_TOP1_BOTTOM1
@@ -82,14 +128,14 @@ export const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): 
     if (
         ai_match_status === 432 || ai_match_status === 452 || ai_match_status === 433 || ai_match_status === 453 || ai_match_status === 434
     ) {
-        return '1th';
+        return '1st';
     }
     // 454 |                                       // BREAK_TOP2_BOTTOM2
     // 435 |                                       // SECOND_INNING_BOTTOM
     if (
         ai_match_status === 454 || ai_match_status === 435
     ) {
-        return '2th';
+        return '2nd';
     }
     // 455 |                                       // BREAK_TOP3_BOTTOM2
     // 436 |                                       // THIRD_INNING_TOP
@@ -98,7 +144,7 @@ export const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): 
     if (
         ai_match_status === 455 || ai_match_status === 436 || ai_match_status === 456 || ai_match_status === 437
     ) {
-        return '3th';
+        return '3rd';
     }
     // 457 |                                       // BREAK_TOP4_BOTTOM3
     // 438 |                                       // FOURTH_INNING_TOP

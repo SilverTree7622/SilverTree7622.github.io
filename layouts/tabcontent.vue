@@ -24,7 +24,7 @@
                             {{ ECommonSportSectionValue[ props.sName ] }}
                         </div>
                         <div class="text-1 valign-text-middle">
-                            ({{ props.pagedListLength }})
+                            ({{ props.isPending ? 0 : props.pagedListLength }})
                         </div>
                     </div>
                     <div class="sport-title_-date_-set">

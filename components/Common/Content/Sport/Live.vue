@@ -48,7 +48,12 @@
             }"
             :isFavorite="false"
         >
-            <slot name="inning" />
+            <template #inning-classic-home>
+                <slot name="inning-classic-home" />
+            </template>
+            <template #inning-classic-away>
+                <slot name="inning-classic-away" />
+            </template>
         </CommonContentSportStyleLiveClassic>
     </div>
     <div v-else>
@@ -71,7 +76,7 @@
             }"
             :isFavorite="false"
         >
-            <slot name="inning" />
+            <slot v-if="hasSlot('inning-default')" name="inning-default" />
         </CommonContentSportStyleLiveDefault>
     </div>
 </template>

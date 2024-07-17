@@ -145,3 +145,13 @@ TODO
     - 리그 홈 기존과 다른 점들 위주로 퍼블리싱 적용
 
 내일 작업 예정
+
+
+top scores
+    idx / 의미
+    0 / X
+    0보다 큰 수들 / top score
+    
+    schedule로 부를시 topscores_id 속성도 주기 때문에 가져와서 적용
+    주기적으로 loading시 topscores에 적용된 match_id들만 모아서 req시 array 형식으로 건네기
+    

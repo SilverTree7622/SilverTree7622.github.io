@@ -1,101 +1,99 @@
-
 <template>
-    <!-- <div class="live-match-default"> -->
-  <div class="div">
-    <div class="div-2 mr-4">
-      <img
-        loading="lazy"
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/d9b030b330a14507ae7bc561988ace8c9d732e6bab57d62be5414bbadbc69f44?"
-        class="img"
-      />
-      <div class="div-3">0.0 M</div>
-    </div>
-    <div class="div-4 mr-2">
-      <div class="div-5">
-        {{ props.time }}
-      </div>
-      <div class="div-6">
-        <div class="div-7">
-          <div class="div-8">
+  <!-- <div class="live-match-default"> -->
+    <div class="div">
+        <div class="div-2 mr-4">
             <img
-              loading="lazy"
-              :src="props.homeLogo"
-              :alt="props.homeName"
-              class="img-2"
+                loading="lazy"
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/d9b030b330a14507ae7bc561988ace8c9d732e6bab57d62be5414bbadbc69f44?"
+                class="img"
             />
-            <div class="div-9">
-              {{ props.homeName }}
-            </div>
-          </div>
-          <div class="div-10">
-            <div class="div-11">
-              {{ props.homeScore }}
-            </div>
-            <CommonFavoriteStar
-              :isFavorite="false"
-              class="mr-2"
-            />
-          </div>
+            <div class="div-3">0.0 M</div>
         </div>
-        <div class="div-12">
-          <div class="div-13">
+        <div class="div-4 mr-2">
+            <div class="div-5">
+                {{ props.time }}
+            </div>
+            <div class="div-6">
+                    <div class="div-7">
+                        <div class="div-8">
+                            <img
+                                loading="lazy"
+                                :src="props.homeLogo"
+                                :alt="props.homeName"
+                                class="img-2"
+                            />
+                            <div class="div-9">
+                                {{ props.homeName }}
+                            </div>
+
+                            <slot name="inning-classic-home" />
+
+                        </div>
+                        <div class="div-10">
+                            <div class="div-11">
+                            {{ props.homeScore }}
+                            </div>
+                            <CommonFavoriteStar :isFavorite="false" class="mr-2" />
+                        </div>
+                    </div>
+                    <div class="div-12">
+                    <div class="div-13">
+                        <img
+                            loading="lazy"
+                            :src="props.awayLogo"
+                            :alt="props.awayName"
+                            class="img-4"
+                        />
+                        <div class="div-14">
+                            {{ props.awayName }}
+                        </div>
+
+                        <slot name="inning-classic-away" />
+
+                    </div>
+                    <div class="div-15">
+                        <div class="div-16">
+                            {{ props.awayScore }}
+                        </div>
+                        <CommonFavoriteStar :isFavorite="false" class="mr-2" />
+                    </div>
+                    </div>
+            </div>
             <img
-              loading="lazy"
-              :src="props.awayLogo"
-              :alt="props.awayName"
-              class="img-4"
+                loading="lazy"
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/dcfc3d3b9f672dda4a04926881018ca0991d53f999c04d40a2bd7594a6984eff?"
+                class="img-6 ml-2"
             />
-            <div class="div-14">
-              {{ props.awayName }}
-            </div>
-          </div>
-          <div class="div-15">
-            <div class="div-16">
-              {{ props.awayScore }}
-            </div>
-            <CommonFavoriteStar
-              :isFavorite="false"
-              class="mr-2"
-            />
-          </div>
         </div>
-      </div>
-      <img
-        loading="lazy"
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/dcfc3d3b9f672dda4a04926881018ca0991d53f999c04d40a2bd7594a6984eff?"
-        class="img-6 ml-2"
-      />
-    </div>
   </div>
   <!-- </div> -->
 </template>
 
 <script setup lang="ts">
 const props = defineProps<{
-    idx: number;
-    homeLogo: string;
-    homeName: string;
-    homeScore: number;
-    time: string;
-    awayLogo: string;
-    awayName: string;
-    awayScore: number;
-    goLiveTracker: () => void;
-    updateOpt: {
-        time: boolean;
-        score1: boolean;
-        score2: boolean;
-    };
-    isFavorite?: boolean;
+  idx: number;
+  homeLogo: string;
+  homeName: string;
+  homeScore: number;
+  time: string;
+  awayLogo: string;
+  awayName: string;
+  awayScore: number;
+  goLiveTracker: () => void;
+  updateOpt: {
+    time: boolean;
+    score1: boolean;
+    score2: boolean;
+  };
+  isFavorite?: boolean;
 }>();
 
 onMounted(async () => {
-    await nextTick();
+  await nextTick();
 });
 </script>
 
 <style scoped>
-
 .live-match-default {
   align-items: center;
   align-self: stretch;
@@ -107,16 +105,13 @@ onMounted(async () => {
   padding: 0px 4px;
   position: relative;
   width: 100%;
+  min-height: 64px;
 }
 
 .div {
   align-self: stretch;
-  /* border-color: rgba(224, 228, 234, 1);
-  border-style: solid;
-  border-bottom-width: 1px;
-  background-color: #f8f8f8; */
   display: flex;
-  
+
   flex-direction: column;
 }
 .div-2 {

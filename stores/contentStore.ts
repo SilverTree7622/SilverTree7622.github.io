@@ -9,6 +9,11 @@ import type { TCommonMatchStatus } from "~/types/Common/status";
 
 export type TContentStorePrefix = '' | 'home' | 'away';
 
+export type TInningDataClassic = {
+    score: number;
+    isBlack: boolean;
+};
+
 export const useContentStore = defineStore('contentStore', () => {
 
     const go_prefix_via_position = (position: number = 0): TContentStorePrefix => {
@@ -131,7 +136,7 @@ export const useContentStore = defineStore('contentStore', () => {
         isLiving: boolean;
         time: string;
     } => {
-const { ai_match_status } = league;
+        const { ai_match_status } = league;
         const isLiving = Types.isLive(sportSection, ai_match_status);
         if (isLiving && league['ai_kickoff_timestamp'] !== undefined) {
             return {
@@ -145,6 +150,40 @@ const { ai_match_status } = league;
             };
         }
     };
+
+    const getInningClassic = (
+        sportSection: TCommonSportSection,
+        prefix: TContentStorePrefix,
+        league: TSportScheduleTypes,
+    ): TInningDataClassic[] => {
+        const homeScoreList = Types.getScoreList(sportSection, 'home', league);
+        const awayScoreList = Types.getScoreList(sportSection, 'away', league);
+        if (prefix === 'home') {
+            return homeScoreList.map((item, idx) => {
+                return {
+                    score: item,
+                    isBlack: (item >= awayScoreList[idx]),
+                };
+            });
+        }
+        if (prefix === 'away') {
+            return awayScoreList.map((item, idx) => {
+                return {
+                    score: item,
+                    isBlack: (item >= homeScoreList[idx]),
+                };
+            });
+        }
+        return [];
+    };
+
+    const getCurrentInningSpotlightIdx = (
+        sportSection: TCommonSportSection,
+        schedule: TSportScheduleTypes,
+    ): number => {
+        return Types.getCurrentInningSpotlightIdx(sportSection, schedule);
+    };
+    
 
     return {
         setLeagueGroup,
@@ -161,5 +200,7 @@ const { ai_match_status } = league;
         getPrefix,
         getLeagueTime,
         getOddsTime,
+        getInningClassic,
+        getCurrentInningSpotlightIdx,
     };
 });

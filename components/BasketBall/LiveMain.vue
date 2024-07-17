@@ -22,9 +22,21 @@
                     :sportSection="'basketball'"
                     :league="league"
                 >
-                    <template #inning>
-                        <CommonContentInningBasketball
+                    <template #inning-default>
+                        <CommonContentInningBasketballDefault
                             :league="league"
+                        />
+                    </template>
+                    <template #inning-classic-home>
+                        <CommonContentInningBasketballClassic
+                            :currentSpotlightIdx="contentStore.getCurrentInningSpotlightIdx('basketball', league)"
+                            :list="contentStore.getInningClassic('basketball', 'home', league)"
+                        />
+                    </template>
+                    <template #inning-classic-away>
+                        <CommonContentInningBasketballClassic
+                            :currentSpotlightIdx="contentStore.getCurrentInningSpotlightIdx('basketball', league)"
+                            :list="contentStore.getInningClassic('basketball', 'away', league)"
                         />
                     </template>
                 </CommonContentSportLive>
@@ -49,6 +61,7 @@ const opt = reactive({
 const $live = ref();
 
 const liveIntervalLoadingStore = useLiveIntervalLoadingStore();
+const contentStore = useContentStore();
 
 const update = (idx: number, newLeague: TCommonLiveRealTime) => {
     if (!$live.value) return;

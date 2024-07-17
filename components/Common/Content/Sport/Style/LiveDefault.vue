@@ -30,54 +30,59 @@
         </div>
     </div> -->
   <div class="live-match-default">
-    <div class="div">
-      <div class="div-2 mr-4">
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/d9b030b330a14507ae7bc561988ace8c9d732e6bab57d62be5414bbadbc69f44?"
-          class="img"
-        />
-        <div class="div-3">0.0 M</div>
-      </div>
-      <div class="div-4">
-        <CommonFavoriteStar :isFavorite="false" />
-        <div class="div-5">
-          <img loading="lazy" class="img-3" :src="props.homeLogo" :alt="props.homeName" />
-          <div class="div-6">
-            {{ props.homeName }}
-          </div>
+    <div class="div-live-match">
+        <div class="div-2 mr-4">
+                <img
+                loading="lazy"
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/d9b030b330a14507ae7bc561988ace8c9d732e6bab57d62be5414bbadbc69f44?"
+                class="img"
+                />
+                <div class="div-3">0.0 M</div>
         </div>
-        <div class="div-7">
-          <div class="div-8">
-            <!-- src="/img/Scoreboard_Time.svg" -->
-            <div class="div-9">{{ props.prefix }}</div>
-            <div class="div-10">{{ props.time }}</div>
-          </div>
-          <div class="div-11">
-            <div class="div-12">{{ props.homeScore }}</div>
-            <div class="div-13">:</div>
-            <div class="div-14">{{ props.awayScore }}</div>
-          </div>
-          
-          <div class="my-4">
-            <slot />
-          </div>
-
-          <img
+        <div class="div-4">
+            <CommonFavoriteStar :isFavorite="false" />
+            <div class="div-5">
+                <img loading="lazy" class="img-3" :src="props.homeLogo" :alt="props.homeName" />
+                <div class="div-6">
+                    {{ props.homeName }}
+                </div>
+            </div>
+            <div class="div-7">
+                <div class="div-8">
+                        <div class="div-9">{{ props.prefix }}</div>
+                        <div class="div-10">{{ props.time }}</div>
+                </div>
+                <div class="div-11">
+                        <div class="div-12">{{ props.homeScore }}</div>
+                        <div class="div-13">:</div>
+                        <div class="div-14">{{ props.awayScore }}</div>
+                </div>
+                <!-- no inning  -->
+                <img
+                    v-if="!hasSlot()"
+                    loading="lazy"
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/dcfc3d3b9f672dda4a04926881018ca0991d53f999c04d40a2bd7594a6984eff?"
+                    class="img-4 cursor-pointer mt-2 mx-auto"
+                    @click="props.goLiveTracker()"
+                />
+            </div>
+            <div class="div-15">
+                <img loading="lazy" :src="props.awayLogo" :alt="props.awayName" class="img-5" />
+                <div class="div-16">
+                    {{ props.awayName }}
+                </div>
+            </div>
+            <CommonFavoriteStar :isFavorite="false" class="mr-4" />
+      </div>
+    </div>
+    <div v-if="hasSlot()" class="flex flex-col justify-center items-center mr-[18px]">
+        <slot class="my-4" />
+        <img
             loading="lazy"
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/dcfc3d3b9f672dda4a04926881018ca0991d53f999c04d40a2bd7594a6984eff?"
-            class="img-4 cursor-pointer mb-2"
+            class="img-4 cursor-pointer mb-2 mx-auto"
             @click="props.goLiveTracker()"
-          />
-        </div>
-        <div class="div-15">
-          <img loading="lazy" :src="props.awayLogo" :alt="props.awayName" class="img-5" />
-          <div class="div-16">
-            {{ props.awayName }}
-          </div>
-        </div>
-        <CommonFavoriteStar :isFavorite="false" class="mr-4" />
-      </div>
+        />
     </div>
   </div>
 </template>
@@ -102,6 +107,12 @@ const props = defineProps<{
   isFavorite?: boolean;
 }>();
 
+const slots = useSlots();
+
+const hasSlot = (name: string = 'default'): boolean => {
+    return !!slots[name];
+};
+
 onMounted(async () => {
   await nextTick();
 });
@@ -122,7 +133,7 @@ onMounted(async () => {
   min-height: 108px;
 }
 
-.div {
+.div-live-match {
   align-self: stretch;
   display: flex;
   flex-direction: column;
@@ -257,7 +268,8 @@ onMounted(async () => {
   aspect-ratio: 3.13;
   object-fit: auto;
   object-position: center;
-
+    max-width: 56px;
+    max-height: 20px;
   margin-top: 4px;
 }
 .div-15 {

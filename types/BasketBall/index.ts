@@ -27,10 +27,43 @@ export const isResult = (ai_status_id: number): boolean => {
 };
 
 export const getScore = (prefix: TContentStorePrefix, schedule: TBasketBallSchedule): number => {
-    return schedule[`ai_${ prefix }_scores`][0];
+    return getScoreList(prefix, schedule)[0];
 };
 
-export const getPrefix = (ai_match_status: number, ai_kickoff_timestamp: number) => {
+export const getScoreViaIdx = (
+    prefix: TContentStorePrefix,
+    schedule: TBasketBallSchedule,
+    idx: number = 0,
+): number => {
+    return getScoreList(prefix, schedule)[idx];
+};
+
+export const getCurrentInningSpotlightIdx = (
+    schedule: TBasketBallSchedule,
+): number => {
+    if (schedule.ai_status_id === 2 || schedule.ai_status_id === 3) {
+        return 0;
+    }
+    if (schedule.ai_status_id === 4 || schedule.ai_status_id === 5) {
+        return 1;
+    }
+    if (schedule.ai_status_id === 6 || schedule.ai_status_id === 7) {
+        return 2;
+    }
+    return 3;
+    // if (schedule.ai_status_id === 8 || schedule.ai_status_id === 9) {
+    //     return 3;
+    // }
+};
+
+export const getScoreList = (
+    prefix: TContentStorePrefix,
+    schedule: TBasketBallSchedule,
+): TBasketBallSchedule['ai_home_scores'] => {
+    return schedule[`ai_${ prefix }_scores`];
+};
+
+export const getPrefix = (ai_match_status: number) => {
     if (ai_match_status === 2 || ai_match_status === 3) {
         return 'Q1';
     }

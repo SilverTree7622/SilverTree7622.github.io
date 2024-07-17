@@ -26,10 +26,31 @@ export const isResult = (ai_status_id: number): boolean => {
 };
 
 export const getScore = (prefix: TContentStorePrefix, schedule: TFootBallSchedule): number => {
-    return schedule[`ai_${ prefix }_scores`][0];
+    return getScoreList(prefix, schedule)[0];
 };
 
-export const getPrefix = (ai_match_status: number, ai_kickoff_timestamp: number) => {
+export const getScoreViaIdx = (
+    prefix: TContentStorePrefix,
+    schedule: TFootBallSchedule,
+    idx: number = 0,
+): number => {
+    return getScoreList(prefix, schedule)[idx];
+};
+
+export const getCurrentInningSpotlightIdx = (
+    schedule: TFootBallSchedule,
+): number => {
+    return 0;
+};
+
+export const getScoreList = (
+    prefix: TContentStorePrefix,
+    schedule: TFootBallSchedule,
+): TFootBallSchedule['ai_home_scores'] => {
+    return schedule[`ai_${ prefix }_scores`];
+};
+
+export const getPrefix = (ai_match_status: number) => {
     if (ai_match_status === 2) {
         return '1H';
     }
