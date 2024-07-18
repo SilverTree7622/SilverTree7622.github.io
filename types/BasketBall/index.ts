@@ -1,5 +1,6 @@
 import UtilDate from "~/utils/date";
 import type { TBasketBallSchedule } from "./schedule";
+import type { TSportScheduleTypes } from "../schedule";
 
 
 export const isLive = (ai_status_id: number): boolean => {
@@ -26,12 +27,12 @@ export const isResult = (ai_status_id: number): boolean => {
     );
 };
 
-export const getScore = (prefix: TContentStorePrefix, schedule: TBasketBallSchedule): number => {
+export const getScore = (prefix: TContentStoreHomeAwayPrefix, schedule: TBasketBallSchedule): number => {
     return getScoreList(prefix, schedule)[0];
 };
 
 export const getScoreViaIdx = (
-    prefix: TContentStorePrefix,
+    prefix: TContentStoreHomeAwayPrefix,
     schedule: TBasketBallSchedule,
     idx: number = 0,
 ): number => {
@@ -57,7 +58,7 @@ export const getCurrentInningSpotlightIdx = (
 };
 
 export const getScoreList = (
-    prefix: TContentStorePrefix,
+    prefix: TContentStoreHomeAwayPrefix,
     schedule: TBasketBallSchedule,
 ): TBasketBallSchedule['ai_home_scores'] => {
     return schedule[`ai_${ prefix }_scores`];
@@ -81,6 +82,14 @@ export const getPrefix = (ai_match_status: number) => {
     }
 };
 
+export const getPrefixViaIdx = (idx: number): string => {
+    if (idx === 0) return '1Q';
+    if (idx === 1) return '2Q';
+    if (idx === 2) return '3Q';
+    if (idx === 3) return '4Q';
+    return '';
+};
+
 export const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): string => {
     // default time calculation via match status
     const currentTime = UtilDate.getWithOutMillisecond();
@@ -89,4 +98,15 @@ export const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): 
     let dateTime = gapTime / 60 + 1;
     const matchUpTime = `${ UtilDate.syncDigit(~~(dateTime)) }’`;
     return matchUpTime;
+};
+
+export const getTimeViaIdx = (
+    currentIdx: number,
+    inningIdx: number,
+    schedule: TBasketBallSchedule,
+): string => {
+    if (currentIdx === inningIdx) {
+        return getTime(schedule.ai_status_id, schedule['ai_kickoff_timestamp'] ?? 0);
+    }
+    return 'Ended';
 };

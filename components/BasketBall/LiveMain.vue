@@ -10,9 +10,26 @@
                     :idx="idx"
                     :sportSection="'basketball'"
                     :league="league"
-                />
+                >
+                    <template #inning-default>
+                        <CommonContentInningDefault
+                            :list="contentStore.getInningSets('basketball', league)"
+                        />
+                    </template>
+                    <template #inning-classic-home>
+                        <CommonContentInningClassic
+                            :list="contentStore.getInningClassic('basketball', 'home', league)"
+                        />
+                    </template>
+                    <template #inning-classic-away>
+                        <CommonContentInningClassic
+                            :list="contentStore.getInningClassic('basketball', 'away', league)"
+                        />
+                    </template>
+                </CommonContentSportLive>
             </template>
             <template
+                v-if="!props.result_league_list.length"
                 v-for="(league, idx) in opt.list"
                 :key="`${ idx }-0`"
             >
@@ -23,19 +40,17 @@
                     :league="league"
                 >
                     <template #inning-default>
-                        <CommonContentInningBasketballDefault
-                            :league="league"
+                        <CommonContentInningDefault
+                            :list="contentStore.getInningSets('basketball', league)"
                         />
                     </template>
                     <template #inning-classic-home>
-                        <CommonContentInningBasketballClassic
-                            :currentSpotlightIdx="contentStore.getCurrentInningSpotlightIdx('basketball', league)"
+                        <CommonContentInningClassic
                             :list="contentStore.getInningClassic('basketball', 'home', league)"
                         />
                     </template>
                     <template #inning-classic-away>
-                        <CommonContentInningBasketballClassic
-                            :currentSpotlightIdx="contentStore.getCurrentInningSpotlightIdx('basketball', league)"
+                        <CommonContentInningClassic
                             :list="contentStore.getInningClassic('basketball', 'away', league)"
                         />
                     </template>

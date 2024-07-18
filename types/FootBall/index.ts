@@ -25,12 +25,12 @@ export const isResult = (ai_status_id: number): boolean => {
     );
 };
 
-export const getScore = (prefix: TContentStorePrefix, schedule: TFootBallSchedule): number => {
+export const getScore = (prefix: TContentStoreHomeAwayPrefix, schedule: TFootBallSchedule): number => {
     return getScoreList(prefix, schedule)[0];
 };
 
 export const getScoreViaIdx = (
-    prefix: TContentStorePrefix,
+    prefix: TContentStoreHomeAwayPrefix,
     schedule: TFootBallSchedule,
     idx: number = 0,
 ): number => {
@@ -44,7 +44,7 @@ export const getCurrentInningSpotlightIdx = (
 };
 
 export const getScoreList = (
-    prefix: TContentStorePrefix,
+    prefix: TContentStoreHomeAwayPrefix,
     schedule: TFootBallSchedule,
 ): TFootBallSchedule['ai_home_scores'] => {
     return schedule[`ai_${ prefix }_scores`];
@@ -60,6 +60,10 @@ export const getPrefix = (ai_match_status: number) => {
     else {
         return '2H';
     }
+};
+
+export const getPrefixViaIdx = (idx: number): string => {
+    return '';
 };
 
 export const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): string => {
@@ -83,4 +87,12 @@ export const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): 
     }
     const matchUpTime = `${ UtilDate.syncDigit(~~(dateTime)) }’`;
     return matchUpTime;
+};
+
+export const getTimeViaIdx = (
+    currentIdx: number,
+    inningIdx: number,
+    schedule: TFootBallSchedule,
+): string => {
+    return '';
 };

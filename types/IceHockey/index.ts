@@ -31,12 +31,12 @@ export const isResult = (ai_status_id: number): boolean => {
     );
 };
 
-export const getScore = (prefix: TContentStorePrefix, schedule: TIceHockeySchedule): number => {
+export const getScore = (prefix: TContentStoreHomeAwayPrefix, schedule: TIceHockeySchedule): number => {
     return schedule['ai_scores']['ft'][ prefix === 'home' ? 0 : 1 ];
 };
 
 export const getScoreViaIdx = (
-    prefix: TContentStorePrefix,
+    prefix: TContentStoreHomeAwayPrefix,
     schedule: TIceHockeySchedule,
     idx: number | string = 0,
 ): number => {
@@ -67,7 +67,7 @@ export const getCurrentInningSpotlightIdx = (
 };
 
 export const getScoreList = (
-    prefix: TContentStorePrefix,
+    prefix: TContentStoreHomeAwayPrefix,
     schedule: TIceHockeySchedule,
 ): number[] => {
     const inningList = [ 'ft', 'p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8', 'p9', ];
@@ -75,6 +75,7 @@ export const getScoreList = (
     for (const item of inningList) {
         if (schedule['ai_scores'][item]) {
             returnList.push(schedule['ai_scores'][item][ prefix === 'home' ? 0 : 1 ]);
+            continue;
         }
         break;
     }
@@ -91,6 +92,13 @@ export const getPrefix = (ai_match_status: number): string => {
     return '3PER';
 };
 
+export const getPrefixViaIdx = (idx: number): string => {
+    if (idx === 0) return '1PER';
+    if (idx === 1) return '2PER';
+    if (idx === 2) return '3PER';
+    return '';
+};
+
 export const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): string => {
     const currentTime = UtilDate.getWithOutMillisecond();
     const kickOffTime = ai_kickoff_timestamp;
@@ -98,4 +106,15 @@ export const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): 
     let dateTime = gapTime / 60 + 1;
     const matchUpTime = `${ UtilDate.syncDigit(~~(dateTime)) }’`;
     return matchUpTime;
+};
+
+export const getTimeViaIdx = (
+    currentIdx: number,
+    inningIdx: number,
+    schedule: TIceHockeySchedule,
+): string => {
+    if (currentIdx === inningIdx) {
+        return getTime(schedule.ai_status_id, schedule['ai_kickoff_timestamp'] ?? 0);
+    }
+    return 'ENDED';
 };

@@ -1,18 +1,23 @@
 <template>
   <div class="div-inning">
-        <div v-for="(item, idx) in opt.list" class="div-2">
+        <img 
+            v-if="getIsOverMaxCnt()"
+            class=""
+            src="/img/3dots.svg"
+        />
+        <div v-for="(item, idx) in getSortedList(props.list)" class="div-2">
             <div class="div-3">
-                <div :class="props.currentSpotlightIdx === idx ? 'div-19' : 'div-4'">
+                <div :class="getCurrentInningSpotlightIdx(idx, props.list) ? 'div-19' : 'div-4'">
                     {{ item.prefix }}
                 </div>
                 <div class="div-5">{{ item.time }}</div>
             </div>
             <div class="div-6">
-                <span :class="props.currentSpotlightIdx === idx && item.isHomeScoreBlack && 'text-black'">
+                <span :class="getCurrentInningSpotlightIdx(idx, props.list) && item.isHomeScoreBlack && 'text-black'">
                     {{ item.homeScore }}
                 </span>
                 -
-                <span :class="props.currentSpotlightIdx === idx && item.isAwayScoreBlack && 'text-black'">
+                <span :class="getCurrentInningSpotlightIdx(idx, props.list) && item.isAwayScoreBlack && 'text-black'">
                     {{ item.awayScore }}
                 </span>
             </div>
@@ -21,86 +26,40 @@
 </template>
 
 <script setup lang="ts">
-import { getTime } from '~/types';
-import { getPrefix } from '~/types';
-import type { TBasketBallSchedule } from '~/types/BasketBall/schedule';
-
 const props = defineProps<{
-    currentSpotlightIdx: number;
-    league: TBasketBallSchedule;
+    list: TInningDataSet[];
 }>();
 
-const opt = reactive({
-    list: <TInningDataSet[]> [],
-});
+const {
+    MAX_SHOW_INNING_CNT,
+} = useRuntimeConfig().public.CONSTANTS;
 
-const update = () => {
-    const ai_kickoff_timestamp = props.league['ai_kickoff_timestamp'] ?? 0;
-    const tmpOptList: TInningDataSet[] = [];
-    const dummyData: TInningDataSet = {
-        prefix: getPrefix('basketball', props.league.ai_status_id),
-        time: getTime('basketball', props.league.ai_status_id, ai_kickoff_timestamp),
-        homeScore: props.league.ai_home_scores[1],
-        awayScore: props.league.ai_away_scores[1],
-        isHomeScoreBlack: props.league.ai_home_scores[1] >= props.league.ai_away_scores[1],
-        isAwayScoreBlack: props.league.ai_home_scores[1] <= props.league.ai_away_scores[1],
-    };
+const getIsOverMaxCnt = (): boolean => {
+    return props.list.length > MAX_SHOW_INNING_CNT;
+};
 
-    if (props.league.ai_status_id >= 2) tmpOptList.push(dummyData);
-    if (props.league.ai_status_id >= 4) tmpOptList.push(dummyData);
-    if (props.league.ai_status_id >= 6) tmpOptList.push(dummyData);
-    if (props.league.ai_status_id >= 8) tmpOptList.push(dummyData);
+const getSortedList = (list: TInningDataSet[]): TInningDataSet[] => {
+    const isOver = getIsOverMaxCnt();
+    if (isOver) {
+        const length = list.length;
+        const value = length - MAX_SHOW_INNING_CNT;
+        const tmpList: TInningDataSet[] = [];
+        list.map((item, idx) => {
+            if (idx < value) return false;
+            return tmpList.push(list[idx]);
+        });
+        return tmpList;
+    }
+    return list;
+};
 
-    if (props.league.ai_status_id === 2 || props.league.ai_status_id === 3) {
-        tmpOptList[0].homeScore = props.league.ai_home_scores[1];
-        tmpOptList[0].awayScore = props.league.ai_away_scores[1];
-        const { homeScore, awayScore, } = tmpOptList[0];
-        tmpOptList[0].isHomeScoreBlack = (homeScore >= awayScore);
-        tmpOptList[0].isAwayScoreBlack = (homeScore <= awayScore);
-    }
-    if (props.league.ai_status_id === 3) {
-        tmpOptList[0].time = 'Ended';
-    }
-    
-    if (props.league.ai_status_id === 4 || props.league.ai_status_id === 5) {
-        tmpOptList[1].homeScore = props.league.ai_home_scores[2];
-        tmpOptList[1].awayScore = props.league.ai_away_scores[2];
-        const { homeScore, awayScore, } = tmpOptList[1];
-        tmpOptList[1].isHomeScoreBlack = (homeScore >= awayScore);
-        tmpOptList[1].isAwayScoreBlack = (homeScore <= awayScore);
-    }
-    if (props.league.ai_status_id === 5) {
-        tmpOptList[1].time = 'Ended';
-    }
-        
-    if (props.league.ai_status_id === 6 || props.league.ai_status_id === 7) {
-        tmpOptList[2].homeScore = props.league.ai_home_scores[3];
-        tmpOptList[2].awayScore = props.league.ai_away_scores[3];
-        const { homeScore, awayScore, } = tmpOptList[2];
-        tmpOptList[2].isHomeScoreBlack = (homeScore >= awayScore);
-        tmpOptList[2].isAwayScoreBlack = (homeScore <= awayScore);
-    }
-    if (props.league.ai_status_id === 7) {
-        tmpOptList[2].time = 'Ended';
-    }
-        
-    if (props.league.ai_status_id === 8 || props.league.ai_status_id === 9) {
-        tmpOptList[3].homeScore = props.league.ai_home_scores[4];
-        tmpOptList[3].awayScore = props.league.ai_away_scores[4];
-        const { homeScore, awayScore, } = tmpOptList[3];
-        tmpOptList[3].isHomeScoreBlack = (homeScore >= awayScore);
-        tmpOptList[3].isAwayScoreBlack = (homeScore <= awayScore);
-    }
-    if (props.league.ai_status_id === 9) {
-        tmpOptList[3].time = 'Ended';
-    }
-
-    opt.list = tmpOptList;
+const getCurrentInningSpotlightIdx = (idx: number, list: TInningDataSet[]): boolean => {
+    const length = getSortedList(list).length;
+    return (length - 1) === idx;
 };
 
 onMounted(async () => {
-    await nextTick();
-    update();
+    await nextTick();    
 });
 </script>
 

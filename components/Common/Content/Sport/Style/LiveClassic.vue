@@ -29,11 +29,11 @@
                             <slot name="inning-classic-home" />
 
                         </div>
-                        <div class="div-10">
-                            <div class="div-11">
+                        <div class="div-10 py-auto my-auto">
+                            <div class="div-11 py-auto my-auto">
                             {{ props.homeScore }}
                             </div>
-                            <CommonFavoriteStar :isFavorite="false" class="mr-2" />
+                            <CommonFavoriteStar :isFavorite="false" class="mr-2 " />
                         </div>
                     </div>
                     <div class="div-12">
@@ -51,8 +51,8 @@
                         <slot name="inning-classic-away" />
 
                     </div>
-                    <div class="div-15">
-                        <div class="div-16">
+                    <div class="div-15 py-auto my-auto">
+                        <div class="div-16 py-auto my-auto">
                             {{ props.awayScore }}
                         </div>
                         <CommonFavoriteStar :isFavorite="false" class="mr-2" />
@@ -62,7 +62,8 @@
             <img
                 loading="lazy"
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/dcfc3d3b9f672dda4a04926881018ca0991d53f999c04d40a2bd7594a6984eff?"
-                class="img-6 ml-2"
+                class="img-6 ml-2 cursor-pointer"
+                @click="props.goLiveTracker()"
             />
         </div>
   </div>

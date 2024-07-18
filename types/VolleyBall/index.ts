@@ -25,12 +25,12 @@ export const isResult = (ai_status_id: number): boolean => {
 };
 
 
-export const getScore = (prefix: TContentStorePrefix, schedule: TVolleyBallSchedule): number => {
+export const getScore = (prefix: TContentStoreHomeAwayPrefix, schedule: TVolleyBallSchedule): number => {
     return schedule['ai_scores']['ft'][ prefix === 'home' ? 0 : 1 ];
 };
 
 export const getScoreViaIdx = (
-    prefix: TContentStorePrefix,
+    prefix: TContentStoreHomeAwayPrefix,
     schedule: TVolleyBallSchedule,
     idx: number | string = 0,
 ): number => {
@@ -58,7 +58,7 @@ export const getCurrentInningSpotlightIdx = (
 };
 
 export const getScoreList = (
-    prefix: TContentStorePrefix,
+    prefix: TContentStoreHomeAwayPrefix,
     schedule: TVolleyBallSchedule,
 ): number[] => {
     const inningList = [ 'ft', 'p1', 'p2', 'p3', 'p4', 'p5', ];
@@ -66,6 +66,7 @@ export const getScoreList = (
     for (const item of inningList) {
         if (schedule['ai_scores'][item]) {
             returnList.push(schedule['ai_scores'][item][ prefix === 'home' ? 0 : 1 ]);
+            continue;
         }
         break;
     }
@@ -73,6 +74,10 @@ export const getScoreList = (
 };
 
 export const getPrefix = (ai_match_status: number): string => {
+    return 'SET';
+};
+
+export const getPrefixViaIdx = (idx: number): string => {
     return 'SET';
 };
 
@@ -90,4 +95,12 @@ export const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): 
         return '4';
     }
     return '5'
+};
+
+export const getTimeViaIdx = (
+    currentIdx: number,
+    inningIdx: number,
+    schedule: TVolleyBallSchedule,
+): string => {
+    return `${ inningIdx + 1 }`;
 };

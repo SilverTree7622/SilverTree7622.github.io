@@ -76,7 +76,9 @@
             }"
             :isFavorite="false"
         >
-            <slot v-if="hasSlot('inning-default')" name="inning-default" />
+            <template #inning-default>
+                <slot name="inning-default" />
+            </template>
         </CommonContentSportStyleLiveDefault>
     </div>
 </template>

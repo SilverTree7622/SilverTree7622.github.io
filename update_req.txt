@@ -155,3 +155,14 @@ top scores
     schedule로 부를시 topscores_id 속성도 주기 때문에 가져와서 적용
     주기적으로 loading시 topscores에 적용된 match_id들만 모아서 req시 array 형식으로 건네기
     
+    
+common api
+param id(팀, 플레이어, 코치 등) : structure 조회 api용
+
+match home
+stats, h2h
+화요일
+odds, live
+수요일
+
+다음주 끝쯤에 league home 시작하는걸 목표로

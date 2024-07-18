@@ -7,17 +7,26 @@ import type { TCommonSportSection } from "~/types/Common/sport";
 import type { TCommonMatchStatus } from "~/types/Common/status";
 
 
-export type TContentStorePrefix = '' | 'home' | 'away';
+export type TContentStoreHomeAwayPrefix = '' | 'home' | 'away';
 
 export type TInningDataClassic = {
     score: number;
     isBlack: boolean;
 };
 
+export type TInningDataSet = {
+    prefix: string;
+    time: string;
+    homeScore: number | string;
+    awayScore: number | string;
+    isHomeScoreBlack: boolean;
+    isAwayScoreBlack: boolean;
+};
+
 export const useContentStore = defineStore('contentStore', () => {
 
-    const go_prefix_via_position = (position: number = 0): TContentStorePrefix => {
-        let prefix: TContentStorePrefix = '';
+    const go_prefix_via_position = (position: number = 0): TContentStoreHomeAwayPrefix => {
+        let prefix: TContentStoreHomeAwayPrefix = '';
         if (position === 0) {
             prefix = 'home';
         }
@@ -81,7 +90,7 @@ export const useContentStore = defineStore('contentStore', () => {
     // get score & time via custom function
     const getScore = (
         sportSection: TCommonSportSection,
-        prefix: TContentStorePrefix, 
+        prefix: TContentStoreHomeAwayPrefix, 
         schedule,
     ): number[] => {
         return [ Types.getScore(sportSection, prefix, schedule) ];
@@ -151,39 +160,74 @@ export const useContentStore = defineStore('contentStore', () => {
         }
     };
 
-    const getInningClassic = (
-        sportSection: TCommonSportSection,
-        prefix: TContentStorePrefix,
-        league: TSportScheduleTypes,
-    ): TInningDataClassic[] => {
-        const homeScoreList = Types.getScoreList(sportSection, 'home', league);
-        const awayScoreList = Types.getScoreList(sportSection, 'away', league);
-        if (prefix === 'home') {
-            return homeScoreList.map((item, idx) => {
-                return {
-                    score: item,
-                    isBlack: (item >= awayScoreList[idx]),
-                };
-            });
-        }
-        if (prefix === 'away') {
-            return awayScoreList.map((item, idx) => {
-                return {
-                    score: item,
-                    isBlack: (item >= homeScoreList[idx]),
-                };
-            });
-        }
-        return [];
-    };
-
     const getCurrentInningSpotlightIdx = (
         sportSection: TCommonSportSection,
         schedule: TSportScheduleTypes,
     ): number => {
         return Types.getCurrentInningSpotlightIdx(sportSection, schedule);
     };
-    
+
+    const getInningSets = (
+        sportSection: TCommonSportSection,
+        league: TSportScheduleTypes,
+    ): TInningDataSet[] => {
+        const homeScoreList = Types.getScoreList(sportSection, 'home', league);
+        const awayScoreList = Types.getScoreList(sportSection, 'away', league);
+        const tmpHomeScoreList = [ ...homeScoreList ];
+        const tmpAwayScoreList = [ ...awayScoreList ];
+        // delete ft score
+        if (sportSection !== 'football') {
+            tmpHomeScoreList.shift();
+            tmpAwayScoreList.shift();
+        }
+        // set scorelist via current inning spotlight idx & set and return data via list
+        const currentInningSpotlightIdx = getCurrentInningSpotlightIdx(sportSection, league);
+        return tmpHomeScoreList.filter((item, idx) => idx <= currentInningSpotlightIdx ).map((item, idx) => {
+            return {
+                prefix: Types.getPrefixViaIdx(sportSection, idx),
+                time: Types.getTimeViaIdx(sportSection, currentInningSpotlightIdx, idx, league),
+                homeScore: item,
+                awayScore: tmpAwayScoreList[idx],
+                isHomeScoreBlack: item >= tmpAwayScoreList[idx],
+                isAwayScoreBlack: item <= tmpAwayScoreList[idx],
+            };
+        });
+    };
+
+    const getInningClassic = (
+        sportSection: TCommonSportSection,
+        prefix: TContentStoreHomeAwayPrefix,
+        league: TSportScheduleTypes,
+    ): TInningDataClassic[] => {
+        const homeScoreList = Types.getScoreList(sportSection, 'home', league);
+        const awayScoreList = Types.getScoreList(sportSection, 'away', league);
+        const tmpHomeScoreList = [ ...homeScoreList ];
+        const tmpAwayScoreList = [ ...awayScoreList ];
+        // delete ft score
+        if (sportSection !== 'football') {
+            tmpHomeScoreList.shift();
+            tmpAwayScoreList.shift();
+        }
+        // set scorelist via current inning spotlight idx & set and return data via list
+        const currentInningSpotlightIdx = getCurrentInningSpotlightIdx(sportSection, league);
+        if (prefix === 'home') {
+            return tmpHomeScoreList.filter((item, idx) => idx <= currentInningSpotlightIdx ).map((item, idx) => {
+                return {
+                    score: item,
+                    isBlack: (item >= tmpAwayScoreList[idx]),
+                };
+            });
+        }
+        if (prefix === 'away') {
+            return tmpAwayScoreList.filter((item, idx) => idx <= currentInningSpotlightIdx ).map((item, idx) => {
+                return {
+                    score: item,
+                    isBlack: (item >= tmpHomeScoreList[idx]),
+                };
+            });
+        }
+        return [];
+    };
 
     return {
         setLeagueGroup,
@@ -200,7 +244,8 @@ export const useContentStore = defineStore('contentStore', () => {
         getPrefix,
         getLeagueTime,
         getOddsTime,
-        getInningClassic,
         getCurrentInningSpotlightIdx,
+        getInningSets,
+        getInningClassic,
     };
 });

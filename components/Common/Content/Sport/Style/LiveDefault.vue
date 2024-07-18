@@ -59,7 +59,7 @@
                 </div>
                 <!-- no inning  -->
                 <img
-                    v-if="!hasSlot()"
+                    v-if="!hasSlot('inning-default')"
                     loading="lazy"
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/dcfc3d3b9f672dda4a04926881018ca0991d53f999c04d40a2bd7594a6984eff?"
                     class="img-4 cursor-pointer mt-2 mx-auto"
@@ -75,8 +75,8 @@
             <CommonFavoriteStar :isFavorite="false" class="mr-4" />
       </div>
     </div>
-    <div v-if="hasSlot()" class="flex flex-col justify-center items-center mr-[18px]">
-        <slot class="my-4" />
+    <div v-if="hasSlot('inning-default')" class="flex flex-col justify-center items-center mr-[16px]">
+        <slot name="inning-default" class="my-4" />
         <img
             loading="lazy"
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/dcfc3d3b9f672dda4a04926881018ca0991d53f999c04d40a2bd7594a6984eff?"
@@ -92,12 +92,12 @@ const props = defineProps<{
   idx: number;
   homeLogo: string;
   homeName: string;
-  homeScore: number;
+  homeScore: number | string;
   prefix: string;
   time: string;
   awayLogo: string;
   awayName: string;
-  awayScore: number;
+  awayScore: number | string;
   goLiveTracker: () => void;
   updateOpt: {
     time: boolean;
@@ -114,7 +114,7 @@ const hasSlot = (name: string = 'default'): boolean => {
 };
 
 onMounted(async () => {
-  await nextTick();
+    await nextTick();
 });
 </script>
 

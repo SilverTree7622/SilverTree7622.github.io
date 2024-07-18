@@ -103,7 +103,7 @@ export const isResult = (sportSection: TCommonSportSection, ai_status_id: number
 
 export const getScore = (
     sportSection: TCommonSportSection,
-    prefix: TContentStorePrefix,
+    prefix: TContentStoreHomeAwayPrefix,
     schedule: TSportScheduleTypes,
 ): number => {
     if (sportSection === 'football') {
@@ -129,7 +129,7 @@ export const getScore = (
 
 export const getScoreViaIdx = (
     sportSection: TCommonSportSection,
-    prefix: TContentStorePrefix,
+    prefix: TContentStoreHomeAwayPrefix,
     schedule: TSportScheduleTypes,
     idx: number = 0,
 ): number => {
@@ -144,7 +144,7 @@ export const getScoreViaIdx = (
 
 export const getScoreList = (
     sportSection: TCommonSportSection,
-    prefix: TContentStorePrefix,
+    prefix: TContentStoreHomeAwayPrefix,
     schedule: TSportScheduleTypes,
 ): number[] => {
     if (sportSection === 'football') return football.getScoreList(prefix, schedule);
@@ -174,25 +174,26 @@ export const getPrefix = (
     ai_match_status: number,
     ai_kickoff_timestamp?: number
 ): string => {
-    if (sportSection === 'football') {
-        return football.getPrefix(ai_match_status);
-    }
-    if (sportSection === 'basketball') {
-        return basketball.getPrefix(ai_match_status);
-    }
-    if (sportSection === 'baseball') {
-        return baseball.getPrefix(ai_match_status);
-    }
-    if (sportSection === 'volleyball') {
-        return volleyball.getPrefix(ai_match_status);
-    }
-    if (sportSection === 'tennis') {
-        return tennis.getPrefix(ai_match_status);
-    }
-    if (sportSection === 'icehockey') {
-        return icehockey.getPrefix(ai_match_status);
-    }
+    if (sportSection === 'football') return football.getPrefix(ai_match_status);
+    if (sportSection === 'basketball') return basketball.getPrefix(ai_match_status);
+    if (sportSection === 'baseball') return baseball.getPrefix(ai_match_status);
+    if (sportSection === 'volleyball') return volleyball.getPrefix(ai_match_status);
+    if (sportSection === 'tennis') return tennis.getPrefix(ai_match_status);
+    if (sportSection === 'icehockey') return icehockey.getPrefix(ai_match_status);
     return `00`;
+};
+
+export const getPrefixViaIdx = (
+    sportSection: TCommonSportSection,
+    idx: number
+): string => {
+    if (sportSection === 'football') return football.getPrefixViaIdx(idx);
+    if (sportSection === 'basketball') return basketball.getPrefixViaIdx(idx);
+    if (sportSection === 'baseball') return baseball.getPrefixViaIdx(idx);
+    if (sportSection === 'volleyball') return volleyball.getPrefixViaIdx(idx);
+    if (sportSection === 'tennis') return tennis.getPrefixViaIdx(idx);
+    if (sportSection === 'icehockey') return icehockey.getPrefixViaIdx(idx);
+    return '';
 };
 
 export const getTime = (
@@ -200,23 +201,26 @@ export const getTime = (
     ai_match_status: number,
     ai_kickoff_timestamp: number,
 ): string => {
-    if (sportSection === 'football') {
-        return football.getTime(ai_match_status, ai_kickoff_timestamp);
-    }
-    if (sportSection === 'basketball') {
-        return basketball.getTime(ai_match_status, ai_kickoff_timestamp);
-    }
-    if (sportSection === 'baseball') {
-        return baseball.getTime(ai_match_status, ai_kickoff_timestamp);
-    }
-    if (sportSection === 'volleyball') {
-        return volleyball.getTime(ai_match_status, ai_kickoff_timestamp);
-    }
-    if (sportSection === 'tennis') {
-        return tennis.getTime(ai_match_status, ai_kickoff_timestamp);
-    }
-    if (sportSection === 'icehockey') {
-        return icehockey.getTime(ai_match_status, ai_kickoff_timestamp);
-    }
+    if (sportSection === 'football') return football.getTime(ai_match_status, ai_kickoff_timestamp);
+    if (sportSection === 'basketball') return basketball.getTime(ai_match_status, ai_kickoff_timestamp);
+    if (sportSection === 'baseball') return baseball.getTime(ai_match_status, ai_kickoff_timestamp);
+    if (sportSection === 'volleyball') return volleyball.getTime(ai_match_status, ai_kickoff_timestamp);
+    if (sportSection === 'tennis') return tennis.getTime(ai_match_status, ai_kickoff_timestamp);
+    if (sportSection === 'icehockey') return icehockey.getTime(ai_match_status, ai_kickoff_timestamp);
     return `00`;
+};
+
+export const getTimeViaIdx = (
+    sportSection: TCommonSportSection,
+    currentIdx: number,
+    inningIdx: number,
+    schedule: TSportScheduleTypes,
+): string => {
+    if (sportSection === 'football') return football.getTimeViaIdx(currentIdx, inningIdx, schedule);
+    if (sportSection === 'basketball') return basketball.getTimeViaIdx(currentIdx, inningIdx, schedule);
+    if (sportSection === 'baseball') return baseball.getTimeViaIdx(currentIdx, inningIdx, schedule);
+    if (sportSection === 'volleyball') return volleyball.getTimeViaIdx(currentIdx, inningIdx, schedule);
+    if (sportSection === 'tennis') return tennis.getTimeViaIdx(currentIdx, inningIdx, schedule);
+    if (sportSection === 'icehockey') return icehockey.getTimeViaIdx(currentIdx, inningIdx, schedule);
+    return ``;
 };

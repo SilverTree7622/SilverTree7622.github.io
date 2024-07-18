@@ -58,12 +58,12 @@ export const isResult = (ai_status_id: number): boolean => {
     );
 };
 
-export const getScore = (prefix: TContentStorePrefix, schedule: TBaseBallSchedule): number => {
+export const getScore = (prefix: TContentStoreHomeAwayPrefix, schedule: TBaseBallSchedule): number => {
     return schedule['ai_scores']['ft'][ prefix === 'home' ? 0 : 1 ];
 };
 
 export const getScoreViaIdx = (
-    prefix: TContentStorePrefix,
+    prefix: TContentStoreHomeAwayPrefix,
     schedule: TBaseBallSchedule,
     idx: number | string = 0,
 ): number => {
@@ -86,8 +86,8 @@ export const getScoreViaIdx = (
 export const getCurrentInningSpotlightIdx = (
     schedule: TBaseBallSchedule,
 ): number => {
-    const timeStr = getTime(schedule.ai_match_status, 0);
-    if (timeStr === '1th') return 0;
+    const timeStr = getTime(schedule.ai_status_id, 0);
+    if (timeStr === '1st') return 0;
     if (timeStr === '2nd') return 1;
     if (timeStr === '3rd') return 2;
     if (timeStr === '4th') return 3;
@@ -100,7 +100,7 @@ export const getCurrentInningSpotlightIdx = (
 };
 
 export const getScoreList = (
-    prefix: TContentStorePrefix,
+    prefix: TContentStoreHomeAwayPrefix,
     schedule: TBaseBallSchedule,
 ): number[] => {
     const inningList = [ 'ft', 'p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8', 'p9' ];
@@ -108,6 +108,7 @@ export const getScoreList = (
     for (const item of inningList) {
         if (schedule['ai_scores'][item]) {
             returnList.push(schedule['ai_scores'][item][ prefix === 'home' ? 0 : 1 ]);
+            continue;
         }
         break;
     }
@@ -115,6 +116,10 @@ export const getScoreList = (
 };
 
 export const getPrefix = (ai_match_status: number) => {
+    return 'INN';
+};
+
+export const getPrefixViaIdx = (idx: number): string => {
     return 'INN';
 };
 
@@ -207,4 +212,21 @@ export const getTime = (ai_match_status: number, ai_kickoff_timestamp: number): 
     // 470 |                                       // BREAK_TOPEI_BOTTOMEI
     // 421 |                                       // EXTRA_INNING_BOTTOM
     return '9th';
+};
+
+export const getTimeViaIdx = (
+    currentIdx: number,
+    inningIdx: number,
+    schedule: TBaseBallSchedule,
+): string => {
+    if (inningIdx === 0) return '1st';
+    if (inningIdx === 1) return '2nd';
+    if (inningIdx === 2) return '3rd';
+    if (inningIdx === 3) return '4th';
+    if (inningIdx === 4) return '5th';
+    if (inningIdx === 5) return '6th';
+    if (inningIdx === 6) return '7th';
+    if (inningIdx === 7) return '8th';
+    if (inningIdx === 8) return '9th';
+    return '';
 };
