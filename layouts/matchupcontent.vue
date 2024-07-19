@@ -34,8 +34,9 @@
                 :awayName="info.awayName"
                 :awayScore="info.awayScore"
             />
-            <CommonHeaderLiveTracker v-show="!opt.isSticky" :match_id="info.match_id" />
+            <!-- <CommonHeaderLiveTracker v-show="!opt.isSticky" :match_id="info.match_id" /> -->
             <CommonHeaderTabMatchUp :sName="props.sName" :tab="props.tab" />
+            <CommonHeaderSubTabMatchUp />
             <MatchUpStatsMainTab v-if="props.tab === 'stats'" :selectedIdx="opt.selectedIdx" @selectTab="clickTab" />
         </div>
         
@@ -121,10 +122,10 @@ onMounted(async () => {
     info.timestamp = matchUpConfig.timestamp || storageItem.timestamp;
     info.homeLogo = matchUpConfig.homeLogo || storageItem.homeLogo;
     info.homeName = matchUpConfig.homeName || storageItem.homeName;
-    info.homeScore = matchUpConfig.homeScore || storageItem.homeScore;
+    info.homeScore = matchUpConfig.homeScore || (storageItem.homeScore ?? '');
     info.awayLogo = matchUpConfig.awayLogo || storageItem.awayLogo;
     info.awayName = matchUpConfig.awayName || storageItem.awayName;
-    info.awayScore = matchUpConfig.awayScore || storageItem.awayScore;
+    info.awayScore = matchUpConfig.awayScore || (storageItem.awayScore ?? '');
     if (info.leagueName) {
         localStorage.setItem(storageKey, JSON.stringify(info));
     }
@@ -133,14 +134,6 @@ onMounted(async () => {
     console.log('matchUpConfig: ', matchUpConfig);
     console.log('storageItem: ', storageItem);
     console.log('info: ', info);
-
-    updateOpt.basic = false;
-    updateOpt.sticky = false;
-    setTimeout(() => {
-        updateOpt.basic = true;
-        updateOpt.sticky = true;
-    }, 0);
-
     // set sticky logic
     if ($headerSticky.value) {
         opt.observer = undefined;
@@ -160,6 +153,12 @@ onMounted(async () => {
         );
         opt.observer.observe($headerSticky.value);
     }
+    
+    updateOpt.basic = false;
+    updateOpt.sticky = false;
+    await nextTick();
+    updateOpt.basic = true;
+    updateOpt.sticky = true;
 });
 
 onBeforeUnmount(() => {

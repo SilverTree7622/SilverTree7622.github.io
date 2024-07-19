@@ -70,6 +70,7 @@ import type { TCommonSchedule } from "~/types/Common/schedule";
 import type { TCommonSportSection } from "~/types/Common/sport";
 import type { TFootBallSchedule } from "~/types/FootBall/schedule";
 import type { TMatchUpStoreConfig } from "~/types/matchUp";
+import type { TSportScheduleTypes } from "~/types/schedule";
 import UtilDate from "~/utils/date";
 
 const props = defineProps<{
@@ -120,6 +121,7 @@ const getIsToday = (): number => {
 
 const goLiveTracker = (league: TSportScheduleTypes) => {
     const config: TMatchUpStoreConfig = {
+        sportSection: props.sportSection,
         match_id: league.match_id,
         leagueName: league.ai_competition_name,
         timestamp: league.ai_match_time,

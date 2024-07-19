@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import type { TCommonSportSection } from "~/types/Common/sport";
 import type { TMatchUpStoreConfig } from "~/types/matchUp";
 
 

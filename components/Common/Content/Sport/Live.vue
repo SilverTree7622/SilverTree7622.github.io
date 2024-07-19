@@ -179,6 +179,7 @@ const on = (home: boolean, away: boolean, time: boolean) => {
 
 const goLiveTracker = (league: TSportScheduleTypes) => {
     const config: TMatchUpStoreConfig = {
+        sportSection: props.sportSection,
         match_id: league.match_id,
         leagueName: league.ai_competition_name,
         timestamp: league.ai_match_time,

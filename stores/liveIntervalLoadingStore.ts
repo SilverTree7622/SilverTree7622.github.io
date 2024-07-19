@@ -79,8 +79,8 @@ export const useLiveIntervalLoadingStore = defineStore('liveIntervalLoadingStore
             if (item['ai_scores']) {
                 returnList[ matchedIdx ]['ai_scores'] = item['ai_scores'];
             } else {
-                returnList[ matchedIdx ].ai_away_scores = item['ai_away_scores'];
-                returnList[ matchedIdx ].ai_home_scores = item['ai_home_scores'];
+                returnList[ matchedIdx ]['ai_away_scores'] = item['ai_away_scores'];
+                returnList[ matchedIdx ]['ai_home_scores'] = item['ai_home_scores'];
             }
             returnList[ matchedIdx ].ai_status_id = item.ai_match_status;
         });

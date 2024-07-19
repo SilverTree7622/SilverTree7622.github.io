@@ -118,6 +118,7 @@ const hasSlot = (name) => {
 
 const goLiveTracker = (league: TFootBallSchedule) => {
     const config: TMatchUpStoreConfig = {
+        sportSection: props.sportSection,
         match_id: league.match_id,
         leagueName: league.ai_competition_name,
         timestamp: league.ai_match_time,

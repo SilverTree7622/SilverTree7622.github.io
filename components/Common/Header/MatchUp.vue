@@ -57,12 +57,12 @@ const clickBack = () => {
     router.back();
 };
 
-const getScore = (matchStatus: TCommonMatchStatus, homeScore: number, awayScore: number) => {
+const getScore = (matchStatus: TCommonMatchStatus, homeScore: number | string, awayScore: number | string) => {
     const isFixtures = (
         matchStatus === 0 ||
         matchStatus === 1
     );
-    return isFixtures ? `` : `${ homeScore ?? 0 } - ${ awayScore ?? 0 }`;
+    return isFixtures ? `` : `${ homeScore ?? '' } - ${ awayScore ?? '' }`;
 };
 
 const getTime = (timestamp: number) => {

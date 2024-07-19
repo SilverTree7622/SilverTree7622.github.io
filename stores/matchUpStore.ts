@@ -1,9 +1,11 @@
 import { defineStore } from "pinia";
+import type { TCommonSportSection } from "~/types/Common/sport";
 import type { TMatchUpStoreConfig } from "~/types/matchUp";
 
 
 export const useMatchUpStore = defineStore('matchUpStore', () => {
     const config = reactive<TMatchUpStoreConfig>({
+        sportSection: 'football',
         match_id: '',
         leagueName: '',
         timestamp: 0,
@@ -30,6 +32,7 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
     };
 
     const setConfig = (infoConfig: TMatchUpStoreConfig) => {
+        config.sportSection = infoConfig.sportSection;
         config.match_id = infoConfig.match_id;
         config.matchStatus = infoConfig.matchStatus;
         config.leagueName = infoConfig.leagueName;

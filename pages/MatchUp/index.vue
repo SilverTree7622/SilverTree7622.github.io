@@ -64,19 +64,24 @@ watch(
     }
 );
 
+const chckMatchId = (): string => {
+    return route.query['uuid'] as string;
+};
+
 const res = async () => {
-    setTimeout(() => {
-        opt.result.league.push(
-            { lg_name: 'dummy_lg_name' },
-            { lg_name: 'dummy_lg_name2' },
-            { lg_name: 'dummy_lg_name3' },
-            { lg_name: 'dummy_lg_name4' },
-            { lg_name: 'dummy_lg_name5' },
-        );
-        list.sortedLeagueList = opt.result.league;
-        opt.isBooting = false;
-        opt.isPending = false;
-    }, Math.random() * 3 * 1000);
+    const matchid = chckMatchId();
+    const res = await useApiFetch(
+        'MatchStats',
+        { method: 'POST', },
+        {
+            matchid,
+            sports: 'FOOTBALL',
+        },
+    );
+    const data = (res.data as any)['data'] ?? {};
+    console.log('res, data: ', res, data);
+    opt.isBooting = false;
+    opt.isPending = false;
 };
 
 onMounted(async () => {

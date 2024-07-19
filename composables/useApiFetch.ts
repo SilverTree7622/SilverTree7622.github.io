@@ -122,11 +122,11 @@ export const useApiFetch = async <T> (
         reqConfig.b._memid = _memid;
     } else {
         if (param) {
-            reqConfig.c.param.sid = param['sid'] ?? 0;
-            reqConfig.c.param.fromdate = param['fromdate'] ?? 0;
+            for (const item in param) {
+                reqConfig.c.param[item] = param[item];    
+            }
         }
     }
-
 
     const opt = reactive({
         trialCnt: <number> 0,

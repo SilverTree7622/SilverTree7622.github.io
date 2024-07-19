@@ -141,6 +141,7 @@ const opt = reactive({
 
 const clickLiveCenter = () => {
     const config: TMatchUpStoreConfig = {
+        sportSection: props.sportSection,
         match_id: props.item.match_id,
         leagueName: props.item.ai_competition_name,
         timestamp: props.item.ai_match_time,
