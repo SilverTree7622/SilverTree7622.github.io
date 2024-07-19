@@ -159,10 +159,12 @@ top scores
 common api
 param id(팀, 플레이어, 코치 등) : structure 조회 api용
 
-match home
-stats, h2h
-화요일
-odds, live
-수요일
+이번 주
+    금요일
+    match home stats, h2h
+    화요일
+    match home odds, live
+    수요일
 
-다음주 끝쯤에 league home 시작하는걸 목표로
+다음주 끝쯤에
+    league home 끝? 시작하는걸 목표로

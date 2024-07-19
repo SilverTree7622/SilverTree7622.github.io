@@ -122,7 +122,8 @@ onMounted(async () => {
         "ai_match_time": 1721142000,
         "ai_season_id": "4zp5rzkt7l3r82w",
         "ai_status_id": 2,
-        "match_id": "dn1m17tp75ljmoe"
+        "match_id": "dn1m17tp75ljmoe",
+        "topscore_id": 0,
     };
     opt.list = [ tmpData ];
 });

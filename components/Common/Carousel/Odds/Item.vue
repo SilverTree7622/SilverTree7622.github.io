@@ -288,11 +288,11 @@ onBeforeUnmount(() => {
 
 .frame-matchup-league {
     width: auto;
-    max-width: 80px;
+    max-width: 100px;
     justify-content: center;
     border-color: rgba(204, 94, 94, 1);
     border-style: solid;
-    border-bottom-width: 4px;
+    border-bottom-width: 3px;
     color: #000;
     text-align: center;
     text-transform: uppercase;
@@ -300,6 +300,7 @@ onBeforeUnmount(() => {
     text-align: center;
     text-overflow: ellipsis;
     overflow: hidden;
+    margin-bottom: 1px;
 }
 
 .frame-573 {

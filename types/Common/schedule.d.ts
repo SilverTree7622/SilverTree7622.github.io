@@ -41,6 +41,7 @@ export type TCommonSchedulePropsMatch = {
     "ai_match_time": number;
     "ai_season_id": string;
     "match_id": string;
+    "topscore_id": number;                  // 0 => no top scores, value > 0 => top scores
 };
 
 export type TCommonSchedulePropsHome = {

@@ -26,6 +26,9 @@ export const isResult = (ai_status_id: number): boolean => {
 };
 
 export const getScore = (prefix: TContentStoreHomeAwayPrefix, schedule: TFootBallSchedule): number => {
+    // ISSUE: WITH SCORE VISE VERSA
+    if (prefix === 'home') prefix = 'away';
+    if (prefix === 'away') prefix = 'home';
     return getScoreList(prefix, schedule)[0];
 };
 

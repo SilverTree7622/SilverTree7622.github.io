@@ -24,23 +24,24 @@
                             <CommonCarouselLiveItem
                                 v-if="props.tab === 'live'"
                                 :item="item"
+                                :sportSection="props.sportSection"
                                 :background="props.background"
                                 :arrow="props.arrow"
                             />
                             <CommonCarouselFixturesItem
                                 v-if="props.tab === 'fixtures'"
+                                :sportSection="props.sportSection"
                                 :item="item"
-                                :background="props.background"
                             />
                             <CommonCarouselOddsItem
                                 v-if="props.tab === 'odds'"
+                                :sportSection="props.sportSection"
                                 :item="item"
-                                :background="props.background"
                             />
                             <CommonCarouselResultItem
                                 v-if="props.tab === 'result'"
+                                :sportSection="props.sportSection"
                                 :item="item"
-                                :background="props.background"
                             />
                         </div>
                     </div>
@@ -108,12 +109,16 @@ import { Carousel } from 'flowbite';
 import { useFlowbite } from '~/composables/useFlowbite';
 import type { CarouselItem, CarouselOptions, CarouselInterface, IndicatorItem, } from 'flowbite';
 import type { TCommonTabTypes } from '~/types/Common/tab';
-import type { TCarouselTitle } from '~/types/Common/Carousel';
+import type { TCarouselTitle, TCarouselUpdate } from '~/types/Common/Carousel';
+import type { TSportScheduleTypes } from '~/types/schedule';
+import type { TCommonSportSection } from '~/types/Common/sport';
 
 const props = defineProps<{
+    sportSection: TCommonSportSection;
     title: TCarouselTitle;
     tab: TCommonTabTypes;
-    list: any[];
+    list: TSportScheduleTypes[];
+    updateConfigList?: TCarouselUpdate[];
     background?: string;
     arrow?: string;
     height?: number;

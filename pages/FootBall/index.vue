@@ -8,7 +8,7 @@
         :tab="opt.tab"
         :result="opt.result"
         :sortedList="list.sortedList"
-        :pagedListLength="list.pagedList.length"
+        :pagedList="list.pagedList"
         :changeTab="changeTab"
         :changeDate="changeDate"
         :toggleByTime="toggleByTime"
@@ -203,19 +203,10 @@ const updateLiveRealTime = async () => {
         $liveMain,
         callNextContents,
     );
-    list.totalList = totalList;
-    const length1 = totalList.filter( item => item.match_id === "l7oqdehoggk7r51" ).length;
-    const length2 = totalList.filter( item => item.match_id === "y0or5jhn8986qwz" ).length;
-    const length3 = totalList.filter( item => item.match_id === "3glrw7h7n44oqdy" ).length;
-    const length4 = totalList.filter( item => item.match_id === "jw2r09h2kkverz8" ).length;
-    
-    console.log('length1, length2, length3, length4: ', length1, length2, length3, length4);
-    console.log('totalList,', totalList);
+    list.totalList = totalList as TFootBallSchedule[];
     list.totalKickOffList = totalKickOffList;
-    list.sortedList = sortedList;
+    list.sortedList = sortedList as TFootBallSchedule[];
     list.sortedKickOffList = sortedKickOffList;
-    console.log('list.sortedList: ', list.sortedList);
-
 };
 
 /**
@@ -279,7 +270,7 @@ const res = async () => {
 const loadSortedContent = async (isFilter: boolean, list: any[]) => {
     if (list.length === 0) return list;
     if (isFilter) {
-        console.log('page.idx from loadSortedContent: ', page.idx);
+        console.log('page.idx from loadSortedContent via filter: ', page.idx);
         return list.slice(0, MAX_PAGINATION_CONTENT * page.idx);
     }
     if (list.length < page.idx) {

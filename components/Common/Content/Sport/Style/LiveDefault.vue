@@ -49,13 +49,13 @@
             </div>
             <div class="div-7">
                 <div class="div-8">
-                        <div class="div-9">{{ props.prefix }}</div>
-                        <div class="div-10">{{ props.time }}</div>
+                    <div class="div-9">{{ props.prefix }}</div>
+                    <div class="div-10">{{ props.time }}</div>
                 </div>
                 <div class="div-11">
-                        <div class="div-12">{{ props.homeScore }}</div>
-                        <div class="div-13">:</div>
-                        <div class="div-14">{{ props.awayScore }}</div>
+                    <div class="div-12">{{ props.homeScore }}</div>
+                    <div class="div-13">:</div>
+                    <div class="div-14">{{ props.awayScore }}</div>
                 </div>
                 <!-- no inning  -->
                 <img

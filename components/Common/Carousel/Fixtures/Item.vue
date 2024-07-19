@@ -5,7 +5,7 @@
                 <div class="premier_-league_logo-1"></div>
                 <div class="top-scores_-league top-scores_">
                     <div class="epl body2">
-                        {{ props.item.name }}
+                        {{ contentStore.getLeagueName(props.item) }}
                     </div>
                 </div>
             </div>
@@ -30,10 +30,14 @@
                 <CommonFavoriteStar class="pr-7" />
                 <div class="top-scores_-right-team">
                     <div class="manchester-city">
-                        <img class="manchester-city-1" src="/img/manchestercity@2x.png" alt="ManchesterCity" />
+                        <img
+                            class="manchester-city-1"
+                            :src="contentStore.getParticipantSrc(props.item, 0)"
+                            :alt="contentStore.getParticipantName(props.item, 0)"
+                        />
                     </div>
                     <div class="name valign-text-middle body2">
-                        CHELSEA
+                        {{ contentStore.getParticipantName(props.item, 0) }}
                     </div>
                 </div>
             </div>
@@ -52,10 +56,14 @@
                 <CommonFavoriteStar class="pr-7" />
                 <div class="top-scores_-right-team-1">
                     <div class="manchester-city">
-                        <img class="manchester-city-1" src="/img/manchestercity@2x.png" alt="ManchesterCity" />
+                        <img
+                            class="manchester-city-1"
+                            :src="contentStore.getParticipantSrc(props.item, 1)"
+                            :alt="contentStore.getParticipantName(props.item, 1)"
+                        />
                     </div>
                     <div class="manchester-city-2 valign-text-middle body2">
-                        MANCHESTER<br />CITY
+                        {{ contentStore.getParticipantName(props.item, 1) }}
                     </div>
                 </div>
             </div>
@@ -65,23 +73,13 @@
 </template>
 
 <script setup lang="ts">
+import type { TSportScheduleTypes } from '~/types/schedule';
+
 const props = defineProps<{
-    item: any;
-    // leagueLogo?: string;
-    // commentId?: string;
-    // commentContext?: string;
-    // commentLength?: number;
-    // homeLogo?: string;
-    // homeName?: string;
-    // homeScore?: string;
-    // awayLogo?: string;
-    // awayName?: string;
-    // awayScore?: string;
-    // match_id?: string;
-    // time1?: string;
-    // time2?: string;
+    item: TSportScheduleTypes;
 }>();
 
+const contentStore = useContentStore();
 const goStore = useGoStore();
 
 const clickViewMatchUp = () => {

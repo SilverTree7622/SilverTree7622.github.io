@@ -91,7 +91,7 @@ export const useContentStore = defineStore('contentStore', () => {
     const getScore = (
         sportSection: TCommonSportSection,
         prefix: TContentStoreHomeAwayPrefix, 
-        schedule,
+        schedule: TSportScheduleTypes,
     ): number[] => {
         return [ Types.getScore(sportSection, prefix, schedule) ];
     };
@@ -145,12 +145,12 @@ export const useContentStore = defineStore('contentStore', () => {
         isLiving: boolean;
         time: string;
     } => {
-        const { ai_match_status } = league;
-        const isLiving = Types.isLive(sportSection, ai_match_status);
+        const { ai_status_id } = league;
+        const isLiving = Types.isLive(sportSection, ai_status_id);
         if (isLiving && league['ai_kickoff_timestamp'] !== undefined) {
             return {
                 isLiving,
-                time: getLeagueTime(0, sportSection, ai_match_status, league['ai_kickoff_timestamp']).matchUpTime,
+                time: getLeagueTime(0, sportSection, ai_status_id, league['ai_kickoff_timestamp']).matchUpTime,
             };
         } else {
             return {

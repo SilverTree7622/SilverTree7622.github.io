@@ -5,35 +5,47 @@
                 <CommonFavoriteStar class="pr-7" />
                 <div class="top-scores_-right-team">
                     <div class="manchester-city">
-                        <img class="manchester-city-1" src="/img/manchestercity@2x.png" alt="ManchesterCity" />
+                        <img 
+                            class="manchester-city-1"
+                            :src="contentStore.getParticipantSrc(props.item, 0)"
+                            :alt="contentStore.getParticipantName(props.item, 0)"
+                        />
                     </div>
                     <div class="name valign-text-middle body2">
-                        CHELSEA
+                        {{ contentStore.getParticipantName(props.item, 0) }}
                     </div>
                 </div>
             </div>
             <div class="div top-matchup_">
                 <div class="frame-matchup-league">
-                    {{ props.item.name }}
+                    {{ contentStore.getLeagueName(props.item) }}
                 </div>
                 <div class="div-3">
                     <div class="div-4">FINISHED</div>
                     <div class="div-5">FT</div>
                 </div>
                 <div class="div-6">
-                    <div class="div-7">00</div>
+                    <div class="div-7">
+                        {{ contentStore.getScore(props.sportSection, 'home', props.item)[0] }}
+                    </div>
                     <div class="div-8">:</div>
-                    <div class="div-9">00</div>
+                    <div class="div-9">
+                        {{ contentStore.getScore(props.sportSection, 'away', props.item)[0] }}
+                    </div>
                 </div>
             </div>
             <div class="top-matchup_-favourite_-right-team-1 ml-5">
                 <CommonFavoriteStar class="pr-7" />
                 <div class="top-scores_-right-team-1">
                     <div class="manchester-city">
-                        <img class="manchester-city-1" src="/img/manchestercity@2x.png" alt="ManchesterCity" />
+                        <img
+                            class="manchester-city-1" 
+                            :src="contentStore.getParticipantSrc(props.item, 1)"
+                            :alt="contentStore.getParticipantName(props.item, 1)"
+                        />
                     </div>
                     <div class="manchester-city-2 valign-text-middle body2">
-                        MANCHESTER<br />CITY
+                        {{ contentStore.getParticipantName(props.item, 1) }}
                     </div>
                 </div>
             </div>
@@ -43,23 +55,15 @@
 </template>
 
 <script setup lang="ts">
+import type { TCommonSportSection } from '~/types/Common/sport';
+import type { TSportScheduleTypes } from '~/types/schedule';
+
 const props = defineProps<{
-    item: any;
-    // leagueLogo?: string;
-    // commentId?: string;
-    // commentContext?: string;
-    // commentLength?: number;
-    // homeLogo?: string;
-    // homeName?: string;
-    // homeScore?: string;
-    // awayLogo?: string;
-    // awayName?: string;
-    // awayScore?: string;
-    // match_id?: string;
-    // time1?: string;
-    // time2?: string;
+    sportSection: TCommonSportSection;
+    item: TSportScheduleTypes;
 }>();
 
+const contentStore = useContentStore();
 const goStore = useGoStore();
 
 const clickStatistics = () => {
@@ -285,11 +289,11 @@ onBeforeUnmount(() => {
 
 .frame-matchup-league {
     width: auto;
-    max-width: 80px;
+    max-width: 100px;
     justify-content: center;
     border-color: #6C6E71;
     border-style: solid;
-    border-bottom-width: 4px;
+    border-bottom-width: 3px;
     color: #000;
     text-align: center;
     text-transform: uppercase;
@@ -297,6 +301,7 @@ onBeforeUnmount(() => {
     text-align: center;
     text-overflow: ellipsis;
     overflow: hidden;
+    margin-bottom: 1px;
 }
 
 .top-matchup_-time {

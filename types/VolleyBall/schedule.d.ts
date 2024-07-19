@@ -1,4 +1,5 @@
-import type { TCommonSchedule } from "../Common/schedule";
+import type { TCommonSchedule, TCommonSchedulePropsAway, TCommonSchedulePropsCategory, TCommonSchedulePropsCompetition, TCommonSchedulePropsCountry, TCommonSchedulePropsHome, TCommonSchedulePropsMatch } from "../Common/schedule";
+import type { TCommonMatchStatus } from "../Common/status";
 
 
 export type TVolleyBallSchedule = 

@@ -5,7 +5,7 @@
                 <img class="premier_-league_logo-1" :src="props.background ? `/img/${ props.background }` : `/img/premier-league-logo-1@2x.png`" />
                 <div class="top-scores_-league">
                     <div class="epl body2">
-                        {{ props.item.name }}
+                        {{ contentStore.getLeagueName(props.item) }}
                     </div>
                 </div>
             </div>
@@ -32,9 +32,14 @@
                     <div class="top-scores_-favourite_-left-team">
                         <CommonFavoriteStar class="pr-7" />
                         <div class="top-scores_-left-team">
-                            <img class="manchester-city" draggable="false" src="/img/manchestercity.png" alt="ManchesterCity" />
+                            <img
+                                class="manchester-city"
+                                draggable="false"
+                                :src="contentStore.getParticipantSrc(props.item, 0)"
+                                :alt="contentStore.getParticipantName(props.item, 0)"
+                            />
                             <div class="manchester-city-2 valign-text-middle body2">
-                                MANCHESTER<br />CITY
+                                {{ contentStore.getParticipantName(props.item, 0) }}
                             </div>
                         </div>
                     </div>
@@ -42,19 +47,36 @@
             </div>
             <div class="frame-575">
                 <div class="top-scores_-time">
-                    <div class="frame-573">
-                        <div class="x1-h body2"><span class="body2">1 </span><span class="body2">H</span>
+                    <div class="div-8 !font-bolder">
+                        <div class="div-9 !font-bolder">
+                            {{ getPrefix(props.sportSection, props.item.ai_status_id) }}
+                        </div>
+                        <div class="div-10 !font-bolder">
+                            {{ getLeagueTime() }}
+                        </div>
+                    </div>
+                    <!-- <div class="frame-573">
+                        <div class="x1-h body2">
+                            <span class="body2">
+                                {{ getPrefix(props.sportSection, props.item.ai_status_id) }}
+                            </span>
                         </div>
                     </div>
                     <div class="frame-574">
-                        <div class="text-3 text body2">00’</div>
-                    </div>
+                        <div class="text-3 text body2">
+                            {{ getLeagueTime() }}
+                        </div>
+                    </div> -->
                 </div>
                 <div class="top-scores_-scoreboard">
                     <div class="flex-row y-full my-auto py-auto mt-[6px]">
-                        <div class="number number-2 headline2 mr-3">00</div>
+                        <div class="number number-2 headline2 mr-3">
+                            {{ contentStore.getScore(props.sportSection, 'home', props.item)[0] }}
+                        </div>
                         <div class="text-4 text body2">:</div>
-                        <div class="number-1 number-2 headline2">00</div>
+                        <div class="number-1 number-2 headline2">
+                            {{ contentStore.getScore(props.sportSection, 'away', props.item)[0] }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -64,9 +86,14 @@
                     <div class="top-scores_-favourite_-right-team">
                         <CommonFavoriteStar class="pr-7" />
                         <div class="top-scores_-right-team">
-                            <img class="manchester-city" draggable="false" src="/img/manchestercity.png" alt="ManchesterCity" />
+                            <img
+                                class="manchester-city"
+                                draggable="false"
+                                :src="contentStore.getParticipantSrc(props.item, 1)"
+                                :alt="contentStore.getParticipantName(props.item, 1)"
+                            />
                             <div class="manchester-city-2 valign-text-middle body2">
-                                MANCHESTER<br />CITY
+                                {{ contentStore.getParticipantName(props.item, 1) }}
                             </div>
                         </div>
                     </div>
@@ -82,46 +109,66 @@
 </template>
 
 <script setup lang="ts">
+import { getPrefix } from '~/types';
+import type { TCarouselUpdate } from '~/types/Common/Carousel';
+import type { TCommonLiveRealTime } from '~/types/Common/Live';
+import type { TCommonSportSection } from '~/types/Common/sport';
+import type { TMatchUpStoreConfig } from '~/types/matchUp';
+import type { TSportScheduleTypes } from '~/types/schedule';
+
 const props = defineProps<{
-    item: any;
+    sportSection: TCommonSportSection;
+    item: TSportScheduleTypes;
+    updateConfig?: TCarouselUpdate[];
     background?: string;
     arrow?: string;
-    // leagueLogo?: string;
-    // commentId?: string;
-    // commentContext?: string;
-    // commentLength?: number;
-    // homeLogo?: string;
-    // homeName?: string;
-    // homeScore?: string;
-    // awayLogo?: string;
-    // awayName?: string;
-    // awayScore?: string;
-    // match_id?: string;
-    // time1?: string;
-    // time2?: string;
 }>();
 
+const prev = reactive({
+    timestamp: <TCommonLiveRealTime['ai_kickoff_timestamp']> 0,
+});
+
+const contentStore = useContentStore();
 const goStore = useGoStore();
 
+const opt = reactive({
+    ai_away_scores: <TCommonLiveRealTime['ai_away_scores']> contentStore.getScore(props.sportSection, 'away', props.item),
+    ai_home_scores: <TCommonLiveRealTime['ai_home_scores']> contentStore.getScore(props.sportSection, 'home', props.item),
+    ai_kickoff_timestamp: <TCommonLiveRealTime['ai_kickoff_timestamp']> props.item.ai_kickoff_timestamp ?? 0,
+    ai_match_status: <TCommonLiveRealTime['ai_match_status']> props.item.ai_status_id,
+    match_id: <TCommonLiveRealTime['match_id']> props.item.match_id,
+});
+
 const clickLiveCenter = () => {
-    // const config: TMatchUpStoreConfig = {
-    //     match_id: props.match_id,
-    //     leagueName: props.ai_competition_name,
-    //     timestamp: props.ai_match_time,
-    //     homeLogo: props.ai_home_team_img,
-    //     homeName: props.ai_home_team_name,
-    //     homeScore: props.ai_home_scores[0],
-    //     awayLogo: props.ai_away_team_img,
-    //     awayName: props.ai_away_team_name,
-    //     awayScore: props.ai_away_scores[0],
-    //     matchStatus: props.ai_status_id,
-    // };
-    // goStore.go_livetraker(props.match_id ?? '', config);
+    const config: TMatchUpStoreConfig = {
+        match_id: props.item.match_id,
+        leagueName: props.item.ai_competition_name,
+        timestamp: props.item.ai_match_time,
+        homeLogo: props.item.ai_home_team_img,
+        homeName: props.item.ai_home_team_name,
+        homeScore: contentStore.getScore(props.sportSection, 'home', props.item)[0],
+        awayLogo: props.item.ai_away_team_img,
+        awayName: props.item.ai_away_team_name,
+        awayScore: contentStore.getScore(props.sportSection, 'away', props.item)[0],
+        matchStatus: props.item.ai_status_id,
+    };
+    goStore.go_livetraker(props.item.match_id ?? '', config);
+};
+
+const getLeagueTime = () => {
+    const {
+        prevTimestamp,
+        matchUpTime,
+    } = contentStore.getLeagueTime(
+        0, props.sportSection, opt.ai_match_status, opt.ai_kickoff_timestamp,
+    );
+    prev.timestamp = prevTimestamp;
+    return matchUpTime;
 };
 
 onMounted(async () => {
     await nextTick();
-
+    
 });
 
 onBeforeUnmount(() => {
@@ -392,9 +439,37 @@ onBeforeUnmount(() => {
     width: 100%;
 }
 
+.div-8 {
+    justify-content: center;
+    display: flex;
+    gap: 0px;
+    font-size: 12px;
+}
+.div-9 {
+  font-family: Pretendard, sans-serif;
+  justify-content: center;
+  background: conic-gradient(
+    from 191deg at 112.82% -69.44%,
+    #617acc 0deg,
+    #dde0e3 360deg
+  );
+  color: #fff;
+  text-align: right;
+  padding: 0 4px 0 2px;
+}
+.div-10 {
+  font-family: Pretendard, sans-serif;
+  justify-content: center;
+  background-color: #dde0e3;
+  color: #000;
+  white-space: nowrap;
+  padding-right: 2px;
+  padding-left: 4px;
+}
+
 .frame-573 {
     align-items: center;
-    /* background: conic-gradient(from 180deg at 50% 50%, rgb(97, 122, 204) 0deg, rgb(221, 224, 227) 360deg); */
+    background: conic-gradient(from 180deg at 50% 50%, rgb(97, 122, 204) 0deg, rgb(221, 224, 227) 360deg);
     display: inline-flex;
     flex: 0 0 auto;
     gap: 10px;

@@ -8,7 +8,7 @@
         :tab="opt.tab"
         :result="opt.result"
         :sortedList="list.sortedList"
-        :pagedListLength="list.pagedList.length"
+        :pagedList="list.pagedList"
         :changeTab="changeTab"
         :changeDate="changeDate"
         :toggleByTime="toggleByTime"

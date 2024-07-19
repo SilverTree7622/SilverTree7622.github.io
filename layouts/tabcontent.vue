@@ -7,10 +7,11 @@
 
         <!-- carousel section -->
         <CommonCarouselSport
+            ref="$carousel"
             :sName="props.sName"
             :tab="props.tab"
             :isPending="props.isPending"
-            :list="props.pagedListLength ? [ { name: 'wth' }, { name: 'wth2' }, { name: 'wth3' } ] : []"
+            :list="carouselOpt.list.length ? carouselOpt.list : []"
         />
 
         <div class="pt-[2px]"></div>
@@ -24,7 +25,7 @@
                             {{ ECommonSportSectionValue[ props.sName ] }}
                         </div>
                         <div class="text-1 valign-text-middle">
-                            ({{ props.isPending ? 0 : props.pagedListLength }})
+                            ({{ props.isPending ? 0 : props.pagedList.length }})
                         </div>
                     </div>
                     <div class="sport-title_-date_-set">
@@ -75,6 +76,7 @@
 </template>
 
 <script lang="ts" setup>
+import type { TCarouselUpdate } from '~/types/Common/Carousel';
 import { ECommonSportSectionValue, type TCommonSportSection } from '~/types/Common/sport';
 import type { TCommonTabTypes } from '~/types/Common/tab';
 import type { TSportScheduleTypes } from '~/types/schedule';
@@ -88,11 +90,11 @@ const props = defineProps<{
     tab: TCommonTabTypes;
     result: any;
     sortedList: TSportScheduleTypes[];
-    pagedListLength: number;
+    pagedList: TSportScheduleTypes[];
     changeTab: () => Promise<void>;
     changeDate: () => Promise<void>;
     toggleByTime: () => Promise<void>;
-    updateLiveRealTime: () => void;
+    updateLiveRealTime: () => Promise<void>;
 }>();
 
 const emit = defineEmits<{
@@ -105,13 +107,22 @@ const opt = reactive({
     useInitForChangingTab: <boolean>true,      // when init date filter section
 });
 
+const carouselOpt = reactive({
+    list: <TSportScheduleTypes[]> [],
+});
+
+const {
+    MAX_SHOW_CAROUSEL_CNT,
+} = useRuntimeConfig().public.CONSTANTS;
 const filterStore = useFilterStore();
 const dateStore = useDateStore();
 const liveIntervalLoadingStore = useLiveIntervalLoadingStore();
 const leftStore = useLeftStore();
+const contentStore = useContentStore();
 const route = useRoute();
 
 const $date = ref();
+const $carousel = ref();
 
 // tab changed evt
 watch(
@@ -154,14 +165,15 @@ watch(
     () => liveIntervalLoadingStore.getRealTimeData(),
     async () => {
         await props.updateLiveRealTime();
+        updateCarouselListViaLive();
     }
 );
 
-// watch list item length for the time update
+// watch list item length for the time update && search for the 
 watch(
     () => props.sortedList.length,
     async (p) => {
-        await props.updateLiveRealTime();
+        await update();
     },
 );
 
@@ -225,10 +237,38 @@ const nextDate = (date: Date) => {
     });
 };
 
+const update = async () => {
+    await props.updateLiveRealTime();
+    await updateCarouselList();
+    updateCarouselListViaLive();
+};
+
+const updateCarouselList = async () => {
+    carouselOpt.list = [];
+    await nextTick();
+    const prevList: TSportScheduleTypes[] = props.pagedList.filter( sortedItem => sortedItem.topscore_id > 0 );
+    if (prevList.length > MAX_SHOW_CAROUSEL_CNT) {
+        prevList.sort((a, b) => new Date(a.ai_match_time).getTime() - new Date(b.ai_match_time).getTime() );
+        carouselOpt.list = [];
+        for (let i = 0; i++; i < MAX_SHOW_CAROUSEL_CNT) {
+            carouselOpt.list.push(prevList[i]);
+        }
+        return;
+    }
+    carouselOpt.list = prevList;
+};
+
+// update scores & time & inning mostly
+const updateCarouselListViaLive = () => {
+    if (!$carousel.value) return;
+    if (!$carousel.value.update) return;
+    $carousel.value.update([] as TCarouselUpdate[]);
+};
+
 onMounted(async () => {
     await nextTick();
-    await props.updateLiveRealTime();
     leftStore.onMountedSport(props.sName);
+    await update();
 });
 
 onBeforeUnmount(() => {
@@ -292,7 +332,6 @@ onBeforeUnmount(() => {
   justify-content: flex-end;
   position: relative;
 }
-
 
 .frame-578 {
   align-items: flex-start;

@@ -177,7 +177,7 @@ const on = (home: boolean, away: boolean, time: boolean) => {
     if (time) updateOpt.time = true;
 };
 
-const goLiveTracker = (league: TCommonSchedule) => {
+const goLiveTracker = (league: TSportScheduleTypes) => {
     const config: TMatchUpStoreConfig = {
         match_id: league.match_id,
         leagueName: league.ai_competition_name,

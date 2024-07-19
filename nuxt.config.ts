@@ -47,6 +47,7 @@ export default defineNuxtConfig({
 				MAX_PAGINATION_CONTENT: 10,
 
 				MAX_SHOW_INNING_CNT: 5,
+				MAX_SHOW_CAROUSEL_CNT: 10,
 
 				// CAROUSEL_INTERVAL_DURAITON: 3 * 1000,
 			},

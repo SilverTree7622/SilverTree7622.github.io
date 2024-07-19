@@ -9,6 +9,12 @@ import type { TAuthGuest, TAuthUser } from "./Auth";
 import type { TCommonSchedule } from "./Common/schedule";
 import type { TSelectorTime } from "./Selector";
 import type { TSportScheduleTypes } from './schedule';
+import type { TFootBallSchedule } from './FootBall/schedule';
+import type { TBasketBallSchedule } from './BasketBall/schedule';
+import type { TBaseBallSchedule } from './BaseBall/schedule';
+import type { TVolleyBallSchedule } from './VolleyBall/schedule';
+import type { TTennisSchedule } from './Tennis/schedule';
+import type { TIceHockeySchedule } from './IceHockey/schedule';
 
 // export enum EError {
 //     SUCCESS = { code: 0, type: null, title: '', message: '', },
@@ -107,22 +113,22 @@ export const getScore = (
     schedule: TSportScheduleTypes,
 ): number => {
     if (sportSection === 'football') {
-        return football.getScore(prefix, schedule);
+        return football.getScore(prefix, schedule as TFootBallSchedule);
     }
     if (sportSection === 'basketball') {
-        return basketball.getScore(prefix, schedule);
+        return basketball.getScore(prefix, schedule as TBasketBallSchedule);
     }
     if (sportSection === 'baseball') {
-        return baseball.getScore(prefix, schedule);
+        return baseball.getScore(prefix, schedule as TBaseBallSchedule);
     }
     if (sportSection === 'volleyball') {
-        return volleyball.getScore(prefix, schedule);
+        return volleyball.getScore(prefix, schedule as TVolleyBallSchedule);
     }
     if (sportSection === 'tennis') {
-        return tennis.getScore(prefix, schedule);
+        return tennis.getScore(prefix, schedule as TTennisSchedule);
     }
     if (sportSection === 'icehockey') {
-        return icehockey.getScore(prefix, schedule);
+        return icehockey.getScore(prefix, schedule as TIceHockeySchedule);
     }
     return 0;
 };
@@ -133,12 +139,12 @@ export const getScoreViaIdx = (
     schedule: TSportScheduleTypes,
     idx: number = 0,
 ): number => {
-    if (sportSection === 'football') return football.getScoreViaIdx(prefix, schedule, idx);
-    if (sportSection === 'basketball') return basketball.getScoreViaIdx(prefix, schedule, idx);
-    if (sportSection === 'baseball') return baseball.getScoreViaIdx(prefix, schedule, idx);
-    if (sportSection === 'volleyball') return volleyball.getScoreViaIdx(prefix, schedule, idx);
-    if (sportSection === 'tennis') return tennis.getScoreViaIdx(prefix, schedule, idx);
-    if (sportSection === 'icehockey') return icehockey.getScoreViaIdx(prefix, schedule, idx);
+    if (sportSection === 'football') return football.getScoreViaIdx(prefix, schedule as TFootBallSchedule, idx);
+    if (sportSection === 'basketball') return basketball.getScoreViaIdx(prefix, schedule as TBasketBallSchedule, idx);
+    if (sportSection === 'baseball') return baseball.getScoreViaIdx(prefix, schedule as TBaseBallSchedule, idx);
+    if (sportSection === 'volleyball') return volleyball.getScoreViaIdx(prefix, schedule as TVolleyBallSchedule, idx);
+    if (sportSection === 'tennis') return tennis.getScoreViaIdx(prefix, schedule as TTennisSchedule, idx);
+    if (sportSection === 'icehockey') return icehockey.getScoreViaIdx(prefix, schedule as TIceHockeySchedule, idx);
     return 0;
 };
 
@@ -147,12 +153,12 @@ export const getScoreList = (
     prefix: TContentStoreHomeAwayPrefix,
     schedule: TSportScheduleTypes,
 ): number[] => {
-    if (sportSection === 'football') return football.getScoreList(prefix, schedule);
-    if (sportSection === 'basketball') return basketball.getScoreList(prefix, schedule);
-    if (sportSection === 'baseball') return baseball.getScoreList(prefix, schedule);
-    if (sportSection === 'volleyball') return volleyball.getScoreList(prefix, schedule);
-    if (sportSection === 'tennis') return tennis.getScoreList(prefix, schedule);
-    if (sportSection === 'icehockey') return icehockey.getScoreList(prefix, schedule);
+    if (sportSection === 'football') return football.getScoreList(prefix, schedule as TFootBallSchedule);
+    if (sportSection === 'basketball') return basketball.getScoreList(prefix, schedule as TBasketBallSchedule);
+    if (sportSection === 'baseball') return baseball.getScoreList(prefix, schedule as TBaseBallSchedule);
+    if (sportSection === 'volleyball') return volleyball.getScoreList(prefix, schedule as TVolleyBallSchedule);
+    if (sportSection === 'tennis') return tennis.getScoreList(prefix, schedule as TTennisSchedule);
+    if (sportSection === 'icehockey') return icehockey.getScoreList(prefix, schedule as TIceHockeySchedule);
     return [];
 };
 
@@ -160,12 +166,12 @@ export const getCurrentInningSpotlightIdx = (
     sportSection: TCommonSportSection,
     schedule: TSportScheduleTypes,
 ): number => {
-    if (sportSection === 'football') return football.getCurrentInningSpotlightIdx(schedule);
-    if (sportSection === 'basketball') return basketball.getCurrentInningSpotlightIdx(schedule);
-    if (sportSection === 'baseball') return baseball.getCurrentInningSpotlightIdx(schedule);
-    if (sportSection === 'volleyball') return volleyball.getCurrentInningSpotlightIdx(schedule);
-    if (sportSection === 'tennis') return tennis.getCurrentInningSpotlightIdx(schedule);
-    if (sportSection === 'icehockey') return icehockey.getCurrentInningSpotlightIdx(schedule);
+    if (sportSection === 'football') return football.getCurrentInningSpotlightIdx(schedule as TFootBallSchedule);
+    if (sportSection === 'basketball') return basketball.getCurrentInningSpotlightIdx(schedule as TBasketBallSchedule);
+    if (sportSection === 'baseball') return baseball.getCurrentInningSpotlightIdx(schedule as TBaseBallSchedule);
+    if (sportSection === 'volleyball') return volleyball.getCurrentInningSpotlightIdx(schedule as TVolleyBallSchedule);
+    if (sportSection === 'tennis') return tennis.getCurrentInningSpotlightIdx(schedule as TTennisSchedule);
+    if (sportSection === 'icehockey') return icehockey.getCurrentInningSpotlightIdx(schedule as TIceHockeySchedule);
     return 0;
 };
 
@@ -216,11 +222,11 @@ export const getTimeViaIdx = (
     inningIdx: number,
     schedule: TSportScheduleTypes,
 ): string => {
-    if (sportSection === 'football') return football.getTimeViaIdx(currentIdx, inningIdx, schedule);
-    if (sportSection === 'basketball') return basketball.getTimeViaIdx(currentIdx, inningIdx, schedule);
-    if (sportSection === 'baseball') return baseball.getTimeViaIdx(currentIdx, inningIdx, schedule);
-    if (sportSection === 'volleyball') return volleyball.getTimeViaIdx(currentIdx, inningIdx, schedule);
-    if (sportSection === 'tennis') return tennis.getTimeViaIdx(currentIdx, inningIdx, schedule);
-    if (sportSection === 'icehockey') return icehockey.getTimeViaIdx(currentIdx, inningIdx, schedule);
+    if (sportSection === 'football') return football.getTimeViaIdx(currentIdx, inningIdx, schedule as TFootBallSchedule);
+    if (sportSection === 'basketball') return basketball.getTimeViaIdx(currentIdx, inningIdx, schedule as TBasketBallSchedule);
+    if (sportSection === 'baseball') return baseball.getTimeViaIdx(currentIdx, inningIdx, schedule as TBaseBallSchedule);
+    if (sportSection === 'volleyball') return volleyball.getTimeViaIdx(currentIdx, inningIdx, schedule as TVolleyBallSchedule);
+    if (sportSection === 'tennis') return tennis.getTimeViaIdx(currentIdx, inningIdx, schedule as TTennisSchedule);
+    if (sportSection === 'icehockey') return icehockey.getTimeViaIdx(currentIdx, inningIdx, schedule as TIceHockeySchedule);
     return ``;
 };
