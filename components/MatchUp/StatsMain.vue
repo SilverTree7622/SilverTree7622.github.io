@@ -1,17 +1,32 @@
 <template>
-    <div class="">
-        <MatchUpStatsMainStats v-if="props.selectedIdx === 0" />
-        <MatchUpStatsMainMatchStats v-if="props.selectedIdx === 1" />
-        <MatchUpStatsMainLastMatches v-if="props.selectedIdx === 2" />
-        <MatchUpStatsMainTopPlayers v-if="props.selectedIdx === 3" />
+    <div class="px-2">
+        <MatchUpStatsMatchStats v-if="matchUpStore.chckIsLive() && props.selectedIdx === 0" />
+        <MatchUpStatsLastMatches v-if="matchUpStore.chckIsLive() && props.selectedIdx === 1" />
+        <MatchUpStatsTopPlayers v-if="matchUpStore.chckIsLive() && props.selectedIdx === 2" />
+        <MatchUpStatsOdds v-if="matchUpStore.chckIsLive() && props.selectedIdx === 3" />
+        
+        <MatchUpStatsMatchStatsResult
+            v-if="!matchUpStore.chckIsLive()"
+            :list="[]"
+        />
     </div>
 </template>
 
 <script setup lang="ts">
+const matchUpStore = useMatchUpStore();
+
 const props = defineProps<{
     selectedIdx: number;
 }>();
 
+
+const update = () => {
+
+};
+
+defineExpose({
+    update,
+});
 </script>
 
 <style scoped>

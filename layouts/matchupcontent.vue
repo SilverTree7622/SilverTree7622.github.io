@@ -6,6 +6,7 @@
             <CommonHeaderMatchUp
                 ref="controlMatchUp"
                 v-show="!opt.isSticky && updateOpt.basic"
+                :sportSection="info.sportSection"
                 :match_id="info.match_id"
                 :matchStatus="info.matchStatus"
                 :leagueName="info.leagueName"
@@ -23,6 +24,7 @@
             <CommonHeaderMatchUpSticky
                 ref="controlMatchUpSticky"
                 v-show="opt.isSticky && updateOpt.sticky"
+                :sportSection="info.sportSection"
                 :match_id="info.match_id"
                 :matchStatus="info.matchStatus"
                 :leagueName="info.leagueName"
@@ -36,8 +38,22 @@
             />
             <!-- <CommonHeaderLiveTracker v-show="!opt.isSticky" :match_id="info.match_id" /> -->
             <CommonHeaderTabMatchUp :sName="props.sName" :tab="props.tab" />
-            <CommonHeaderSubTabMatchUp />
-            <MatchUpStatsMainTab v-if="props.tab === 'stats'" :selectedIdx="opt.selectedIdx" @selectTab="clickTab" />
+            <!-- <CommonHeader -->
+            <CommonHeaderSubTabMatchUpStatsLive
+                v-if="matchUpStore.chckIsLive() && props.tab === 'stats'"
+                :selectedIdx="opt.selectedIdx"
+                @selectTab="clickTab"
+            /><CommonHeaderSubTabMatchUpStatsResult
+                v-if="!matchUpStore.chckIsLive() && props.tab === 'stats'"
+                :selectedIdx="opt.selectedIdx"
+                @selectTab="clickTab"
+            />
+            <CommonHeaderSubTabMatchUpOdds
+                v-if="props.tab === 'odds'"
+                :selectedIdx="odds.selectedIdx"
+                @selectTab="clickTabOdds"
+            />
+            <!-- <MatchUpStatsMainTab v-if="props.tab === 'stats'" :selectedIdx="opt.selectedIdx" @selectTab="clickTab" /> -->
         </div>
         
         <LoadingSpinner v-show="props.isPending" style="margin-top: 30px; margin-bottom: 50px;" />
@@ -50,19 +66,21 @@
 </template>
 
 <script lang="ts" setup>
+import type { TCommonSportSection } from '~/types/Common/sport';
 import type { TCommonMatchStatus } from '~/types/Common/status';
 import type { TMatchUpStoreConfig } from '~/types/matchUp';
-import UtilObj from '~/utils/obj';
 
 const props = defineProps<{
     isPending: boolean;
     sName: string;
     tab: string;
+    changeTab: () => Promise<void>;
     result: any;
 }>();
 
 const emit = defineEmits<{
     (e: 'clickTab', idx: number): void;
+    (e: 'clickTabOdds', idx: number): void;
 }>();
 
 const {
@@ -89,6 +107,7 @@ const opt = reactive({
 });
 
 const info = reactive<TMatchUpStoreConfig>({
+    sportSection: <TCommonSportSection> 'football',
     match_id: <string> '',
     matchStatus: <TCommonMatchStatus> 0,
     leagueName: <string> '',
@@ -101,12 +120,30 @@ const info = reactive<TMatchUpStoreConfig>({
     awayScore: <number> 0,
 });
 
+const odds = reactive({
+    selectedIdx: <number> 0,
+
+});
+
 const $headerSticky = ref();
 const $content = ref();
+
+// watch tab changed
+watch(
+    () => route.fullPath,
+    async (p) => {
+        await props.changeTab();
+    }
+);
 
 const clickTab = (idx: number) => {
     opt.selectedIdx = idx;
     emit('clickTab', opt.selectedIdx);
+};
+
+const clickTabOdds = (idx: number) => {
+    odds.selectedIdx = idx;
+    emit('clickTab', odds.selectedIdx);
 };
 
 onMounted(async () => {
@@ -148,7 +185,7 @@ onMounted(async () => {
             },
             {
                 threshold: [ 1 ],
-                rootMargin: "-4% 0px 0px 0px"
+                rootMargin: "-5% 0px 0px 0px"
             }
         );
         opt.observer.observe($headerSticky.value);

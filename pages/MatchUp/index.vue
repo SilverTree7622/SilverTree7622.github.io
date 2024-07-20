@@ -5,10 +5,12 @@
         :sName="'MatchUp'"
         :tab="opt.tab"
         :result="opt.result"
+        :changeTab="changeTab"
         @clickTab="clickTab"
     >
         <MatchUpStatsMain
             v-if="opt.tab === 'stats'"
+            ref="$stats"
             :selectedIdx="statsOpt.selectedIdx"
         />
         <MatchUpNavitalkMain
@@ -28,7 +30,9 @@
 </template>
 
 <script setup lang="ts">
+import { GetSportSectionUpperCase } from '~/types/Common/sport';
 
+const matchUpStore = useMatchUpStore();
 const route = useRoute();
 
 const opt = reactive({
@@ -54,15 +58,12 @@ const clickTab = (idx: number) => {
     statsOpt.selectedIdx = idx;
 };
 
-watch(
-    () => route.fullPath,
-    async (p) => {
-        opt.tab = route.query['tab'] as string;
-        opt.result.league = [];
-        opt.isPending = true;
-        await res();
-    }
-);
+const changeTab = async () => {
+    opt.tab = route.query['tab'] as string;
+    opt.result.league = [];
+    opt.isPending = true;
+    await res();
+};
 
 const chckMatchId = (): string => {
     return route.query['uuid'] as string;
@@ -70,12 +71,15 @@ const chckMatchId = (): string => {
 
 const res = async () => {
     const matchid = chckMatchId();
+    const {
+        sportSection,
+    } = matchUpStore.getConfig();
     const res = await useApiFetch(
         'MatchStats',
         { method: 'POST', },
         {
             matchid,
-            sports: 'FOOTBALL',
+            sports: GetSportSectionUpperCase(sportSection),
         },
     );
     const data = (res.data as any)['data'] ?? {};
@@ -91,8 +95,8 @@ onMounted(async () => {
 
 });
 
-onBeforeUnmount(async () => {
-    // TODO: save to localstorage for 
+onBeforeUnmount(() => {
+    
 });
 </script>
 

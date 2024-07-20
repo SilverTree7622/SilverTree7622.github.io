@@ -97,11 +97,6 @@ const props = defineProps<{
     updateLiveRealTime: () => Promise<void>;
 }>();
 
-const emit = defineEmits<{
-    (e: 'change-tab'): void;
-    (e: 'change-date'): void;
-}>();
-
 const opt = reactive({
     tab: <TCommonTabTypes>props.tab,
     useInitForChangingTab: <boolean>true,      // when init date filter section

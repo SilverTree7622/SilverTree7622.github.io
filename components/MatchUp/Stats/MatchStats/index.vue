@@ -1,5 +1,11 @@
 <template>
     <div class="frmu95mobileu95matchup headline screen">
+        <CommonHeaderLiveTracker
+            :match_id="matchUpStore.getConfig().match_id"
+        />
+        <MatchUpStatsMatchStatsIncidents
+            :list="[]"
+        />
         <div class="contents_-football_ contents_">
             <div class="frame-315">
                 <p class="statistics-season-so-far headline2">STATISTICS - SEASON SO FAR</p>
@@ -116,6 +122,11 @@
 </template>
 
 <script setup lang="ts">
+const matchUpStore = useMatchUpStore();
+
+// const opt = reactive({
+//     isLive: <boolean> matchUpStore.chckIsLive(),
+// });
 
 onMounted(async () => {
     await nextTick();

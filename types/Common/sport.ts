@@ -59,3 +59,7 @@ export type TCommonMatchUpSection = typeof ECommonMatchUpSection;
 export type TCommonLeagueSection = typeof ECommonLeagueSection;
 
 export type TCommonSportNavCode = typeof ECommonSportNavCode[ keyof typeof ECommonSportNavCode ];
+
+export const GetSportSectionUpperCase = (sportSection: TCommonSportSection) => {
+    return sportSection.toUpperCase();
+};

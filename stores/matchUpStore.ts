@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { isLive } from "~/types";
 import type { TCommonSportSection } from "~/types/Common/sport";
 import type { TMatchUpStoreConfig } from "~/types/matchUp";
 
@@ -49,9 +50,14 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
         return config;
     };
 
+    const chckIsLive = (): boolean => {
+        return isLive(config.sportSection, config.matchStatus);
+    };
+
     return {
         init,
         setConfig,
         getConfig,
+        chckIsLive,
     };
 });
