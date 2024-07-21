@@ -2,7 +2,9 @@
     <div class="frmu95mobileu95matchup">
         <div class="frmu95mobileu95matchup-item-2">
             <div class="frame-315-2 frame-315-3">
-                <div class="surname-1 surname-2 headline3">HEAD TO HEAD</div>
+                <div class="surname-1 surname-2 headline3">
+
+                </div>
             </div>
             <div class="frame-532">
                 <div class="frame-533">
@@ -308,7 +310,11 @@
 </template>
 
 <script setup lang="ts">
+import type { TMatchUpH2HCommon } from '~/types/h2h';
 
+const props = defineProps<{
+    data: TMatchUpH2HCommon;
+}>();
 </script>
 
 <style scoped>

@@ -14,7 +14,7 @@ export type TAuthUser = {
 // fromdate는 timestamp로 UTC  : default : today
 export type TAuthGuest = {
     "param": {
-        "sid": number;
-        "fromdate": number;
+        "sid"?: number;
+        "fromdate"?: number;
     }
 };

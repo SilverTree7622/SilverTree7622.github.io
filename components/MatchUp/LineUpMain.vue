@@ -1,3 +1,3 @@
 <template>
-    <CommonContentMatchUpLineUp />
+    <MatchUpLineUp />
 </template>

@@ -75,7 +75,7 @@
             </div>
             <!-- </a> -->
         </NuxtLink>
-        <NuxtLink :to="`/${ props.sName }?tab=lineup&uuid=${ opt.uuid }`">
+        <NuxtLink v-show="matchUpStore.getOpt().isLineUpExist" :to="`/${ props.sName }?tab=lineup&uuid=${ opt.uuid }`">
             <!-- <a href="/{{result.sName}}?tab=lineup"> -->
             <div class="tap_-league-6bZO9Y">
                 <div class="btn_-tap_-dis-selected">

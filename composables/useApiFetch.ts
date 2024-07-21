@@ -101,8 +101,7 @@ export const useApiFetch = async <T> (
         },
         c: {
             param: {
-                sid: 0,
-                fromdate: 0,
+                
             }
         },
     };

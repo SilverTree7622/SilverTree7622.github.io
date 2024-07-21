@@ -31,6 +31,7 @@
 
 <script setup lang="ts">
 import { GetSportSectionUpperCase } from '~/types/Common/sport';
+import UtilObj from '~/utils/obj';
 
 const matchUpStore = useMatchUpStore();
 const route = useRoute();
@@ -60,8 +61,7 @@ const clickTab = (idx: number) => {
 
 const changeTab = async () => {
     opt.tab = route.query['tab'] as string;
-    opt.result.league = [];
-    opt.isPending = true;
+    // opt.isPending = true;
     // await res();
 };
 
@@ -69,21 +69,48 @@ const chckMatchId = (): string => {
     return route.query['uuid'] as string;
 };
 
-const res = async () => {
+const chckLineUpInfo = async () => {
     const matchid = chckMatchId();
     const {
         sportSection,
     } = matchUpStore.getConfig();
-    const res = await useApiFetch(
-        'MatchStats',
+    const lineUpRes = await useApiFetch(
+        'MatchLineUp',
         { method: 'POST', },
         {
             matchid,
             sports: GetSportSectionUpperCase(sportSection),
         },
     );
-    const data = (res.data as any)['data'] ?? {};
-    console.log('res, data: ', res, data);
+    const lineUpdata = (lineUpRes.data as any)['data']['LineUp'] ?? {};
+    if (!UtilObj.chckIsEmpty(lineUpdata)) {
+        matchUpStore.setIsLineUpExist(true);
+        matchUpStore.setConfigLineUp(lineUpdata);
+        return;
+    }
+    matchUpStore.setIsLineUpExist(false);
+    if (opt.tab !== 'lineup') return;
+    navigateTo(`/MatchUp?tab=stats&uuid=${ matchid }`);
+};
+
+const res = async () => {
+    const matchid = chckMatchId();
+    const {
+        sportSection,
+    } = matchUpStore.getConfig();
+    let path = 'MatchStats';
+    if (opt.tab === 'h2h') {
+        path = 'MatchH2H';
+    }
+    const statsRes = await useApiFetch(
+        path,
+        { method: 'POST', },
+        {
+            matchid,
+            sports: GetSportSectionUpperCase(sportSection),
+        },
+    );
+    const data = (statsRes.data as any)['data'] ?? {};
     matchUpStore.setConfig(sportSection, data['data']);
     opt.isBooting = false;
     opt.isPending = false;
@@ -92,6 +119,7 @@ const res = async () => {
 onMounted(async () => {
     opt.isPending = true;
     await nextTick();
+    await chckLineUpInfo();
     await res();
 
 });

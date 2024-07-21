@@ -1,11 +1,16 @@
 import { defineStore } from "pinia";
 import { getScore, isLive } from "~/types";
 import type { TCommonSportSection } from "~/types/Common/sport";
+import type { TMatchUpLineUpCommon } from "~/types/lineUp";
 import type { TMatchUpStoreConfig } from "~/types/matchUp";
 import type { TSportScheduleTypes } from "~/types/schedule";
 
 
 export const useMatchUpStore = defineStore('matchUpStore', () => {
+    const opt = reactive({
+        isLineUpExist: <boolean> true,
+    });
+
     const config = reactive<TMatchUpStoreConfig>({
         sportSection: 'football',
         match_id: '',
@@ -18,6 +23,24 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
         awayName: '',
         awayScore: 0,
         matchStatus: 1,
+    });
+
+    const lineUpConfig = reactive<TMatchUpLineUpCommon>({
+        away_formation: '',
+        coach_id: {
+            home: '',
+            away: '',
+        },
+        confirmed: 0,
+        home_formation: '',
+        injury: {
+            home: [],
+            away: [],
+        },
+        lineup: {
+            home: [],
+            away: [],
+        },
     });
 
     const init = () => {
@@ -48,6 +71,22 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
         config.awayScore = getScore(sportSection, 'away', schedule);
     };
 
+    const setConfigLineUp = (data: TMatchUpLineUpCommon) => {
+        for (const item in data) {
+            lineUpConfig[item] = data[item];
+        }
+        console.log('lineUpConfig: ', lineUpConfig);
+
+    };
+
+    const setIsLineUpExist = (value: boolean) => {
+        opt.isLineUpExist = value;
+    };
+
+    const getOpt = () => {
+        return opt;
+    };
+
     const getConfig = () => {
         return config;
     };
@@ -59,6 +98,9 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
     return {
         init,
         setConfig,
+        setConfigLineUp,
+        setIsLineUpExist,
+        getOpt,
         getConfig,
         chckIsLive,
     };

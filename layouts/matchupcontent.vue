@@ -16,7 +16,7 @@
                 :leagueName="info.leagueName" :timestamp="info.timestamp" :homeLogo="info.homeLogo"
                 :homeName="info.homeName" :homeScore="info.homeScore" :awayLogo="info.awayLogo"
                 :awayName="info.awayName" :awayScore="info.awayScore" />
-            <CommonHeaderTabMatchUp :sName="props.sName" :tab="props.tab" />
+            <CommonHeaderTabMatchUp v-if="!props.isPending" :sName="props.sName" :tab="props.tab" />
             <CommonHeaderSubTabMatchUpStatsLive v-if="matchUpStore.chckIsLive() && props.tab === 'stats'"
                 :selectedIdx="opt.selectedIdx" @selectTab="clickTab" />
             <CommonHeaderSubTabMatchUpStatsResult v-if="!matchUpStore.chckIsLive() && props.tab === 'stats'"
