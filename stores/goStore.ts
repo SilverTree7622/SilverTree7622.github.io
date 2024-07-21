@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import type { TCommonSportSection } from "~/types/Common/sport";
 import type { TMatchUpStoreConfig } from "~/types/matchUp";
+import type { TSportScheduleTypes } from "~/types/schedule";
 
 
 export const useGoStore = defineStore('goStore', () => {
@@ -21,8 +22,8 @@ export const useGoStore = defineStore('goStore', () => {
         }
     };
     
-    const go_livetraker = (match_id: string, config: TMatchUpStoreConfig) => {
-        useMatchUpStore().setConfig(config);
+    const go_livetraker = (match_id: string, sportSection: TCommonSportSection, schedule: TSportScheduleTypes) => {
+        useMatchUpStore().setConfig(sportSection, schedule);
         navigateTo(`/Matchup?tab=stats&uuid=${ match_id }`);
     };
 

@@ -3,7 +3,14 @@
         <div class="statchart4 screen">
             <div class="match_-stats_chart4">
                 <div class="frame-491 headline3">
-                    <div class="ft-0-2">FT 0-2</div>
+                    <MatchUpStatsMatchStatsIncidentsTitle
+                        :title="'FT 0-2'"
+                    />
+                    <!-- <MatchUpStatsMatchStatsIncidentsItem
+                        v-for="(item, idx) in props.list"
+                        
+                    /> -->
+<!-- 
                     <div class="frame-4">
                         <div class="flex-row">
                             <div class="text caption">87’</div>
@@ -110,7 +117,9 @@
                             <div class="text-12 caption">61’</div>
                         </div>
                     </div>
-                    <div class="ht-0-0">HT 0-0</div>
+                    <MatchUpStatsMatchStatsIncidentsTitle
+                        :title="'HT 0-0'"
+                    />
                     <div class="frame-4">
                         <div class="flex-row-10 flex-row-13">
                             <div class="text caption">45’</div>
@@ -140,12 +149,21 @@
                             <img class="btn_-yellow-card" src="/img/btn-yellowcard@2x.png" alt="Btn_YellowCard" />
                             <div class="text-15 caption">14’</div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
     </div>
 </template>
+
+<script setup lang="ts">
+// import { type TMatchUpStoreStatsIncident } from '~/types/matchUp';
+
+const props = defineProps<{
+    list: any[];
+}>();
+
+</script>
 
 <style scoped>
 @import '@/public/css/matchup/stats/chart/globals.css';

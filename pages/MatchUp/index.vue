@@ -62,7 +62,7 @@ const changeTab = async () => {
     opt.tab = route.query['tab'] as string;
     opt.result.league = [];
     opt.isPending = true;
-    await res();
+    // await res();
 };
 
 const chckMatchId = (): string => {

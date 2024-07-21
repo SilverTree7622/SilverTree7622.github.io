@@ -48,9 +48,9 @@ import type { TMatchUpStoreConfig } from '~/types/matchUp';
 import UtilDate from '~/utils/date';
 
 const props = defineProps<TMatchUpStoreConfig>();
-console.log('props: ', props);
 
 const dateStore = useDateStore();
+const matchUpStore = useMatchUpStore();
 const router = useRouter();
 
 const clickBack = () => {
@@ -74,15 +74,7 @@ const getTime = (timestamp: number) => {
 };
 
 const getIsFinished = (matchStatus: TCommonMatchStatus): boolean => {
-    // console.log('matchStatus: ', matchStatus);
-    return !(
-        matchStatus === 2 ||
-        matchStatus === 3 ||
-        matchStatus === 4 ||
-        matchStatus === 5 ||
-        matchStatus === 6 ||
-        matchStatus === 7
-    );
+    return !matchUpStore.chckIsLive();
 };
 
 onMounted(async () => {

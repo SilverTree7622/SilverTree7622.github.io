@@ -140,20 +140,7 @@ const opt = reactive({
 });
 
 const clickLiveCenter = () => {
-    const config: TMatchUpStoreConfig = {
-        sportSection: props.sportSection,
-        match_id: props.item.match_id,
-        leagueName: props.item.ai_competition_name,
-        timestamp: props.item.ai_match_time,
-        homeLogo: props.item.ai_home_team_img,
-        homeName: props.item.ai_home_team_name,
-        homeScore: contentStore.getScore(props.sportSection, 'home', props.item)[0],
-        awayLogo: props.item.ai_away_team_img,
-        awayName: props.item.ai_away_team_name,
-        awayScore: contentStore.getScore(props.sportSection, 'away', props.item)[0],
-        matchStatus: props.item.ai_status_id,
-    };
-    goStore.go_livetraker(props.item.match_id ?? '', config);
+    goStore.go_livetraker(props.item.match_id ?? '', props.sportSection, props.item);
 };
 
 const getLeagueTime = () => {

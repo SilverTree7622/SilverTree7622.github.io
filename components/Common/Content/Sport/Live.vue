@@ -178,20 +178,7 @@ const on = (home: boolean, away: boolean, time: boolean) => {
 };
 
 const goLiveTracker = (league: TSportScheduleTypes) => {
-    const config: TMatchUpStoreConfig = {
-        sportSection: props.sportSection,
-        match_id: league.match_id,
-        leagueName: league.ai_competition_name,
-        timestamp: league.ai_match_time,
-        homeLogo: league.ai_home_team_img,
-        homeName: league.ai_home_team_name,
-        homeScore: contentStore.getScore(props.sportSection, 'home', league)[0],
-        awayLogo: league.ai_away_team_img,
-        awayName: league.ai_away_team_name,
-        awayScore: contentStore.getScore(props.sportSection, 'away', league)[0],
-        matchStatus: league.ai_status_id,
-    };
-    goStore.go_livetraker(league.match_id, config);
+    goStore.go_livetraker(league.match_id, props.sportSection, league);
 };
 
 onMounted(async () => {

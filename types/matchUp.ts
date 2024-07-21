@@ -1,8 +1,8 @@
 import type { TCommonSportSection } from "./Common/sport";
 import type { TCommonMatchStatus } from "./Common/status";
 import type { TMatchUpH2H } from "./FootBall/h2h";
-import type { TMatchUpStatistics } from "./FootBall/statistics";
 import type { TSportScheduleTypes } from "./schedule";
+import type { TSportStatistics } from "./statistics";
 
 
 export type TMatchUpStoreConfig = {
@@ -31,7 +31,7 @@ export type TMatchUpStoreStatsIncident = {
     away_score: number;
     home_score: number;
     time: number;           // unit is minute
-    type: TMatchUpStatistics;
+    type: TSportStatistics;
 };
 
 export type TMatchUpStoreStats = {

@@ -1,6 +1,6 @@
 <template>
     <div class="tap-Mzx5SR mx-0">
-        <NuxtLink :to="`/${ props.sName }?tab=stats`">
+        <NuxtLink :to="`/${ props.sName }?tab=stats&uuid=${ opt.uuid }`">
             <!-- <a href="/{{result.sName}}?tab=stats"> -->
             <div class="tap_-live-6bZO9Y">
                 <div class="btn_-tap_-dis-selected">
@@ -27,7 +27,7 @@
             </div>
             <!-- </a> -->
         </NuxtLink>
-        <NuxtLink :to="`/${ props.sName }?tab=navitalk`">
+        <NuxtLink :to="`/${ props.sName }?tab=navitalk&uuid=${ opt.uuid }`">
             <!-- <a href="/{{result.sName}}?tab=navitalk"> -->
             <div class="tap_-fixtures-6bZO9Y">
                 <div class="btn_-tap_-dis-selected">
@@ -51,7 +51,7 @@
             </div>
             <!-- </a> -->
         </NuxtLink>
-        <NuxtLink :to="`/${ props.sName }?tab=odds`">
+        <NuxtLink :to="`/${ props.sName }?tab=odds&uuid=${ opt.uuid }`">
             <!-- <a href="/{{result.sName}}?tab=odds"> -->
             <div class="tap_-odds-6bZO9Y">
                 <div class="btn_-tap_-dis-selected">
@@ -75,7 +75,7 @@
             </div>
             <!-- </a> -->
         </NuxtLink>
-        <NuxtLink :to="`/${ props.sName }?tab=lineup`">
+        <NuxtLink :to="`/${ props.sName }?tab=lineup&uuid=${ opt.uuid }`">
             <!-- <a href="/{{result.sName}}?tab=lineup"> -->
             <div class="tap_-league-6bZO9Y">
                 <div class="btn_-tap_-dis-selected">
@@ -99,7 +99,7 @@
             </div>
             <!-- </a> -->
         </NuxtLink>
-        <NuxtLink :to="`/${ props.sName }?tab=h2h`">
+        <NuxtLink :to="`/${ props.sName }?tab=h2h&uuid=${ opt.uuid }`">
             <!-- <a href="/{{result.sName}}?tab=h2h"> -->
             <div class="tap_-result-6bZO9Y">
                 <div class="btn_-tap_-dis-selected">
@@ -130,10 +130,29 @@
 </template>
 
 <script lang="ts" setup>
+import { ECommonSportSectionValue } from '~/types/Common/sport';
 
 const props = defineProps<{
     sName: string;
     tab: string;
 }>();
 
+const opt = reactive({
+    uuid: <string> '',
+});
+
+const matchUpStore = useMatchUpStore();
+const route = useRoute();
+
+onMounted(async () => {
+    await nextTick();
+    const {
+        match_id,
+        sportSection,
+    } = matchUpStore.getConfig();
+    opt.uuid = (route.query["uuid"] as string) ?? match_id;
+    if (opt.uuid !== '') return;
+    // redirect to live home?
+    navigateTo(`/${ ECommonSportSectionValue[sportSection] ?? 'FootBall' }`);
+})
 </script>

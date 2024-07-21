@@ -21,6 +21,7 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
     });
 
     const init = () => {
+        config.sportSection = 'football';
         config.match_id = '';
         config.matchStatus = 1;
         config.leagueName = '';
