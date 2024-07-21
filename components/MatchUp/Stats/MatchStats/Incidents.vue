@@ -160,10 +160,10 @@
 </template>
 
 <script setup lang="ts">
-import type { TStatsMatchStatsIncident } from '~/types/MatchUp/index';
+import type { TMatchUpStoreStatsIncident } from '~/types/matchUp';
 
 const props = defineProps<{
-    list: TStatsMatchStatsIncident[];
+    list: TMatchUpStoreStatsIncident[];
 }>();
 </script>
 

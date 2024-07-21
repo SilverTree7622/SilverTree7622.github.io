@@ -1,4 +1,4 @@
-export type TMatchUpStatisics = 
+export type TMatchUpStatistics = 
     1	|   // Goal
     2	|   // Corner
     3	|   // Yellow card

@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
-import { isLive } from "~/types";
+import { getScore, isLive } from "~/types";
 import type { TCommonSportSection } from "~/types/Common/sport";
 import type { TMatchUpStoreConfig } from "~/types/matchUp";
+import type { TSportScheduleTypes } from "~/types/schedule";
 
 
 export const useMatchUpStore = defineStore('matchUpStore', () => {
@@ -32,18 +33,18 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
         config.awayScore = 0;
     };
 
-    const setConfig = (infoConfig: TMatchUpStoreConfig) => {
-        config.sportSection = infoConfig.sportSection;
-        config.match_id = infoConfig.match_id;
-        config.matchStatus = infoConfig.matchStatus;
-        config.leagueName = infoConfig.leagueName;
-        config.timestamp = infoConfig.timestamp;
-        config.homeLogo = infoConfig.homeLogo;
-        config.homeName = infoConfig.homeName;
-        config.homeScore = infoConfig.homeScore;
-        config.awayLogo = infoConfig.awayLogo;
-        config.awayName = infoConfig.awayName;
-        config.awayScore = infoConfig.awayScore;
+    const setConfig = (sportSection: TCommonSportSection, schedule: TSportScheduleTypes) => {
+        config.sportSection = sportSection;
+        config.match_id = schedule.match_id;
+        config.matchStatus = schedule.ai_status_id;
+        config.leagueName = schedule.ai_competition_name;
+        config.timestamp = schedule.ai_match_time;
+        config.homeLogo = schedule.ai_home_team_img;
+        config.homeName = schedule.ai_home_team_name;
+        config.homeScore = getScore(sportSection, 'home', schedule);
+        config.awayLogo = schedule.ai_away_team_img;
+        config.awayName = schedule.ai_away_team_name;
+        config.awayScore = getScore(sportSection, 'away', schedule);
     };
 
     const getConfig = () => {

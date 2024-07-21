@@ -84,6 +84,7 @@ const res = async () => {
     );
     const data = (res.data as any)['data'] ?? {};
     console.log('res, data: ', res, data);
+    matchUpStore.setConfig(sportSection, data['data']);
     opt.isBooting = false;
     opt.isPending = false;
 };
@@ -96,7 +97,7 @@ onMounted(async () => {
 });
 
 onBeforeUnmount(() => {
-    
+    matchUpStore.init();
 });
 </script>
 
