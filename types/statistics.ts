@@ -1,4 +1,4 @@
 
-import type { TMatchUpStatistics } from "./FootBall/statistics";
+import type { TMatchUpStatisticsFootball } from "./FootBall/statistics";
 
-export type TSportStatistics = TMatchUpStatistics;
+export type TSportStatistics = TMatchUpStatisticsFootball;

@@ -1,4 +1,4 @@
 import type { TMatchUpLineUp } from "./FootBall/lineUp";
 
 
-export type TMatchUpLineUpCommon = TMatchUpLineUp;
+export type TMatchUpLineUpSport = TMatchUpLineUp;

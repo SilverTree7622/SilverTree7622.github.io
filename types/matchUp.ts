@@ -1,9 +1,11 @@
 import type { TCommonSportSection } from "./Common/sport";
 import type { TCommonMatchStatus } from "./Common/status";
 import type { TMatchUpH2H } from "./FootBall/h2h";
-import type { TMatchUpH2HCommon } from "./h2h";
+import type { TMatchUpStatsIncidentFootball } from "./FootBall/stats";
+import type { TMatchUpH2HSport } from "./h2h";
 import type { TSportScheduleTypes } from "./schedule";
 import type { TSportStatistics } from "./statistics";
+import type { TMatchUpStatsSport } from "./stats";
 
 
 export type TMatchUpStoreConfig = {
@@ -21,19 +23,14 @@ export type TMatchUpStoreConfig = {
 };
 
 export type TMatchUpStatsRes = {
-    H2H: TMatchUpH2HCommon;
+    H2H: TMatchUpH2HSport;
     data: TSportScheduleTypes;
     nav_code: string;
-    overview: {};
+    overview: TMatchUpStatsSport;
     result: number;
 };
 
-export type TMatchUpStoreStatsIncident = {
-    away_score: number;
-    home_score: number;
-    time: number;           // unit is minute
-    type: TSportStatistics;
-};
+export type TMatchUpStoreStatsIncident = TMatchUpStatsIncidentFootball;
 
 export type TMatchUpStoreStats = {
 

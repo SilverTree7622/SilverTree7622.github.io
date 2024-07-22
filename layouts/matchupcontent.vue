@@ -17,9 +17,9 @@
                 :homeName="info.homeName" :homeScore="info.homeScore" :awayLogo="info.awayLogo"
                 :awayName="info.awayName" :awayScore="info.awayScore" />
             <CommonHeaderTabMatchUp v-if="!props.isPending" :sName="props.sName" :tab="props.tab" />
-            <CommonHeaderSubTabMatchUpStatsLive v-if="matchUpStore.chckIsLive() && props.tab === 'stats'"
+            <CommonHeaderSubTabMatchUpStatsLive v-if="!props.isPending && matchUpStore.chckIsLive() && props.tab === 'stats'"
                 :selectedIdx="opt.selectedIdx" @selectTab="clickTab" />
-            <CommonHeaderSubTabMatchUpStatsResult v-if="!matchUpStore.chckIsLive() && props.tab === 'stats'"
+            <CommonHeaderSubTabMatchUpStatsResult v-if="!props.isPending && !matchUpStore.chckIsLive() && props.tab === 'stats'"
                 :selectedIdx="opt.selectedIdx" @selectTab="clickTab" />
             <CommonHeaderSubTabMatchUpOdds v-if="props.tab === 'odds'" :selectedIdx="odds.selectedIdx"
                 @selectTab="clickTabOdds" />

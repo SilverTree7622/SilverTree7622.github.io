@@ -1,33 +1,33 @@
 <template>
-    <div class="div-h2h-filter">
+    <div class="div-h2h-filter cursor-pointer" @click="setIsChecked(!props.isChecked)">
         <img
-            v-show="opt.isChecked"
+            v-show="props.isChecked"
             loading="lazy"
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/6e486fe478a01389f55efc1d0015a38c1351af0d31a2c2346dc0f081f7bd5c08?"
             class="img"
-            @click="setIsChecked(false)"
         />
         <div
-            v-show="!opt.isChecked"
+            v-show="!props.isChecked"
             class="div-2-empty"
-            @click="setIsChecked(true)"
         ></div>
-        <div class="div-2">{{ props.title }}</div>
+        <div class="div-2">
+            {{ props.title }}
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
 const props = defineProps<{
     title: string;
-    isChecked?: boolean;
+    isChecked: boolean;
 }>();
 
-const opt = reactive({
-    isChecked: <boolean> props.isChecked ?? false,
-});
+const emit = defineEmits<{
+    (e: 'toggle', value: boolean): void,
+}>();
 
 const setIsChecked = (value: boolean) => {
-    opt.isChecked = value;
+    emit('toggle', value);
 };
 </script>
 
@@ -45,8 +45,12 @@ const setIsChecked = (value: boolean) => {
   color: #626262;
   font-weight: 400;
   text-align: center;
-  padding: 0 9px;
+  /* padding: 0 4px; */
   width: auto;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
 .img {

@@ -9,22 +9,22 @@
         @clickTab="clickTab"
     >
         <MatchUpStatsMain
-            v-if="opt.tab === 'stats'"
+            v-if="!opt.isPending && opt.tab === 'stats'"
             ref="$stats"
             :selectedIdx="statsOpt.selectedIdx"
         />
         <MatchUpNavitalkMain
-            v-if="opt.tab === 'navitalk'"
+            v-if="!opt.isPending && opt.tab === 'navitalk'"
             :result_league="list.sortedLeagueList"
         />
         <MatchUpOddsMain
-            v-if="opt.tab === 'odds'"
+            v-if="!opt.isPending && opt.tab === 'odds'"
         />
         <MatchUpLineUpMain
-            v-if="opt.tab === 'lineup'"
+            v-if="!opt.isPending && opt.tab === 'lineup'"
         />
         <MatchUpH2hMain
-            v-if="opt.tab === 'h2h'"
+            v-if="!opt.isPending && opt.tab === 'h2h'"
         />
     </NuxtLayout>
 </template>
@@ -112,6 +112,8 @@ const res = async () => {
     );
     const data = (statsRes.data as any)['data'] ?? {};
     matchUpStore.setConfig(sportSection, data['data']);
+    matchUpStore.setConfigStats(data['overview']);
+    matchUpStore.setConfigH2h(data['H2H']);
     opt.isBooting = false;
     opt.isPending = false;
 };
@@ -121,7 +123,6 @@ onMounted(async () => {
     await nextTick();
     await chckLineUpInfo();
     await res();
-
 });
 
 onBeforeUnmount(() => {

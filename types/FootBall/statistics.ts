@@ -1,4 +1,4 @@
-export type TMatchUpStatistics = 
+export type TMatchUpStatisticsFootball = 
     1	|   // Goal
     2	|   // Corner
     3	|   // Yellow card
@@ -27,3 +27,8 @@ export type TMatchUpStatistics =
     29	|   // Penalty(Penalty Shoot-out)
     30      // Penalty missed(Penalty Shoot-out)
 ;
+
+export const TMatchUpStatisticsNeutralFootball = {
+    11: 'HT',
+    12: 'FT',
+} as const;

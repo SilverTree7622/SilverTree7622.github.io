@@ -1,54 +1,31 @@
 <template>
     <div class="frmu95mobileu95matchup">
         <div class="frmu95mobileu95matchup-item-2">
+            <MatchUpH2hTeamSelection
+                :homeName="opt.homeName"
+                :homeLogo="opt.homeLogo"
+                :awayName="opt.awayName"
+                :awayLogo="opt.awayLogo"
+                :isSelectedIdx="filterOpt.selectedIdx"
+                class="mt-2"
+                @toggle="clickSelection"
+            />
             <div class="frame-315-2 frame-315-3">
-                <div class="surname-1 surname-2 headline3">
-
+                <div class="surname-1 surname-2 headline3 flex flex-row">
+                    <MatchUpH2hFilter
+                        :title="'Home'"
+                        :isChecked="filterOpt.isHome"
+                        class="mr-2"
+                        @toggle="clickHome"
+                    />
+                    <MatchUpH2hFilter
+                        :title="'This league'"
+                        :isChecked="filterOpt.isThisLeague"
+                        @toggle="clickThisLeague"
+                    />
                 </div>
             </div>
             <div class="frame-532">
-                <div class="frame-533">
-                    <div class="btn_h2-h">
-                        <div class="frame-container-3">
-                            <div class="frame-529">
-                                <div class="frame-530">
-                                    <div class="overlap-group-6">
-                                        <div class="aston-villa-3"></div>
-                                    </div>
-                                </div>
-                                <div class="aston-villa-10 valign-text-middle body2">ASTON VILLA</div>
-                            </div>
-                            <div class="frame-530-1">
-                                <div class="frame-530-2">
-                                    <div class="overlap-group-7">
-                                        <div class="aston-villa-3"></div>
-                                    </div>
-                                </div>
-                                <div class="aston-villa-11 valign-text-middle body2">ASTON VILLA</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="btn_h2-h">
-                        <div class="frame-container-4">
-                            <div class="frame-529-1">
-                                <div class="aston-villa-12 valign-text-middle body2">ARSENAL</div>
-                                <div class="frame-530">
-                                    <div class="overlap-group-8">
-                                        <div class="arsenal"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="frame-530-3">
-                                <div class="arsenal-7 valign-text-middle body2">ARSENAL</div>
-                                <div class="frame-530">
-                                    <div class="overlap-group-9">
-                                        <div class="arsenal"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="frame-531">
                     <div class="frame-526">
                         <div class="number-17 valign-text-middle leaguetitle">14</div>
@@ -310,18 +287,69 @@
 </template>
 
 <script setup lang="ts">
-import type { TMatchUpH2HCommon } from '~/types/h2h';
+import type { TMatchUpH2HSport } from '~/types/h2h';
 
-const props = defineProps<{
-    data: TMatchUpH2HCommon;
-}>();
+const matchUpStore = useMatchUpStore();
+
+const opt = reactive({
+    homeName: <string> '',
+    homeLogo: <string> '',
+    awayName: <string> '',
+    awayLogo: <string> '',
+});
+
+const config = reactive<TMatchUpH2HSport['history']>({
+    home: [],
+    away: [],
+    vs: [],
+});
+
+const filterOpt = reactive({
+    selectedIdx: <number> 0,
+    isHome: <boolean> true,
+    isThisLeague: <boolean> false,
+});
+
+const clickSelection = (idx: number) => {
+    if (idx === 0) {
+        filterOpt.isHome = true;
+    } else {
+        filterOpt.isHome = false;
+    }
+    filterOpt.selectedIdx = idx;
+};
+
+const clickHome = (value: boolean) => {
+    clickSelection(value ? 0 : 1);
+};
+
+const clickThisLeague = (value: boolean) => {
+    filterOpt.isThisLeague = value;
+};
+
+onMounted(async () => {
+    await nextTick();
+    const {
+        homeName, homeLogo, awayName, awayLogo,
+    } = matchUpStore.getConfig();
+    const {
+        home, away, vs,
+    } = matchUpStore.getConfigH2h();
+    opt.homeName = homeName;
+    opt.homeLogo = homeLogo;
+    opt.awayName = awayName;
+    opt.awayLogo = awayLogo;
+    config.home = home;
+    config.away = away;
+    config.vs = vs;
+    console.log('opt, config: ', opt, config);
+});
 </script>
 
 <style scoped>
 @import '@/public/css/styleguide.css';
 @import '@/public/css/globals.css';
 @import '@/public/css/addStyle.css';
-
 @import '@/public/css/frmu95mobileu95matchup.css';
 
 .flag_-circle_eng-h2h {

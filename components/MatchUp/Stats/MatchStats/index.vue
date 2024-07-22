@@ -4,9 +4,7 @@
         <MatchUpStatsMatchStatsChart1 />
         <MatchUpStatsMatchStatsChart2 />
         <MatchUpStatsMatchStatsChart3 />
-        <MatchUpStatsMatchStatsIncidents
-            :list="[]"
-        />
+        <MatchUpStatsMatchStatsIncidents />
         <!-- <MatchUpStatsMatchStatsIncidents :list="[]" /> -->
     </div>
 </template>

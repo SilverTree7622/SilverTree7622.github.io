@@ -133,6 +133,8 @@
 
 <script setup lang="ts">
 
+// thesports => Season top scorer(newest season) tab related
+
 onMounted(async () => {
     await nextTick();
 });

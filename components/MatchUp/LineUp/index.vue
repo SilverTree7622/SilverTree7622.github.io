@@ -352,9 +352,9 @@
 </template>
 
 <script setup lang="ts">
-import type { TMatchUpLineUpCommon } from '~/types/lineUp';
+import type { TMatchUpLineUpSport } from '~/types/lineUp';
 const props = defineProps<{
-    data: TMatchUpLineUpCommon;
+    data: TMatchUpLineUpSport;
 }>();
 
 onMounted(async () => {
