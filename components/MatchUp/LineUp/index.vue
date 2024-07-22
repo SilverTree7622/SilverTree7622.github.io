@@ -8,11 +8,15 @@
                 <div class="matchup_-lineup_-home-team_-info">
                     <div class="matchup_-lineup_-home-team-strategy">
                         <div class="aston-villa-9"></div>
-                        <div class="text-15 valign-text-middle headline3">4-2-3-1</div>
+                        <div class="text-15 valign-text-middle headline3">
+                            {{ props.data.home_formation }}
+                        </div>
                     </div>
                     <div class="matchup_-lineup_-home-team-manager">
                         <div class="overlap-group-4">
-                            <div class="unai-emery valign-text-middle body">Unai Emery</div>
+                            <div class="unai-emery valign-text-middle body">
+                                <!-- home coach name -->
+                            </div>
                             <img class="non_-available_-player1_-cirle" src="/img/non-available-player1-cirle@2x.png"
                                 alt="Non_Available_Player1_Cirle" />
                         </div>
@@ -171,6 +175,7 @@
                                 <div class="b-saka valign-text-middle caption">A.Isak</div>
                             </div>
                         </div>
+
                         <div class="contents_-football contents_">
                             <div class="match_-lineup_-player_-line-2 match_-lineup_-player_-line-3">
                                 <article class="match_-lineup_-player1-1">
@@ -327,11 +332,15 @@
                 <div class="matchup_-lineup_-away-team_-info">
                     <div class="matchup_-lineup_-away-team-strategy">
                         <div class="arsenal-6"></div>
-                        <div class="text-38 valign-text-middle headline3">4-3-3</div>
+                        <div class="text-38 valign-text-middle headline3">
+                            {{ props.data.away_formation }}
+                        </div>
                     </div>
                     <div class="matchup_-lineup_-away-team-manager">
                         <div class="overlap-group-5">
-                            <div class="name-1 valign-text-middle name-2 body">Mikel Arteta</div>
+                            <div class="name-1 valign-text-middle name-2 body">
+                                <!-- away coach name -->
+                            </div>
                             <img class="non_-available_-player1_-cirle" src="/img/non-available-player1-cirle-3@2x.png"
                                 alt="Non_Available_Player1_Cirle" />
                         </div>
@@ -343,7 +352,14 @@
 </template>
 
 <script setup lang="ts">
+import type { TMatchUpLineUpCommon } from '~/types/lineUp';
+const props = defineProps<{
+    data: TMatchUpLineUpCommon;
+}>();
 
+onMounted(async () => {
+    
+});
 </script>
 
 <style scoped>
