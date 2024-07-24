@@ -13,6 +13,7 @@ export type TMatchUpStoreConfig = {
     match_id: string;
     matchStatus: TCommonMatchStatus;
     leagueName: string;
+    leagueId: string;
     timestamp: number;
     homeLogo: string;
     homeName: string;

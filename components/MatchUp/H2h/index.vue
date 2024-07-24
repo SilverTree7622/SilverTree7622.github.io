@@ -29,31 +29,31 @@
                 <div class="frame-531">
                     <div class="frame-526">
                         <div class="number-17 valign-text-middle leaguetitle">
-                            {{ getTotalWin(filterOpt.selectedList) }}
+                            {{ scoreOpt.win }}
                         </div>
                         <div class="win-2 valign-text-middle win-7 headline2">WIN</div>
                     </div>
                     <img class="line-2-h2h" src="/img/line-27@2x.png" alt="Line 27" />
                     <div class="frame-527">
                         <div class="number-18 valign-text-middle leaguetitle">
-                            {{ getTotalDraw(filterOpt.selectedList) }}
+                            {{ scoreOpt.draw }}
                         </div>
                         <div class="drawn-1 valign-text-middle drawn-3 headline2">DRAW</div>
                     </div>
                     <img class="line-2-h2h" src="/img/line-27@2x.png" alt="Line 28" />
                     <div class="frame-528">
                         <div class="number-19 valign-text-middle leaguetitle">
-                            {{ getTotalLose(filterOpt.selectedList) }}
+                            {{ scoreOpt.lose }}
                         </div>
                         <div class="lose valign-text-middle lose-3 headline2">LOSE</div>
                     </div>
                 </div>
                 <div class="table-8 table-9">
-                    <template v-for="(item, idx) in config.home">
+                    <template v-for="(item, idx) in filterOpt.selectedList">
                         <CommonContentHeadDate
                             :idx="idx"
                             :title="getLeagueTitle(item)"
-                            :hasLeagueTag="item.hasLeagueTag"
+                            :hasLeagueTag="filterOpt.selectedTagList[idx] ?? false"
                             :src="getLeagueLogo(item)"
                             :alt="getLeagueTitle(item)"
                             :isPending="pendingOpt.league"
@@ -136,9 +136,7 @@ import type { TMatchUpTeamInfo } from '~/types/FootBall/h2h';
 import type { TMatchUpH2HSport } from '~/types/h2h';
 import UtilDate from '~/utils/date';
 
-const contentStore = useContentStore();
 const matchUpStore = useMatchUpStore();
-const filterStore = useFilterStore();
 
 type TH2hTeamRes = {
     "ai_competition_id": string;
@@ -160,11 +158,8 @@ type TH2hLeaugeRes = {
     "competition_short_name": string;
 };
 
-type TH2hSelectedTeam = TMatchUpTeamInfo & {
-    hasLeagueTag: boolean;
-};
-
 const opt = reactive({
+    leagueId: <string> '',
     homeName: <string> '',
     homeLogo: <string> '',
     homeTeamId: <string> '',
@@ -182,9 +177,16 @@ const config = reactive<TMatchUpH2HSport['history']>({
 const filterOpt = reactive({
     selectedIdx: <number> 0,
     selectedTeamId: <string> '',
-    selectedList: <TH2hSelectedTeam[]> [],
-    isHome: <boolean> true,
+    selectedList: <TMatchUpTeamInfo[]> [],
+    selectedTagList: <boolean[]> [],
+    isHome: <boolean> false,
     isThisLeague: <boolean> false,
+});
+
+const scoreOpt = reactive({
+    win: <number> 0,
+    draw: <number> 0,
+    lose: <number> 0,
 });
 
 const resourceOpt = reactive({
@@ -197,30 +199,58 @@ const pendingOpt = reactive({
     team: <boolean> true,
 });
 
-const clickSelection = (idx: number) => {
-    if (idx === 0) {
-        filterOpt.isHome = true;
-    } else {
-        filterOpt.isHome = false;
+const updateTotalValues = () => {
+    scoreOpt.win = getTotalWin(filterOpt.selectedList);
+    scoreOpt.draw = getTotalDraw(filterOpt.selectedList);
+    scoreOpt.lose = getTotalLose(filterOpt.selectedList);
+};
+
+// watch filter options
+watch(
+    () => [ filterOpt.selectedIdx, filterOpt.isHome, filterOpt.isThisLeague, ],
+    async (p) => {
+        await nextTick();
+        updateTotalValues();
     }
+);
+
+const clickSelection = (idx: number) => {
     filterOpt.selectedIdx = idx;
-    filterOpt.selectedList = filterOpt.isHome ? config.home : config.away;
+    filterOpt.selectedList = (filterOpt.selectedIdx === 0) ? config.home : config.away;
+    filterOpt.selectedTeamId = (filterOpt.selectedIdx === 0) ? opt.homeTeamId : opt.awayTeamId;
+    clickHome(false);
+    clickThisLeague(false);
 };
 
 const clickHome = (value: boolean) => {
-    clickSelection(value ? 0 : 1);
+    if (value) {
+        const prevList = [ ...filterOpt.selectedList, ];
+        const teamId = (filterOpt.selectedIdx === 0) ? opt.homeTeamId : opt.awayTeamId;
+        filterOpt.selectedList = prevList.filter( item => item[5][0] === teamId );
+    } else {
+        filterOpt.selectedList = (filterOpt.selectedIdx === 0) ? config.home : config.away;
+    }
+    sortLeagueTag(filterOpt.selectedList);
+    filterOpt.isHome = value;
 };
 
 const clickThisLeague = (value: boolean) => {
+    if (value) {
+        const prevList = [ ...filterOpt.selectedList, ];
+        filterOpt.selectedList = prevList.filter( item => item[1] === opt.leagueId );
+    } else {
+        filterOpt.selectedList = (filterOpt.selectedIdx === 0) ? config.home : config.away;
+    }
+    sortLeagueTag(filterOpt.selectedList);
     filterOpt.isThisLeague = value;
 };
 
 const getLeagueTitle = (item: TMatchUpTeamInfo): string => {
-    return resourceOpt.leagueList.find( item => item.ai_id === item[1] )?.competition_name ?? '';
+    return resourceOpt.leagueList.find( leagueItem => leagueItem.ai_id === item[1] )?.competition_name ?? '';
 };
 
 const getLeagueLogo = (item: TMatchUpTeamInfo): string => {
-    return resourceOpt.leagueList.find( item => item.ai_id === item[1] )?.competition_logo ?? '';
+    return resourceOpt.leagueList.find( leagueItem => leagueItem.ai_id === item[1] )?.competition_logo ?? '';
 };
 
 const getTime = (item: TMatchUpTeamInfo): string => {
@@ -315,40 +345,44 @@ const getTotalLose = (targetList: TMatchUpTeamInfo[]): number => {
     return loseCnt;  
 };
 
-const sortLeagueTag = (list: TMatchUpTeamInfo): TH2hSelectedTeam => {
-    // const getDatePath = customPath?.date ?? ((item) => { return item.date });
-    // const getLeaguePath = customPath?.league ?? ((item) => { return item.lg_name });
-    // list.map((item) => {
-    //     item.hasLeagueTag = false;
-    // });
-    // const groupedLeague = list.reduce((acc, match) => {
-    //     if (!acc[getLeaguePath(match)]) {
-    //         acc[getLeaguePath(match)] = [];
-    //     }
-    //     acc[getLeaguePath(match)].push(match);
-    //     return acc;
-    // }, {});
-    // const sortedLeague = Object.entries(groupedLeague).map((item) => {
-    //     const [ lg_name, matches, ] = item;
-    //     // const rlg_name = getLeaguePath(matches);
-    //     const matchesList = matches as any;
-    //     matchesList.sort((a, b) => getDatePath(a).getTime() - getDatePath(b).getTime());
-    //     matchesList.forEach((match, index) => {
-    //         match.hasLeagueTag = index === 0;
-    //     });
-    //     return {
-    //         lg_name,
-    //         matches: matchesList,
-    //     };
-    // });
-    // const finalList: any[] = [];
-    // // const sortedLeagueViaTime = sortedLeague.sort((a, b) => {
-    // //     return getDatePath(a.matches[0]).getTime() - getDatePath(b.matches[0]).getTime();
-    // // })
-    // // sortedLeagueViaTime.map((item) => {finalList.push(...item.matches); });
-    // sortedLeague.map((item) => {
-    //     finalList.push(...item.matches);
-    // });
+const sortLeagueTag = (list: TMatchUpTeamInfo[]) => {
+    const getDatePath = (item: TMatchUpTeamInfo) => {
+        return new Date(item[3]);
+    };
+    list.forEach((item, idx) => {
+        (item as any).push(false);
+    });
+    const groupedLeague = list.reduce((acc, match) => {
+        if (!acc[getLeagueTitle(match)]) {
+            acc[getLeagueTitle(match)] = [];
+        }
+        acc[getLeagueTitle(match)].push(match);
+        return acc;
+    }, {});
+
+    const sortedLeague = Object.entries(groupedLeague).map((item) => {
+        const [ lg_name, matches, ] = item;
+        const matchesList = matches as any;
+        matchesList.sort((a, b) => getDatePath(a).getTime() - getDatePath(b).getTime());
+        matchesList.forEach((match, index) => {
+            match[10] = (index === 0);
+        });
+        return {
+            lg_name,
+            matches: matchesList,
+        };
+    });
+    const finalList: any[] = [];
+    filterOpt.selectedTagList = [];
+    const testList: any[] = [];
+    sortedLeague.map((item) => {
+        finalList.push(...item.matches);
+    });
+    finalList.map((finalItem) => {
+        filterOpt.selectedTagList.push(finalItem[10] ?? false);
+        testList.push(finalItem[1]);
+    });
+
 };
 
 onMounted(async () => {
@@ -357,10 +391,12 @@ onMounted(async () => {
         sportSection,
         homeName, homeLogo, homeTeamId,
         awayName, awayLogo, awayTeamId,
+        leagueId,
     } = matchUpStore.getConfig();
     const {
         home, away, vs,
     } = matchUpStore.getConfigH2h();
+    opt.leagueId = leagueId;
     opt.homeName = homeName;
     opt.homeLogo = homeLogo;
     opt.homeTeamId = homeTeamId;
@@ -371,13 +407,9 @@ onMounted(async () => {
     config.away = away;
     config.vs = vs;
     filterOpt.selectedTeamId = opt.homeTeamId;
-    filterOpt.selectedList = sortLeagueTag(config.home);
-
-    // filterOpt.selectedList = filterStore.sortOnlyLeagueTag(config.home, {
-    //     date: (item) => {
-    //         return new Date(item[3]);
-    //     },
-    // });
+    filterOpt.selectedList = config.home;
+    sortLeagueTag(filterOpt.selectedList);
+    updateTotalValues();
     
     const totalList = [ ...config.home, ...config.away, ...config.vs ];
     const prevTeamid = [
@@ -421,8 +453,8 @@ onMounted(async () => {
             );
             const data = (res.data as any)['data'] ?? {};
             resourceOpt.leagueList = data['data'];
+            sortLeagueTag(filterOpt.selectedList);
             pendingOpt.league = false;
-            console.log('resourceOpt.leagueList: ', resourceOpt.leagueList);
         }
         catch (e) {
             console.warn('e from get team api: ', e);

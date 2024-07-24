@@ -18,6 +18,7 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
         sportSection: 'football',
         match_id: '',
         leagueName: '',
+        leagueId: '',
         timestamp: 0,
         homeLogo: '',
         homeName: '',
@@ -66,6 +67,7 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
         config.match_id = '';
         config.matchStatus = 1;
         config.leagueName = '';
+        config.leagueId = '';
         config.timestamp = 0;
         config.homeLogo = '';
         config.homeName = '';
@@ -80,6 +82,7 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
         config.match_id = schedule.match_id;
         config.matchStatus = schedule.ai_status_id;
         config.leagueName = schedule.ai_competition_name;
+        config.leagueId = schedule.ai_competition_id;
         config.timestamp = schedule.ai_match_time;
         config.homeLogo = schedule.ai_home_team_img;
         config.homeName = schedule.ai_home_team_name;

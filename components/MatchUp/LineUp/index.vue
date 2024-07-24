@@ -358,7 +358,7 @@ const props = defineProps<{
 }>();
 
 onMounted(async () => {
-    
+    await nextTick();
 });
 </script>
 

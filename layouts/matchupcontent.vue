@@ -5,7 +5,7 @@
         <div ref="$headerSticky" class="sticky top-0 z-[1]">
             <CommonHeaderMatchUp ref="$controlMatchUp" v-if="!props.isPending" v-show="!opt.isSticky && updateOpt.basic"
                 :sportSection="info.sportSection" :match_id="info.match_id" :matchStatus="info.matchStatus"
-                :leagueName="info.leagueName" :timestamp="info.timestamp" :homeLogo="info.homeLogo"
+                :leagueId="info.leagueId" :leagueName="info.leagueName" :timestamp="info.timestamp" :homeLogo="info.homeLogo"
                 :homeName="info.homeName" :homeScore="info.homeScore" :awayLogo="info.awayLogo"
                 :awayName="info.awayName" :awayScore="info.awayScore"
                 :homeTeamId="info.homeTeamId" :awayTeamId="info.awayTeamId"
@@ -15,7 +15,7 @@
         <div class="sticky top-0 z-[1] p-0 m-0">
             <CommonHeaderMatchUpSticky ref="$controlMatchUpSticky" v-if="!props.isPending" v-show="opt.isSticky && updateOpt.sticky"
                 :sportSection="info.sportSection" :match_id="info.match_id" :matchStatus="info.matchStatus"
-                :leagueName="info.leagueName" :timestamp="info.timestamp" :homeLogo="info.homeLogo"
+                :leagueId="info.leagueId" :leagueName="info.leagueName" :timestamp="info.timestamp" :homeLogo="info.homeLogo"
                 :homeName="info.homeName" :homeScore="info.homeScore" :awayLogo="info.awayLogo"
                 :awayName="info.awayName" :awayScore="info.awayScore"
                 :homeTeamId="info.homeTeamId" :awayTeamId="info.awayTeamId"
@@ -78,6 +78,7 @@ const info = reactive<TMatchUpStoreConfig>({
     sportSection: <TCommonSportSection>"football",
     match_id: <string>"",
     matchStatus: <TCommonMatchStatus>0,
+    leagueId: <string> '',
     leagueName: <string>"",
     timestamp: <number>0,
     homeLogo: <string>"",
