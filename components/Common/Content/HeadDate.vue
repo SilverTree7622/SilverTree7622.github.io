@@ -2,10 +2,13 @@
     <div
         v-if="props.hasLeagueTag"
         :class="props.idx === 0 ? 'frame-384' : 'frame-17'"
-        @click="goStore.go_league('home')" style="cursor: pointer"
+        style="cursor: pointer"
+        @click="goStore.go_league('home')"
     >
-        <img v-if="props.src" class="flag_-circle_eng" :src="props.src" :alt="props.alt ?? props.title" />
-        <div :class="props.src ? `premier-league-lE9kB9 premier-league headline2`: `x04092024-tue valign-text-middle headline2`">
+        <USkeleton v-if="props.isPending === true" class="w-[15px] h-[15px] relative rounded-full" />
+        <img v-if="!props.isPending && props.src" class="flag_-circle_eng" :src="props.src" :alt="props.alt ?? props.title" />
+        <USkeleton v-if="props.isPending === true" class="w-[100px] h-[15px]" />
+        <div v-if="!props.isPending" :class="props.src ? `premier-league-lE9kB9 premier-league headline2`: `x04092024-tue valign-text-middle headline2`">
             {{ props.title }}
         </div>
     </div>
@@ -19,6 +22,7 @@ const props = defineProps<{
     hasLeagueTag?: boolean;
     src?: string;
     alt?: string;
+    isPending?: boolean;
 }>();
 
 const goStore = useGoStore();

@@ -3892,7 +3892,8 @@
 }
 
 .frmu95mobileu95matchup .img_-matchup_h2-h_-tag_-win_new {
-  background-color: var(--havelock-blue);
+  /* background-color: var(--havelock-blue); */
+  background-color: #1DC341;
   padding: 1px 4px;
   position: relative;
   width: 44px;
@@ -3942,7 +3943,7 @@
 }
 
 .frmu95mobileu95matchup .img_-matchup_h2-h_-tag_-lose_new {
-  background-color: #c52828;
+  background-color: #F37026;
   padding: 1px 4px;
   position: relative;
   width: 44px;
@@ -4136,7 +4137,7 @@
 }
 
 .frmu95mobileu95matchup .img_-matchup_h2-h_-tag_-drawn_new {
-  background-color: var(--ctgray2);
+  background-color: #626262;
   padding: 1px 4px;
   position: relative;
   width: 44px;

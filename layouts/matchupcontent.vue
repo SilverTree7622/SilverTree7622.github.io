@@ -7,7 +7,9 @@
                 :sportSection="info.sportSection" :match_id="info.match_id" :matchStatus="info.matchStatus"
                 :leagueName="info.leagueName" :timestamp="info.timestamp" :homeLogo="info.homeLogo"
                 :homeName="info.homeName" :homeScore="info.homeScore" :awayLogo="info.awayLogo"
-                :awayName="info.awayName" :awayScore="info.awayScore" />
+                :awayName="info.awayName" :awayScore="info.awayScore"
+                :homeTeamId="info.homeTeamId" :awayTeamId="info.awayTeamId"
+            />
         </div>
 
         <div class="sticky top-0 z-[1] p-0 m-0">
@@ -15,7 +17,9 @@
                 :sportSection="info.sportSection" :match_id="info.match_id" :matchStatus="info.matchStatus"
                 :leagueName="info.leagueName" :timestamp="info.timestamp" :homeLogo="info.homeLogo"
                 :homeName="info.homeName" :homeScore="info.homeScore" :awayLogo="info.awayLogo"
-                :awayName="info.awayName" :awayScore="info.awayScore" />
+                :awayName="info.awayName" :awayScore="info.awayScore"
+                :homeTeamId="info.homeTeamId" :awayTeamId="info.awayTeamId"
+            />
             <CommonHeaderTabMatchUp v-if="!props.isPending" :sName="props.sName" :tab="props.tab" />
             <CommonHeaderSubTabMatchUpStatsLive v-if="!props.isPending && props.tab === 'stats'"
                 :selectedIdx="opt.selectedIdx" @selectTab="clickTab" />
@@ -78,10 +82,12 @@ const info = reactive<TMatchUpStoreConfig>({
     timestamp: <number>0,
     homeLogo: <string>"",
     homeName: <string>"",
+    homeTeamId: <string> '',
     homeScore: <number>0,
     awayLogo: <string>"",
     awayName: <string>"",
     awayScore: <number>0,
+    awayTeamId: <string> '',
 });
 
 const odds = reactive({
@@ -127,10 +133,12 @@ const updateInfo = () => {
     info.timestamp = matchUpConfig.timestamp;
     info.homeLogo = matchUpConfig.homeLogo;
     info.homeName = matchUpConfig.homeName;
+    info.homeTeamId = matchUpConfig.homeTeamId;
     info.homeScore = matchUpConfig.homeScore;
     info.awayLogo = matchUpConfig.awayLogo;
     info.awayName = matchUpConfig.awayName;
     info.awayScore = matchUpConfig.awayScore;
+    info.awayTeamId = matchUpConfig.awayTeamId;
 };
 
 onBeforeUnmount(async () => {

@@ -41,6 +41,15 @@ const UtilDate = {
     addMillisecond: (timestamp: number) => {
         return new Date( Number(`${ timestamp }000`) );
     },
+
+    changeMonthNum2Str: (idx: number, isShort: boolean = true): string => {
+        const list = isShort ? [
+            'JAN', 'FEB', 'MAR', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'
+        ] : [
+            'JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'
+        ];
+        return list[ idx + 1 ];
+    },
 };
 
 export default UtilDate;

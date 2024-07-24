@@ -197,11 +197,16 @@ export const useFilterStore = defineStore('filterStore', () => {
         return time.isToggled;
     };
 
+    const sortOnlyLeagueTag = (list: any[], config?: TCustomPathConfig) => {
+        opt.sortedList = time.sortLogicDefault(list, config);
+    };
+
     return {
         init,
         toggle,
         sortList,
         getSortedList,
         getTimeIsToggled,
+        sortOnlyLeagueTag,
     };
 });

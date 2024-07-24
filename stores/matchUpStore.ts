@@ -21,9 +21,11 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
         timestamp: 0,
         homeLogo: '',
         homeName: '',
+        homeTeamId: '',
         homeScore: 0,
         awayLogo: '',
         awayName: '',
+        awayTeamId: '',
         awayScore: 0,
         matchStatus: 1,
     });
@@ -81,9 +83,11 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
         config.timestamp = schedule.ai_match_time;
         config.homeLogo = schedule.ai_home_team_img;
         config.homeName = schedule.ai_home_team_name;
+        config.homeTeamId = schedule.ai_home_team_id;
         config.homeScore = getScore(sportSection, 'home', schedule);
         config.awayLogo = schedule.ai_away_team_img;
         config.awayName = schedule.ai_away_team_name;
+        config.awayTeamId = schedule.ai_away_team_id;
         config.awayScore = getScore(sportSection, 'away', schedule);
     };
 
@@ -91,15 +95,12 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
         for (const item in data) {
             statsConfig[item] = data[item];
         }
-        console.log('statsConfig: ', statsConfig);
-
     };
 
     const setConfigLineUp = (data: TMatchUpLineUpSport) => {
         for (const item in data) {
             lineUpConfig[item] = data[item];
         }
-        console.log('lineUpConfig: ', lineUpConfig);
     };
 
     const setConfigH2h = (data: TMatchUpH2HSport) => {

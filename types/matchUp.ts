@@ -16,9 +16,11 @@ export type TMatchUpStoreConfig = {
     timestamp: number;
     homeLogo: string;
     homeName: string;
+    homeTeamId: string;
     homeScore: number | string;
     awayLogo: string;
     awayName: string;
+    awayTeamId: string;
     awayScore: number | string;
 };
 
