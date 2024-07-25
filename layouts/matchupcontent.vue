@@ -183,6 +183,7 @@ onBeforeUnmount(() => {
         opt.observer.disconnect();
         opt.observer = undefined;
     }
+    matchUpStore.onBeforeUnmountPage();
 });
 </script>
 

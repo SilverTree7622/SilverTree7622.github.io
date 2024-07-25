@@ -6,7 +6,7 @@ export type TMatchUpLineUp = {
         "home": string;                                 // home coach id
     },
     "confirmed": number;                                     
-    "home_formation": string;
+    "home_formation": string;                           // home formation ex) 4-4-2
     "injury": {
         "away": [];                                     // 
         "home": [];                                     // 
@@ -26,8 +26,8 @@ export type TMatchUpLineUpPlayer = {
     "position": string;             // ex) "D"
     "rating": string;               // ex) player rating
     "shirt_number": number;
-    "x": number;
-    "y": number;
+    "x": number;                    // player position x in sport background img
+    "y": number;                    // player position y in sport background img
     "incidents"?: [
         {
             "addtime": number;

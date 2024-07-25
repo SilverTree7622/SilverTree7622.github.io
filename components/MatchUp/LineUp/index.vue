@@ -7,9 +7,10 @@
             <div class="contents_-football_-3 contents_-football_-6">
                 <div class="matchup_-lineup_-home-team_-info">
                     <div class="matchup_-lineup_-home-team-strategy">
-                        <div class="aston-villa-9"></div>
+                        <!-- <div class="aston-villa-9"></div> -->
+                        <img :src="teamOpt.homeLogo" class="w-[25px] h-[25px]" />
                         <div class="text-15 valign-text-middle headline3">
-                            {{ props.data.home_formation }}
+                            {{ formationOpt.home }}
                         </div>
                     </div>
                     <div class="matchup_-lineup_-home-team-manager">
@@ -176,7 +177,7 @@
                             </div>
                         </div>
 
-                        <div class="contents_-football contents_">
+                        <!-- <div class="contents_-football contents_">
                             <div class="match_-lineup_-player_-line-2 match_-lineup_-player_-line-3">
                                 <article class="match_-lineup_-player1-1">
                                     <div class="match_-lineup_-player_-upper">
@@ -326,14 +327,15 @@
                                 </div>
                                 <div class="b-saka valign-text-middle caption">A.Isak</div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="matchup_-lineup_-away-team_-info">
                     <div class="matchup_-lineup_-away-team-strategy">
-                        <div class="arsenal-6"></div>
+                        <!-- <div class="arsenal-6"></div> -->
+                        <img :src="teamOpt.awayLogo" class="w-[25px] h-[25px]" />
                         <div class="text-38 valign-text-middle headline3">
-                            {{ props.data.away_formation }}
+                            {{ formationOpt.away }}
                         </div>
                     </div>
                     <div class="matchup_-lineup_-away-team-manager">
@@ -352,13 +354,62 @@
 </template>
 
 <script setup lang="ts">
+import type { TMatchUpLineUpPlayer } from '~/types/FootBall/lineUp';
 import type { TMatchUpLineUpSport } from '~/types/lineUp';
-const props = defineProps<{
-    data: TMatchUpLineUpSport;
-}>();
+
+const matchUpStore = useMatchUpStore();
+
+const teamOpt = reactive({
+    homeTeamId: <string> '',
+    homeName: <string> '',
+    homeLogo: <string> '',
+    awayTeamId: <string> '',
+    awayName: <string> '',
+    awayLogo: <string> '',
+});
+
+const lineOpt = reactive({
+    home: <TMatchUpLineUpPlayer[]> [],
+    away: <TMatchUpLineUpPlayer[]> [],
+});
+
+const formationOpt = reactive({
+    home: <TMatchUpLineUpSport['home_formation']> '',
+    away: <TMatchUpLineUpSport['away_formation']> '',
+});
 
 onMounted(async () => {
     await nextTick();
+    const {
+        away_formation,
+        home_formation,
+        lineup,
+    } = matchUpStore.getConfigLineUp();
+    const {
+        homeTeamId, homeName, homeLogo,
+        awayTeamId, awayName, awayLogo,
+    } = matchUpStore.getConfig();
+    lineOpt.home = lineup.home;
+    lineOpt.away = lineup.away;
+    formationOpt.home = home_formation;
+    formationOpt.away = away_formation;
+    teamOpt.homeTeamId = homeTeamId;
+    teamOpt.homeName = homeName;
+    teamOpt.awayTeamId = awayTeamId;
+    teamOpt.awayName = awayName;
+    if (!homeLogo || !awayLogo) {
+        await matchUpStore.mountTeam([ homeTeamId ]);
+        teamOpt.homeLogo = matchUpStore.getTeamLogo(homeTeamId);
+        teamOpt.awayLogo = matchUpStore.getTeamLogo(awayTeamId);
+    } else {
+        teamOpt.homeLogo = homeLogo;
+        teamOpt.awayLogo = awayLogo;
+    }
+    console.log('lineup: ', lineup);
+});
+
+onBeforeUnmount(() => {
+
 });
 </script>
 
@@ -366,6 +417,5 @@ onMounted(async () => {
 @import '@/public/css/styleguide.css';
 @import '@/public/css/globals.css';
 @import '@/public/css/addStyle.css';
-
 @import '@/public/css/frmu95mobileu95matchup.css';
 </style>

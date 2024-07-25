@@ -131,32 +131,11 @@
 </template>
 
 <script setup lang="ts">
-import { GetSportSectionUpperCase } from '~/types/Common/sport';
 import type { TMatchUpTeamInfo } from '~/types/FootBall/h2h';
 import type { TMatchUpH2HSport } from '~/types/h2h';
 import UtilDate from '~/utils/date';
 
 const matchUpStore = useMatchUpStore();
-
-type TH2hTeamRes = {
-    "ai_competition_id": string;
-    "ai_country_id": string;
-    "ai_id": string;
-    "ai_index": number;
-    "ai_logo_img": string;
-    "ai_name_eng": string;
-    "ai_short_name": string;
-};
-
-type TH2hLeaugeRes = {
-    "ai_id": string;
-    "ai_type": number;
-    "category_name": string;
-    "catetory_logo": string;
-    "competition_logo": string;
-    "competition_name": string;
-    "competition_short_name": string;
-};
 
 const opt = reactive({
     leagueId: <string> '',
@@ -187,11 +166,6 @@ const scoreOpt = reactive({
     win: <number> 0,
     draw: <number> 0,
     lose: <number> 0,
-});
-
-const resourceOpt = reactive({
-    teamList: <TH2hTeamRes[]> [],
-    leagueList: <TH2hLeaugeRes[]> [],
 });
 
 const pendingOpt = reactive({
@@ -246,11 +220,11 @@ const clickThisLeague = (value: boolean) => {
 };
 
 const getLeagueTitle = (item: TMatchUpTeamInfo): string => {
-    return resourceOpt.leagueList.find( leagueItem => leagueItem.ai_id === item[1] )?.competition_name ?? '';
+    return matchUpStore.getLeagueTitle(item[1]);
 };
 
 const getLeagueLogo = (item: TMatchUpTeamInfo): string => {
-    return resourceOpt.leagueList.find( leagueItem => leagueItem.ai_id === item[1] )?.competition_logo ?? '';
+    return matchUpStore.getLeagueLogo(item[1]);
 };
 
 const getTime = (item: TMatchUpTeamInfo): string => {
@@ -267,11 +241,11 @@ const getYear = (item: TMatchUpTeamInfo): string => {
 };
 
 const getTeamLogo = (teamId: string): string => {
-    return resourceOpt.teamList.find( item => item.ai_id === teamId )?.ai_logo_img ?? '';
+    return matchUpStore.getTeamLogo(teamId);
 };
 
 const getTeamName = (teamId: string): string => {
-    return resourceOpt.teamList.find( item => item.ai_id === teamId )?.ai_name_eng ?? '';
+    return matchUpStore.getTeamName(teamId);
 };
 
 const getIsHomeWin = (item: TMatchUpTeamInfo): 'win' | 'lose' | 'draw' => {
@@ -422,46 +396,13 @@ onMounted(async () => {
     ];
     const competitionid = [ ...new Set(prevCompetitionid) ];
     if (teamid.length) {
-        try {
-            const res = await useApiFetch(
-                `GetTeam`,
-                { method: 'POST', },
-                {
-                    teamid,
-                    sports: GetSportSectionUpperCase(sportSection),
-                }
-            );
-            const data = (res.data as any)['data'] ?? {};
-            resourceOpt.teamList = data['data'];
-            pendingOpt.team = false;
-        }
-        catch (e) {
-            console.warn('e from get team api: ', e);
-        }
-    } else {
-        pendingOpt.team = false;
+        await matchUpStore.mountTeam(teamid);
     }
+    pendingOpt.team = false;
     if (competitionid.length) {
-        try {
-            const res = await useApiFetch(
-                `GetCompetition`,
-                { method: 'POST', },
-                {
-                    competitionid,
-                    sports: GetSportSectionUpperCase(sportSection),
-                }
-            );
-            const data = (res.data as any)['data'] ?? {};
-            resourceOpt.leagueList = data['data'];
-            sortLeagueTag(filterOpt.selectedList);
-            pendingOpt.league = false;
-        }
-        catch (e) {
-            console.warn('e from get team api: ', e);
-        }
-    } else {
-        pendingOpt.league = false;
+        await matchUpStore.mountLeague(competitionid);
     }
+    pendingOpt.league = false;
 });
 </script>
 

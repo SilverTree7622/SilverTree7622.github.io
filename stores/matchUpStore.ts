@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { getScore, isLive } from "~/types";
-import type { TCommonSportSection } from "~/types/Common/sport";
+import { GetSportSectionUpperCase, type TCommonSportSection } from "~/types/Common/sport";
 import type { TMatchUpH2HSport } from "~/types/h2h";
 import type { TMatchUpLineUpSport } from "~/types/lineUp";
 import type { TMatchUpStoreConfig, TMatchUpStoreStatsIncident } from "~/types/matchUp";
@@ -8,6 +8,26 @@ import type { TSportScheduleTypes } from "~/types/schedule";
 import type { TMatchUpStatsSport } from "~/types/stats";
 import type { TContentStoreHomeAwayPrefix } from "./contentStore";
 
+
+export type TH2hTeamRes = {
+    "ai_competition_id": string;
+    "ai_country_id": string;
+    "ai_id": string;
+    "ai_index": number;
+    "ai_logo_img": string;
+    "ai_name_eng": string;
+    "ai_short_name": string;
+};
+
+export type TH2hLeaugeRes = {
+    "ai_id": string;
+    "ai_type": number;
+    "category_name": string;
+    "catetory_logo": string;
+    "competition_logo": string;
+    "competition_name": string;
+    "competition_short_name": string;
+};
 
 export const useMatchUpStore = defineStore('matchUpStore', () => {
     const opt = reactive({
@@ -61,6 +81,20 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
         away: [],
         vs: [],
     });
+
+    const resourceListConfig = reactive({
+        team: <TH2hTeamRes[]> [],
+        league: <TH2hLeaugeRes[]> [],
+    });
+
+    const onMounted = async () => {
+        
+    };
+
+    const onBeforeUnmountPage = () => {
+        resourceListConfig.team = [];
+        resourceListConfig.league = [];
+    };
 
     const init = () => {
         config.sportSection = 'football';
@@ -116,6 +150,50 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
         opt.isLineUpExist = value;
     };
 
+    const mountTeam = async (teamid: string[]) => {
+        try {
+            const res = await useApiFetch(
+                `GetTeam`,
+                { method: 'POST', },
+                {
+                    teamid,
+                    sports: GetSportSectionUpperCase(config.sportSection),
+                }
+            );
+            const data = (res.data as any)['data'] ?? {};
+            const prevList = [
+                ...data['data'],
+                ...resourceListConfig.team,
+            ];
+            resourceListConfig.team = [ ...new Set(prevList) ];
+        }
+        catch (e) {
+            console.warn('e from get team api: ', e);
+        }
+    };
+
+    const mountLeague = async (leagueid: string[]) => {
+        try {
+            const res = await useApiFetch(
+                `GetCompetition`,
+                { method: 'POST', },
+                {
+                    competitionid: leagueid,
+                    sports: GetSportSectionUpperCase(config.sportSection),
+                }
+            );
+            const data = (res.data as any)['data'] ?? {};
+            const prevList = [
+                ...data['data'],
+                ...resourceListConfig.league,
+            ];
+            resourceListConfig.league = [ ...new Set(prevList) ];
+        }
+        catch (e) {
+            console.warn('e from get league api: ', e);
+        }
+    };
+
     const getOpt = () => {
         return opt;
     };
@@ -128,8 +206,16 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
         return statsConfig;
     };
 
+    const getConfigLineUp = () => {
+        return lineUpConfig;
+    };
+
     const getConfigH2h = () => {
         return h2hConfig;
+    };
+
+    const getResourceListConfig = () => {
+        return resourceListConfig;
     };
 
     const chckIsLive = (): boolean => {
@@ -161,19 +247,45 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
         }
         return 0;
     };
+    
+    const getTeamLogo = (teamId: string): string => {
+        return resourceListConfig.team.find( item => item.ai_id === teamId )?.ai_logo_img ?? '';
+    };
+
+    const getTeamName = (teamId: string): string => {
+        return resourceListConfig.team.find( item => item.ai_id === teamId )?.ai_name_eng ?? '';
+    };
+
+    const getLeagueTitle = (leagueId: string): string => {
+        return resourceListConfig.league.find( leagueItem => leagueItem.ai_id === leagueId )?.competition_name ?? '';
+    };
+
+    const getLeagueLogo = (leagueId: string): string => {
+        return resourceListConfig.league.find( leagueItem => leagueItem.ai_id === leagueId )?.competition_logo ?? '';
+    };
 
     return {
+        onMounted,
+        onBeforeUnmountPage,
         init,
         setConfig,
         setConfigLineUp,
         setConfigStats,
         setIsLineUpExist,
         setConfigH2h,
+        mountTeam,
+        mountLeague,
         getOpt,
         getConfig,
         getConfigStats,
+        getConfigLineUp,
         getConfigH2h,
+        getResourceListConfig,
         chckIsLive,
         getIncidentScore,
+        getTeamLogo,
+        getTeamName,
+        getLeagueTitle,
+        getLeagueLogo,
     };
 });
