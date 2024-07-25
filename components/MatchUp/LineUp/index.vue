@@ -7,25 +7,26 @@
             <div class="contents_-football_-3 contents_-football_-6">
                 <div class="matchup_-lineup_-home-team_-info">
                     <div class="matchup_-lineup_-home-team-strategy">
-                        <!-- <div class="aston-villa-9"></div> -->
                         <img :src="teamOpt.homeLogo" class="w-[25px] h-[25px]" />
                         <div class="text-15 valign-text-middle headline3">
                             {{ formationOpt.home }}
                         </div>
                     </div>
-                    <div class="matchup_-lineup_-home-team-manager">
+                    <!-- <div class="matchup_-lineup_-home-team-manager">
                         <div class="overlap-group-4">
                             <div class="unai-emery valign-text-middle body">
-                                <!-- home coach name -->
+
                             </div>
                             <img class="non_-available_-player1_-cirle" src="/img/non-available-player1-cirle@2x.png"
                                 alt="Non_Available_Player1_Cirle" />
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="contents_-football_-4 contents_-football_-6">
                     <div class="contents_-football_-5 contents_-football_-6">
                         <div class="contents_-football contents_">
+                            
+                            <!-- goal keeper -->
                             <div class="match_-lineup_-player1 match_-lineup_">
                                 <div class="match_-lineup_-player_-upper">
                                     <div class="overlap-group-2">
@@ -39,6 +40,8 @@
                                 </div>
                                 <div class="b-saka valign-text-middle caption">E.Haland</div>
                             </div>
+
+                            <!--  -->
                             <div class="match_-lineup_-player_-line">
                                 <article class="match_-lineup_-player match_-lineup_">
                                     <div class="match_-lineup_-player_-upper">
@@ -93,6 +96,7 @@
                                     <div class="b-saka valign-text-middle caption">K.Havertz</div>
                                 </article>
                             </div>
+
                             <div class="match_-lineup_-player_-line-3">
                                 <article class="match_-lineup_-player match_-lineup_">
                                     <div class="match_-lineup_-player_-upper">
@@ -121,6 +125,7 @@
                                     <div class="b-saka valign-text-middle caption">H.Son</div>
                                 </article>
                             </div>
+
                             <div class="match_-lineup_-player_-line-3">
                                 <article class="match_-lineup_-player match_-lineup_">
                                     <div class="match_-lineup_-player_-upper">
@@ -162,6 +167,7 @@
                                     <div class="b-saka valign-text-middle caption">M.Cunha</div>
                                 </article>
                             </div>
+
                             <div class="match_-lineup_-player1 match_-lineup_">
                                 <div class="match_-lineup_-player_-upper">
                                     <div class="overlap-group-2">
@@ -338,15 +344,14 @@
                             {{ formationOpt.away }}
                         </div>
                     </div>
-                    <div class="matchup_-lineup_-away-team-manager">
+                    <!-- <div class="matchup_-lineup_-away-team-manager">
                         <div class="overlap-group-5">
                             <div class="name-1 valign-text-middle name-2 body">
-                                <!-- away coach name -->
                             </div>
                             <img class="non_-available_-player1_-cirle" src="/img/non-available-player1-cirle-3@2x.png"
                                 alt="Non_Available_Player1_Cirle" />
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -354,7 +359,9 @@
 </template>
 
 <script setup lang="ts">
+import UtilString from '~/utils/string';
 import type { TMatchUpLineUpPlayer } from '~/types/FootBall/lineUp';
+import { TMatchUpStatistics2TitleFootball } from '~/types/FootBall/statistics';
 import type { TMatchUpLineUpSport } from '~/types/lineUp';
 
 const matchUpStore = useMatchUpStore();
@@ -405,7 +412,21 @@ onMounted(async () => {
         teamOpt.homeLogo = homeLogo;
         teamOpt.awayLogo = awayLogo;
     }
-    console.log('lineup: ', lineup);
+    
+    // test
+    console.log('lineup.home: ', lineup.home);
+    console.log(`____________________________________________________________________________`);
+    let cnt = 0;
+    lineup.home.map((player) => {
+        if (!player.incidents) return;
+        console.log(`${ UtilString.convertLong2ShortName(player.name) } position: ${ player.x } ${ player.y }`);
+        player.incidents.map((item) => {
+            console.log(`---${ UtilString.convertLong2ShortName(player.name) } / ${ TMatchUpStatistics2TitleFootball[item.type] }`);
+        });
+        cnt++;
+    });
+    console.log('cnt: ', lineup.home.length - cnt, cnt);
+
 });
 
 onBeforeUnmount(() => {

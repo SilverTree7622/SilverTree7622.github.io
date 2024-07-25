@@ -40,7 +40,7 @@ export type TMatchUpLineUpPlayer = {
                 "name": string;
             },
             "time": string;
-            "type": number;
+            "type": number;         
         }
     ],
 };

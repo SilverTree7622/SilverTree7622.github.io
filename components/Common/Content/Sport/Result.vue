@@ -45,11 +45,11 @@
             :idx="props.idx"
             :homeLogo="contentStore.getParticipantSrc(props.league, 0)"
             :homeName="contentStore.getParticipantName(props.league, 0)"
-            :homeScore="contentStore.getLeagueScore(opt, 0)"
+            :homeScore="contentStore.getScore(props.sportSection, 'home', props.league)"
             :time="contentStore.getMatchTime(league)"
             :awayLogo="contentStore.getParticipantSrc(props.league, 1)"
             :awayName="contentStore.getParticipantName(props.league, 1)"
-            :awayScore="contentStore.getLeagueScore(opt, 1)"
+            :awayScore="contentStore.getScore(props.sportSection, 'away', props.league)"
             :goLiveTracker="() => goLiveTracker(props.league)"
             :isFavorite="false"
         />
@@ -60,11 +60,11 @@
             :idx="props.idx"
             :homeLogo="contentStore.getParticipantSrc(props.league, 0)"
             :homeName="contentStore.getParticipantName(props.league, 0)"
-            :homeScore="contentStore.getLeagueScore(opt, 0)"
+            :homeScore="contentStore.getScore(props.sportSection, 'home', props.league)"
             :time="contentStore.getMatchTime(league)"
             :awayLogo="contentStore.getParticipantSrc(props.league, 1)"
             :awayName="contentStore.getParticipantName(props.league, 1)"
-            :awayScore="contentStore.getLeagueScore(opt, 1)"
+            :awayScore="contentStore.getScore(props.sportSection, 'away', props.league)"
             :goLiveTracker="() => goLiveTracker(props.league)"
             :isFavorite="false"
         />
@@ -75,12 +75,12 @@
             :idx="props.idx"
             :homeLogo="contentStore.getParticipantSrc(props.league, 0)"
             :homeName="contentStore.getParticipantName(props.league, 0)"
-            :homeScore="contentStore.getLeagueScore(opt, 0)"
+            :homeScore="contentStore.getScore(props.sportSection, 'home', props.league)[0]"
             :time="contentStore.getMatchTime(league)"
             :prefix="contentStore.getPrefix(props.sportSection, opt.ai_match_status, opt.ai_kickoff_timestamp)"
             :awayLogo="contentStore.getParticipantSrc(props.league, 1)"
             :awayName="contentStore.getParticipantName(props.league, 1)"
-            :awayScore="contentStore.getLeagueScore(opt, 1)"
+            :awayScore="contentStore.getScore(props.sportSection, 'away', props.league)[0]"
             :goLiveTracker="() => goLiveTracker(props.league)"
             :isFavorite="false"
         />
@@ -91,7 +91,6 @@
 import type { TCommonLiveRealTime } from "~/types/Common/Live";
 import type { TCommonSportSection } from "~/types/Common/sport";
 import type { TFootBallSchedule } from "~/types/FootBall/schedule";
-import type { TMatchUpStoreConfig } from "~/types/matchUp";
 
 const props = defineProps<{
     idx: number;

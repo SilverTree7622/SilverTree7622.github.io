@@ -15,11 +15,11 @@
             :idx="props.idx"
             :homeLogo="contentStore.getParticipantSrc(props.league, 0)"
             :homeName="contentStore.getParticipantName(props.league, 0)"
-            :homeScore="contentStore.getLeagueScore(opt, 0)"
+            :homeScore="contentStore.getScore(props.sportSection, 'home', props.league)"
             :time="getLeagueTime()"
             :awayLogo="contentStore.getParticipantSrc(props.league, 1)"
             :awayName="contentStore.getParticipantName(props.league, 1)"
-            :awayScore="contentStore.getLeagueScore(opt, 1)"
+            :awayScore="contentStore.getScore(props.sportSection, 'away', props.league)"
             :goLiveTracker="() => goLiveTracker(props.league)"
             :updateOpt="{
                 time: updateOpt.time,
@@ -35,11 +35,11 @@
             :idx="props.idx"
             :homeLogo="contentStore.getParticipantSrc(props.league, 0)"
             :homeName="contentStore.getParticipantName(props.league, 0)"
-            :homeScore="contentStore.getLeagueScore(opt, 0)"
+            :homeScore="contentStore.getScore(props.sportSection, 'home', props.league)[0]"
             :time="getLeagueTime()"
             :awayLogo="contentStore.getParticipantSrc(props.league, 1)"
             :awayName="contentStore.getParticipantName(props.league, 1)"
-            :awayScore="contentStore.getLeagueScore(opt, 1)"
+            :awayScore="contentStore.getScore(props.sportSection, 'away', props.league)[0]"
             :goLiveTracker="() => goLiveTracker(props.league)"
             :updateOpt="{
                 time: updateOpt.time,
@@ -62,12 +62,12 @@
             :idx="props.idx"
             :homeLogo="contentStore.getParticipantSrc(props.league, 0)"
             :homeName="contentStore.getParticipantName(props.league, 0)"
-            :homeScore="contentStore.getLeagueScore(opt, 0)"
+            :homeScore="contentStore.getScore(props.sportSection, 'home', props.league)[0]"
             :time="getLeagueTime()"
             :prefix="contentStore.getPrefix(props.sportSection, opt.ai_match_status, opt.ai_kickoff_timestamp)"
             :awayLogo="contentStore.getParticipantSrc(props.league, 1)"
             :awayName="contentStore.getParticipantName(props.league, 1)"
-            :awayScore="contentStore.getLeagueScore(opt, 1)"
+            :awayScore="contentStore.getScore(props.sportSection, 'away', props.league)[0]"
             :goLiveTracker="() => goLiveTracker(props.league)"
             :updateOpt="{
                 time: updateOpt.time,
@@ -85,8 +85,6 @@
 
 <script setup lang="ts">
 import type { TCommonLiveRealTime } from "~/types/Common/Live";
-import type { TMatchUpStoreConfig } from "~/types/matchUp";
-import type { TCommonSchedule } from "~/types/Common/schedule";
 import type { TCommonSportSection } from "~/types/Common/sport";
 import type { TSportScheduleTypes } from "~/types/schedule";
 
