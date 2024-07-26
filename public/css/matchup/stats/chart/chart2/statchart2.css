@@ -5,7 +5,7 @@
   background-color: var(--wt);
   display: flex;
   height: 134px;
-  width: 340px;
+  /* width: 340px; */
 }
 
 .statchart2 .match_-stats_chart2 {
@@ -18,7 +18,7 @@
   margin-top: -1px;
   padding: 10px;
   position: relative;
-  width: 340px;
+  /* width: 340px; */
 }
 
 .statchart2 .frame-432 {
@@ -308,7 +308,7 @@
   height: 25px;
   left: 6px;
   min-width: 137px;
-  position: absolute;
+  position: relative;
   top: 0;
 }
 
