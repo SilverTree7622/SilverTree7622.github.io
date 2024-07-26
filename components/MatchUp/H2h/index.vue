@@ -2,6 +2,7 @@
     <div class="frmu95mobileu95matchup">
         <div class="frmu95mobileu95matchup-item-2">
             <MatchUpH2hTeamSelection
+                v-if="props.isLastMatches"
                 :homeName="opt.homeName"
                 :homeLogo="opt.homeLogo"
                 :awayName="opt.awayName"
@@ -13,7 +14,7 @@
             <div class="frame-315-2 frame-315-3">
                 <div class="surname-1 surname-2 headline3 flex flex-row">
                     <MatchUpH2hFilter
-                        :title="'Home'"
+                        :title="`Home${ props.isLastMatches ? '' : ` - ${ opt.homeName }` }`"
                         :isChecked="filterOpt.isHome"
                         class="mr-2"
                         @toggle="clickHome"
@@ -135,6 +136,10 @@ import type { TMatchUpTeamInfo } from '~/types/FootBall/h2h';
 import type { TMatchUpH2HSport } from '~/types/h2h';
 import UtilDate from '~/utils/date';
 
+const props = defineProps<{
+    isLastMatches?: boolean;
+}>();
+
 const matchUpStore = useMatchUpStore();
 
 const opt = reactive({
@@ -188,10 +193,21 @@ watch(
     }
 );
 
+const setTeamIdViaOpts = (): string => {
+    return (filterOpt.selectedIdx === 0) ? opt.homeTeamId : opt.awayTeamId;
+};
+
+const setListViaOpts = (): TMatchUpTeamInfo[]  => {
+    if (props.isLastMatches) {
+        return (filterOpt.selectedIdx === 0) ? config.home : config.away;
+    }
+    return config.vs;
+};
+
 const clickSelection = (idx: number) => {
     filterOpt.selectedIdx = idx;
-    filterOpt.selectedList = (filterOpt.selectedIdx === 0) ? config.home : config.away;
-    filterOpt.selectedTeamId = (filterOpt.selectedIdx === 0) ? opt.homeTeamId : opt.awayTeamId;
+    filterOpt.selectedList = setListViaOpts();
+    filterOpt.selectedTeamId = setTeamIdViaOpts();
     clickHome(false);
     clickThisLeague(false);
 };
@@ -199,10 +215,10 @@ const clickSelection = (idx: number) => {
 const clickHome = (value: boolean) => {
     if (value) {
         const prevList = [ ...filterOpt.selectedList, ];
-        const teamId = (filterOpt.selectedIdx === 0) ? opt.homeTeamId : opt.awayTeamId;
+        const teamId = setTeamIdViaOpts();
         filterOpt.selectedList = prevList.filter( item => item[5][0] === teamId );
     } else {
-        filterOpt.selectedList = (filterOpt.selectedIdx === 0) ? config.home : config.away;
+        filterOpt.selectedList = setListViaOpts();
     }
     sortLeagueTag(filterOpt.selectedList);
     filterOpt.isHome = value;
@@ -213,7 +229,7 @@ const clickThisLeague = (value: boolean) => {
         const prevList = [ ...filterOpt.selectedList, ];
         filterOpt.selectedList = prevList.filter( item => item[1] === opt.leagueId );
     } else {
-        filterOpt.selectedList = (filterOpt.selectedIdx === 0) ? config.home : config.away;
+        filterOpt.selectedList = setListViaOpts();
     }
     sortLeagueTag(filterOpt.selectedList);
     filterOpt.isThisLeague = value;
@@ -356,7 +372,6 @@ const sortLeagueTag = (list: TMatchUpTeamInfo[]) => {
         filterOpt.selectedTagList.push(finalItem[10] ?? false);
         testList.push(finalItem[1]);
     });
-
 };
 
 onMounted(async () => {
@@ -381,11 +396,16 @@ onMounted(async () => {
     config.away = away;
     config.vs = vs;
     filterOpt.selectedTeamId = opt.homeTeamId;
-    filterOpt.selectedList = config.home;
+    filterOpt.selectedList = setListViaOpts();
     sortLeagueTag(filterOpt.selectedList);
     updateTotalValues();
-    
-    const totalList = [ ...config.home, ...config.away, ...config.vs ];
+
+    let totalList: TMatchUpTeamInfo[] = [];
+    if (props.isLastMatches) {
+        totalList = [ ...config.home, ...config.away, ...config.vs ];
+    } else {
+        totalList = [ ...config.vs ];
+    }
     const prevTeamid = [
         ...totalList.map( item => item[5][0] ),
         ...totalList.map( item => item[6][0] ),

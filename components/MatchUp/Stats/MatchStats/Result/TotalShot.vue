@@ -1,20 +1,10 @@
 <template>
     <div class="div-11">
-        <div class="div-12">Total Shots</div>
-        <div class="div-13">
-            <div class="div-14">
-                <div class="div-15">
-                    {{ props.shotTargetOn.home + props.shotTargetOff.home }}
-                </div>
-                <div class="div-16"></div>
-            </div>
-            <div class="div-17">
-                <div class="div-18"></div>
-                <div class="div-19">
-                    {{ props.shotTargetOn.away + props.shotTargetOff.away }}
-                </div>
-            </div>
-        </div>
+        <MatchUpStatsMatchStatsResultGraph
+            :title="`Total Shots`"
+            :home="props.shotTargetOn.home + props.shotTargetOff.home"
+            :away="props.shotTargetOn.away + props.shotTargetOff.away"
+        />
         <div class="div-20">
             <span style="color: rgba(98, 98, 98, 1)">Shots off target</span> / Shots
             on target

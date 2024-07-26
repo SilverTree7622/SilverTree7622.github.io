@@ -35,6 +35,15 @@
     </div>
 </template>
 
+<script setup lang="ts">
+const matchUpStore = useMatchUpStore();
+
+onMounted(async () => {
+    await nextTick();
+    
+});
+</script>
+
 <style scoped>
 @import '@/public/css/matchup/stats/chart/globals.css';
 @import '@/public/css/matchup/stats/chart/styleguide.css';

@@ -144,6 +144,9 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
         for (const item in data.history) {
             h2hConfig[item] = data.history[item];
         }
+        for (const item in data.future) {
+            h2hConfig[item].push(...data.future[item]);
+        }
     };
 
     const setIsLineUpExist = (value: boolean) => {

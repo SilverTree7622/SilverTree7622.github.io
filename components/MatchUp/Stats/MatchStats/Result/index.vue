@@ -28,36 +28,20 @@
         />
 
         <div v-for="(item, idx) in opt.list" class="div-2">
-            <div class="div-3">
-                {{ TMatchUpStatistics2TitleFootball[ item.type ] }}
-            </div>
-            <div class="div-4">
-                <div class="div-5">
-                    <div class="div-6">
-                        {{ `${ item.home }${ item.type === 25 ? '%' : '' }` }}
-                    </div>
-                    <div
-                        :class="`div-7 w-[${ item.homeW }%]`"
-                    ></div>
-                </div>
-                <div class="div-8">
-                    <div
-                        :class="`div-9 w-[${ item.awayW }%]`"
-                    ></div>
-                    <div class="div-10">
-                        {{ `${ item.away }${ item.type === 25 ? '%' : '' }` }}
-                    </div>
-                </div>
-            </div>
+            <MatchUpStatsMatchStatsResultGraph
+                :title="TMatchUpStatistics2TitleFootball[ item.type ]"
+                :home="item.home"
+                :away="item.away"
+                :isPercentage="item.type === 25"
+            />
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import type { TSportStatistics } from '~/types/statistics';
-import type { TMatchUpStatsSport } from '~/types/stats';
-import { TMatchUpStatistics2TitleFootball } from '~/types/FootBall/statistics';
 import type { TMatchUpStatsStatsFootball } from '~/types/FootBall/stats';
+import { TMatchUpStatistics2TitleFootball } from '~/types/FootBall/statistics';
 
 const matchUpStore = useMatchUpStore();
 
@@ -130,8 +114,6 @@ onMounted(async () => {
             awayW: getWidthClass(item.away, total),
         };
     });
-    console.log('opt.list: ', opt.list);
-
 });
 </script>
 
@@ -152,60 +134,6 @@ onMounted(async () => {
     width: 100%;
     flex-direction: column;
     padding: 10px 4px;
-}
-
-.div-3 {
-    text-align: center;
-    width: 100%;
-    font: 400 13px Pretendard, sans-serif;
-}
-
-.div-4 {
-    justify-content: end;
-    display: flex;
-    margin-top: 4px;
-    gap: 6px;
-    font-size: 12px;
-    font-weight: 600;
-    white-space: nowrap;
-    text-transform: uppercase;
-    padding: 0 10px;
-}
-
-.div-5 {
-    justify-content: end;
-    display: flex;
-    gap: 10px;
-    flex: 1;
-    padding: 0 2px;
-}
-
-.div-6 {
-    font-family: Pretendard, sans-serif;
-    margin: auto 0;
-}
-
-.div-7 {
-    border-radius: 3px;
-    background-color: #f50;
-    height: 20px;
-}
-
-.div-8 {
-    display: flex;
-    gap: 10px;
-    flex: 1;
-}
-
-.div-9 {
-    border-radius: 3px;
-    background-color: #001a32;
-    height: 20px;
-}
-
-.div-10 {
-    font-family: Pretendard, sans-serif;
-    margin: auto 0;
 }
 
 .div-26 {

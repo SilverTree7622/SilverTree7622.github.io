@@ -1,10 +1,11 @@
 <template>
     <div class="px-2">
         <MatchUpStatsMatchStats />
-        <MatchUpStatsLastMatches />
+        <MatchUpH2h :isLastMatches="true" />
         <!-- <MatchUpStatsTopPlayers /> -->
         <MatchUpStatsOdds />
         
+        <!-- only after live is over statistics -->
         <MatchUpStatsMatchStatsResult
             v-if="!matchUpStore.chckIsLive()"
             :list="[]"
@@ -19,14 +20,10 @@ const props = defineProps<{
     selectedIdx: number;
 }>();
 
-
-const update = () => {
+const setPosition2Selected = () => {
 
 };
 
-defineExpose({
-    update,
-});
 </script>
 
 <style scoped>

@@ -111,6 +111,7 @@ const res = async () => {
         },
     );
     const data = (statsRes.data as any)['data'] ?? {};
+    console.log('data from stats res: ', data);
     matchUpStore.setConfig(sportSection, data['data']);
     matchUpStore.setConfigStats(data['overview']);
     matchUpStore.setConfigH2h(data['H2H']);

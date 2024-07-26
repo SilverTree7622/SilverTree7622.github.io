@@ -1,5 +1,5 @@
 <template>
-    <MatchUpH2h />
+    <MatchUpH2h :isLastMatches="false" />
 </template>
 
 <script setup lang="ts">

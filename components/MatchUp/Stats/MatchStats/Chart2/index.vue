@@ -101,6 +101,70 @@
     </div>
 </template>
 
+<script setup lang="ts">
+const matchUpStore = useMatchUpStore();
+
+type TMatchUpStatsConfig = {
+    home: number;
+    away: number;
+};
+
+const config = reactive({
+    attacks: <TMatchUpStatsConfig> {
+        home: 0,
+        away: 0,
+    },
+    dangerousAttack: <TMatchUpStatsConfig> {
+        home: 0,
+        away: 0,
+    },
+    ballPossession: <TMatchUpStatsConfig> {
+        home: 0,
+        away: 0,
+    },
+    shotsOnTarget: <TMatchUpStatsConfig> {
+        home: 0,
+        away: 0,
+    },
+    shotsOffTarget: <TMatchUpStatsConfig> {
+        home: 0,
+        away: 0,
+    },
+});
+
+const cardConfig = reactive({
+    corner: <TMatchUpStatsConfig> {
+        home: 0,
+        away: 0,
+    },
+    redCard: <TMatchUpStatsConfig> {
+        home: 0,
+        away: 0,
+    },
+    yellowCard: <TMatchUpStatsConfig> {
+        home: 0,
+        away: 0,
+    },
+});
+
+onMounted(async () => {
+    await nextTick();
+    const {
+        stats,
+    } = matchUpStore.getConfigStats();
+    config.attacks.home = (stats.find( item => item.type === 23 ) ?? 0)['home'] ?? 0;
+    config.attacks.away = (stats.find( item => item.type === 23 ) ?? 0)['away'] ?? 0;
+    config.dangerousAttack.home = (stats.find( item => item.type === 24 ) ?? 0)['home'] ?? 0;
+    config.dangerousAttack.away = (stats.find( item => item.type === 24 ) ?? 0)['away'] ?? 0;
+    config.ballPossession.home = (stats.find( item => item.type === 25 ) ?? 0)['home'] ?? 0;
+    config.ballPossession.away = (stats.find( item => item.type === 25 ) ?? 0)['away'] ?? 0;
+    config.shotsOnTarget.home = (stats.find( item => item.type === 21 ) ?? 0)['home'] ?? 0;
+    config.shotsOnTarget.away = (stats.find( item => item.type === 21 ) ?? 0)['away'] ?? 0;
+    config.shotsOffTarget.home = (stats.find( item => item.type === 22 ) ?? 0)['home'] ?? 0;
+    config.shotsOffTarget.away = (stats.find( item => item.type === 22 ) ?? 0)['away'] ?? 0;
+});
+</script>
+
 <style scoped>
 @import '@/public/css/matchup/stats/chart/chart2/globals.css';
 @import '@/public/css/matchup/stats/chart/chart2/styleguide.css';
