@@ -5,6 +5,7 @@
         />
         
         <CommonHeaderLeague
+            v-if="!props.isPending"
             :title="'Premier League'"
             :flag="'/img/flag-circle-eng@2x.png'"
             :country="'England'"
@@ -16,6 +17,12 @@
         <CommonHeaderTabLeague
             :sName="'League'"
             :tab="opt.tab"
+        />
+
+        <CommonHeaderSubTabLeagueTable
+            v-if="!props.isPending && props.tab === 'table'"
+            :selectedIdx="opt.selectedIdx"
+            @selectTab="clickTab"
         />
         
         <!-- init content loading skeletons -->
@@ -59,12 +66,18 @@ const props = defineProps<{
     result: any;
 }>();
 
+const emit = defineEmits<{
+    (e: "clickTab", idx: number): void;
+}>();
+
 const opt = reactive({
+    selectedIdx: <number> 0,
     tab: <string> props.tab,
 });
 
 const route = useRoute();
 
+// tab changed
 watch(
     () => route.fullPath,
     async (p) => {
@@ -72,21 +85,13 @@ watch(
     }
 );
 
-const nextTab = () => {
-    const tab = route.query['tab'];
-    let resultTab = 'live';
-    if (tab === 'live' || tab === undefined) resultTab = 'fixtures';
-    if (tab === 'fixtures') resultTab = 'odds';
-    if (tab === 'odds') resultTab = 'result';
-    if (tab === 'result') resultTab = 'league';
-    if (tab === 'league') resultTab = 'live';
-    navigateTo({
-        path: `/${ props.sName }`,
-        query: {
-            tab: resultTab,
-        }
-    });
+const clickTab = (idx: number) => {
+    opt.selectedIdx = idx;
+    emit("clickTab", opt.selectedIdx);
 };
 
+onMounted(async () => {
+    await nextTick();
 
+});
 </script>

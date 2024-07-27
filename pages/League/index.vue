@@ -10,7 +10,7 @@
     >
         <LeagueMatchUpMain
             v-if="opt.tab == 'matchup'"
-            :result_league="list.sortedLeagueList"
+            :result_league_list="list.sortedLeagueList"
         />
         <LeagueTableMain
             v-if="opt.tab == 'table'"
@@ -38,6 +38,7 @@ const {
 const filterStore = useFilterStore();
 const dateStore = useDateStore();
 const scrollStore = useScrollStore();
+const leagueStore = useLeagueStore();
 const route = useRoute();
 
 const scroll = reactive({
@@ -76,7 +77,7 @@ const setTabException = () => {
 watch(
     () => route.fullPath,
     async (p) => {
-        opt.tab = route.query['tab'] as string;
+        opt.tab = route.query['tab'] as string ?? 'matchup';
         opt.result.league = [];
         opt.isBooting = true;
         opt.isPending = true;
@@ -195,12 +196,29 @@ const callNextContents = async (isFilter: boolean = false): Promise<boolean> => 
     return opt.isOutOfContent;
 };
 
+const chkcIsLeagueId = () => {
+    return route.query['id'] as string;
+};
+
 onMounted(async () => {
     opt.isPending = true;
     await nextTick();
     scrollStore.setScroll2Top();
     scrollStore.register(scroll.key, callNextContents);
     await res();
+    await leagueStore.onMountedMatchUp(
+        chkcIsLeagueId(),
+        () => {
+            opt.isBooting = false;
+            opt.isPending = false;
+        }
+    );
+    await leagueStore.onMountedTable(
+        
+        () => {
+            
+        }
+    );
 });
 
 onBeforeUnmount(async () => {

@@ -3,7 +3,7 @@
         v-if="props.hasLeagueTag"
         :class="props.idx === 0 ? 'frame-384' : 'frame-17'"
         style="cursor: pointer"
-        @click="goStore.go_league('home')"
+        @click="goStore.go_league(props.id)"
     >
         <USkeleton v-if="props.isPending === true" class="w-[15px] h-[15px] relative rounded-full" />
         <img v-if="!props.isPending && props.src" class="flag_-circle_eng" :src="props.src" :alt="props.alt ?? props.title" />
@@ -17,6 +17,7 @@
 
 <script setup lang="ts">
 const props = defineProps<{
+    id: string;
     idx: number;
     title: string;
     hasLeagueTag?: boolean;
@@ -27,6 +28,7 @@ const props = defineProps<{
 
 const goStore = useGoStore();
 
+console.log('props.id: ', props.id);
 </script>
 
 <style scoped>

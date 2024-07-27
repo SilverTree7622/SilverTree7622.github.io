@@ -6,18 +6,20 @@
             </NuxtLink>
         </div>
         <div class="frame-397">
-            <img class="premier_-league_logo-1" src="/img/premier-league-logo-1@2x.png"></img>
+            <img class="premier_-league_logo-1" :src="opt.logo"></img>
             <div class="frame-401">
-                <h1 class="title leaguetitle">{{ props.title }}</h1>
+                <h1 class="title leaguetitle">
+                    {{ opt.title }}
+                </h1>
                 <div class="flex-row">
                     <div>
-                        <img class="flag_-circle_eng" :src="props.flag" />
+                        <img class="flag_-circle_eng" :src="opt.flag" />
                     </div>
-                    <p class="surname body">{{ `${props.country} / ${props.level} / ${props.bet}` }}</p>
+                    <p class="surname body">{{ `${ opt.country } / ${ opt.level } / ${ opt.bet }` }}</p>
                 </div>
             </div>
             <CommonFavoriteStar
-                :isToggled="props.isStarToggled"
+                :isToggled="opt.isFavorite"
             />
         </div>
     </div>
@@ -33,8 +35,34 @@ const props = defineProps<{
     isStarToggled: boolean;
 }>();
 
+const opt = reactive({
+    logo: <string> '',
+    title: <string> '',
+    flag: <string> '',
+    country: <string> '',
+    level: <string> '',
+    bet: <string> '',
+    isFavorite: <boolean> false,
+})
 
+const leagueStore = useLeagueStore();
 
+onMounted(async () => {
+    await nextTick();
+    const {
+        leagueLogo, leagueTitle,
+        countryLogo, countryName,
+        level, bet,
+        isFavorite,
+    } = leagueStore.getHeaderConfig();
+    opt.logo = leagueLogo;
+    opt.title = leagueTitle;
+    opt.flag = countryLogo;
+    opt.country = countryName;
+    opt.level = level;
+    opt.bet = bet;
+    opt.isFavorite = isFavorite;
+});
 </script>
 
 <style scoped>

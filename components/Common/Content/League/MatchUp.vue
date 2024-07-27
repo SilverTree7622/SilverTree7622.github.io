@@ -1,6 +1,7 @@
 <template>
     <div class="fr_-contents_-football_-fixtures_-upper" :class="props.isLast ? 'rounded-b-lg' : 'rounded-t-lg'">
         <CommonContentHeadDate
+            :id="props.id"
             :idx="props.idx"
             :name="'league_name'"
             :title="dateStore.getLeagueFormat(props.date, false)"
@@ -18,8 +19,9 @@
 
 <script setup lang="ts">
 const props = defineProps<{
+    id: string;
     idx: number;
-    date: Date;
+    date: number;
     isLast?: boolean;
 }>();
 

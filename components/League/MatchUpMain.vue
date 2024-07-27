@@ -1,23 +1,26 @@
 <template>
-    <div class="contents_-football">
-        <template v-for="(league, idx) of props.result_league">
-            <CommonContentLeagueMatchUp
-                :idx="idx"
-                :date="league.date"
-                :isLast="chckIsLast(idx)"
-            />
-        </template>
+    <div class="contents_-football_-live-Mzx5SR" id="contents_-football_-live">
+        <div class="leagueFrame">
+            <template v-for="(league, idx) in props.result_league_list">
+                <CommonContentSportResult
+                    :idx="idx"
+                    :sportSection="'football'"
+                    :league="league"
+                />
+            </template>
+        </div>
     </div>
 </template>
 
-
 <script setup lang="ts">
+import type { TCommonSchedule } from '~/types/Common/schedule';
+
 const props = defineProps<{
-    result_league;
+    result_league_list: TCommonSchedule[];
 }>();
 
 const chckIsLast = (idx: number) => {
-    return idx === (props.result_league.length - 1);
+    return idx === (props.result_league_list.length - 1);
 };
 
 onMounted(async () => {

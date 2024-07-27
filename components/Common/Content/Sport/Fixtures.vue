@@ -2,6 +2,7 @@
 <template>
     <!-- set group tag or border line -->
     <CommonContentHeadDate
+        :id="props.league.ai_competition_id"
         :idx="props.idx"
         :title="contentStore.getLeagueName(props.league)"
         :hasLeagueTag="contentStore.setLeagueGroup(props.league)"
@@ -53,10 +54,8 @@
 </template>
 
 <script setup lang="ts">
-import type { TCommonSchedule } from "~/types/Common/schedule";
 import type { TCommonSportSection } from "~/types/Common/sport";
 import type { TFootBallSchedule } from "~/types/FootBall/schedule";
-import type { TMatchUpStoreConfig } from "~/types/matchUp";
 import type { TSportScheduleTypes } from "~/types/schedule";
 import UtilDate from "~/utils/date";
 

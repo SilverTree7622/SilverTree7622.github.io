@@ -1,5 +1,5 @@
 <template>
-    <NuxtLink :to="`/${ props.sName }?tab=${ props.name }`">
+    <NuxtLink :to="getHeading()">
         <div 
             :class="`
                 tap_ cursor-pointer
@@ -29,11 +29,20 @@ const props = defineProps<{
     sName: string;
     name: string;
     isToggled: boolean;
+    customHeading?: string;
 }>();
 
 const opt = reactive({
     isHover: <boolean> false,
 });
+
+const getHeading = (): string => {
+    if (props.customHeading) {
+        return props.customHeading;
+    } else {
+        return `/${ props.sName }?tab=${ props.name }`;
+    }
+};
 </script>
 
 <style scoped>

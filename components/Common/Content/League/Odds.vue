@@ -1,6 +1,7 @@
 <template>
     <div class="frame-317" :class="props.isLast ? 'rounded-b-lg' : 'rounded-t-lg'">
         <CommonContentHeadDate
+            :id="''"
             :idx="props.idx"
             :title="dateStore.getLeagueFormat(props.date, false)"
         />

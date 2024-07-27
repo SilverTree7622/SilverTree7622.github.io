@@ -1,9 +1,9 @@
 <template>
     <div class="div-sub-tab-stats">
-        <div class="div-2" :class="props.selectedIdx === 0 ? 'bg-[#627bcd]' : 'bg-[#8c9db6] cursor-pointer'" @click="clickTab(0)">match stats</div>
-        <div class="div-2" :class="props.selectedIdx === 1 ? 'bg-[#627bcd]' : 'bg-[#8c9db6] cursor-pointer'" @click="clickTab(1)">last matches</div>
-        <div class="div-2" :class="props.selectedIdx === 2 ? 'bg-[#627bcd]' : 'bg-[#8c9db6] cursor-pointer'" @click="clickTab(2)">top players</div>
-        <div class="div-2" :class="props.selectedIdx === 3 ? 'bg-[#627bcd]' : 'bg-[#8c9db6] cursor-pointer'" @click="clickTab(3)">odds</div>
+        <div class="div-2" :class="props.selectedIdx === 0 ? 'bg-[#627bcd]' : 'bg-[#8c9db6] cursor-pointer'" @click="clickTab(0)">ALL</div>
+        <div class="div-2" :class="props.selectedIdx === 1 ? 'bg-[#627bcd]' : 'bg-[#8c9db6] cursor-pointer'" @click="clickTab(1)">TOP SCORER</div>
+        <div class="div-2" :class="props.selectedIdx === 2 ? 'bg-[#627bcd]' : 'bg-[#8c9db6] cursor-pointer'" @click="clickTab(2)">HOME</div>
+        <div class="div-2" :class="props.selectedIdx === 3 ? 'bg-[#627bcd]' : 'bg-[#8c9db6] cursor-pointer'" @click="clickTab(3)">AWAY</div>
     </div>
 </template>
 

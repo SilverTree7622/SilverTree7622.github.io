@@ -14,12 +14,8 @@ export const useGoStore = defineStore('goStore', () => {
         }
     };
 
-    const go_league = (loc?: string) => {
-        if (loc === 'home'){
-            navigateTo('/League?id=stats');
-        } else{
-            navigateTo('/League?id=stats');
-        }
+    const go_league = (leagueId: string) => {
+        navigateTo(`/League?id=${ leagueId }`);
     };
     
     const go_livetraker = (match_id: string, sportSection: TCommonSportSection, schedule: TSportScheduleTypes) => {

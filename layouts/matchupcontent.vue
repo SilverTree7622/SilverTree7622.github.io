@@ -128,6 +128,7 @@ const clickTabOdds = (idx: number) => {
 const updateInfo = () => {
     // set matchup info config
     const matchUpConfig = matchUpStore.getConfig();
+    info.sportSection = matchUpConfig.sportSection;
     info.match_id = (route.query["uuid"] as string) ?? matchUpConfig.match_id;
     info.matchStatus = matchUpConfig.matchStatus;
     info.leagueName = matchUpConfig.leagueName;
@@ -141,10 +142,6 @@ const updateInfo = () => {
     info.awayScore = matchUpConfig.awayScore;
     info.awayTeamId = matchUpConfig.awayTeamId;
 };
-
-onBeforeUnmount(async () => {
-
-});
 
 onMounted(async () => {
     await nextTick();

@@ -27,7 +27,8 @@ export const useDateStore = defineStore('dateStore', () => {
         return month + '/' + day + '/' + year;
     };
 
-    const getLeagueFormat = (time: Date, isShowInDetail: boolean = true) => {
+    const getLeagueFormat = (timestamp: number, isShowInDetail: boolean = true) => {
+        const time = UtilDate.addMillisecond(timestamp);
         const year = time.getFullYear();
         const month = (time.getMonth() + 1).toString().length === 1 ? `0${ time.getMonth() + 1 }` : (time.getMonth() + 1);
         const day = time.getDate().toString().length === 1 ? `0${ time.getDate() }` : time.getDate();
