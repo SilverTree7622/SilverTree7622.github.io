@@ -33,7 +33,7 @@ export const useLeagueStore = defineStore('leagueStore', () => {
             'LeagueMatchUp',
             { method: 'POST', },
             {
-                leagueId: config.leagueId,
+                competitionid: config.leagueId,
                 sports: GetSportSectionUpperCase(config.sportSection),
             },
         );
@@ -48,7 +48,7 @@ export const useLeagueStore = defineStore('leagueStore', () => {
             'LeagueTable',
             { method: 'POST', },
             {
-                id: config.leagueId,
+                competitionid: config.leagueId,
                 sports: GetSportSectionUpperCase(config.sportSection),
             },
         );
