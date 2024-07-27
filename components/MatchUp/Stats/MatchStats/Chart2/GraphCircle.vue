@@ -5,7 +5,7 @@
                 <div class="number">
                     {{ getPercentage(props.home) }}
                 </div>
-                <div class="number-1">
+                <div class="text-[#031b57]">
                     {{ getPercentage(props.away) }}
                 </div>
             </div>

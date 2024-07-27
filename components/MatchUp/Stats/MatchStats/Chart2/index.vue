@@ -1,7 +1,7 @@
 <template>
     <div class="container-center-horizontal">
         <div class="statchart2 screen w-full">
-            <div class="match_-stats_chart2 w-full">
+            <div class="bg-[--bggray] w-full h-full pt-6 pb-12">
                 <div class="frame-432">
                     <MatchUpStatsMatchStatsChart2GraphCircle
                         :title="'Attacks'"
@@ -22,7 +22,7 @@
                         :middleType="'ball_possession'"
                     />
                 </div>
-                <div class="frame-434">
+                <div class="w-full flex flex-row items-center justify-center mt-10">
                     <MatchUpStatsMatchStatsChart2Cards
                         :corner="cardConfig.corner.home"
                         :redCard="cardConfig.redCard.home"
