@@ -52,6 +52,7 @@
                 <div class="table-8 table-9">
                     <template v-for="(item, idx) in filterOpt.selectedList">
                         <CommonContentHeadDate
+                            :season="item[9][0]"
                             :id="item[1]"
                             :idx="idx"
                             :title="getLeagueTitle(item)"

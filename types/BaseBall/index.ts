@@ -59,6 +59,9 @@ export const isResult = (ai_status_id: number): boolean => {
 };
 
 export const getScore = (prefix: TContentStoreHomeAwayPrefix, schedule: TBaseBallSchedule): number => {
+    // if (typeof schedule['ai_scores'] === 'string') {
+    //     return Number(schedule['ai_scores'])[0];
+    // }
     return schedule['ai_scores']['ft'][ prefix === 'home' ? 0 : 1 ];
 };
 

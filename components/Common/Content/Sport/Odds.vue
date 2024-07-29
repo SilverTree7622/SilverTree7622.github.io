@@ -1,5 +1,6 @@
 <template>
     <CommonContentHeadDate
+        :season="props.league.ai_season_id"
         :id="props.league.ai_competition_id"
         :idx="props.idx"
         :title="contentStore.getLeagueName(props.league)"

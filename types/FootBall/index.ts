@@ -29,6 +29,9 @@ export const getScore = (prefix: TContentStoreHomeAwayPrefix, schedule: TFootBal
     // ISSUE: WITH SCORE VISE VERSA
     // if (prefix === 'home') prefix = 'away';
     // if (prefix === 'away') prefix = 'home';
+    if (typeof getScoreList(prefix, schedule) === 'string') {
+        return JSON.parse(getScoreList(prefix, schedule) as any)[0];
+    }
     return getScoreList(prefix, schedule)[0];
 };
 

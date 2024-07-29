@@ -11,11 +11,11 @@
                 <h1 class="title leaguetitle">
                     {{ opt.title }}
                 </h1>
-                <div class="flex-row">
+                <div class="flex-row mt-4">
                     <div>
                         <img class="flag_-circle_eng" :src="opt.flag" />
                     </div>
-                    <p class="surname body">{{ `${ opt.country } / ${ opt.level } / ${ opt.bet }` }}</p>
+                    <p class="surname body">{{ `${ opt.country }` }}</p>
                 </div>
             </div>
             <CommonFavoriteStar
@@ -26,24 +26,13 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
-    title: string;
-    flag: string;
-    country: string;
-    level: string;
-    bet: string;
-    isStarToggled: boolean;
-}>();
-
 const opt = reactive({
     logo: <string> '',
     title: <string> '',
     flag: <string> '',
     country: <string> '',
-    level: <string> '',
-    bet: <string> '',
     isFavorite: <boolean> false,
-})
+});
 
 const leagueStore = useLeagueStore();
 
@@ -52,15 +41,12 @@ onMounted(async () => {
     const {
         leagueLogo, leagueTitle,
         countryLogo, countryName,
-        level, bet,
         isFavorite,
     } = leagueStore.getHeaderConfig();
     opt.logo = leagueLogo;
     opt.title = leagueTitle;
     opt.flag = countryLogo;
     opt.country = countryName;
-    opt.level = level;
-    opt.bet = bet;
     opt.isFavorite = isFavorite;
 });
 </script>

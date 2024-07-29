@@ -28,6 +28,9 @@ export const isResult = (ai_status_id: number): boolean => {
 };
 
 export const getScore = (prefix: TContentStoreHomeAwayPrefix, schedule: TBasketBallSchedule): number => {
+    if (typeof getScoreList(prefix, schedule) === 'string') {
+        return JSON.parse(getScoreList(prefix, schedule) as any)[0];
+    }
     return getScoreList(prefix, schedule)[0];
 };
 

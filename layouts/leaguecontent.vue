@@ -6,12 +6,6 @@
         
         <CommonHeaderLeague
             v-if="!props.isPending"
-            :title="'Premier League'"
-            :flag="'/img/flag-circle-eng@2x.png'"
-            :country="'England'"
-            :level="'Division Level 1'"
-            :bet="'11.1 B€'"
-            :isStarToggled="false"
         />
 
         <CommonHeaderTabLeague
@@ -26,12 +20,14 @@
         />
         
         <!-- init content loading skeletons -->
-        <LoadingSkeleton v-show="props.isPending" />
-        <LoadingSkeleton v-show="props.isPending" />
-        <LoadingSkeleton v-show="props.isPending" />
+        <div class="mt-10">
+            <LoadingSkeleton v-show="props.isPending" />
+            <LoadingSkeleton v-show="props.isPending" />
+            <LoadingSkeleton v-show="props.isPending" />
+        </div>
 
         <div class="">
-            <slot v-if="!props.isPending"></slot>
+            <slot></slot>
             <!-- center content loading -->
             <div v-show="props.contentIsPending" class="mt-10">
                 <LoadingSkeleton />
@@ -75,6 +71,7 @@ const opt = reactive({
     tab: <string> props.tab,
 });
 
+const leagueStore = useLeagueStore();
 const route = useRoute();
 
 // tab changed
@@ -92,6 +89,5 @@ const clickTab = (idx: number) => {
 
 onMounted(async () => {
     await nextTick();
-
 });
 </script>

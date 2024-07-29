@@ -1,7 +1,13 @@
 <template>
     <div class="contents_-football">
         <template v-for="(league, idx) of props.result_league">
-            <CommonContentLeagueOdds :idx="idx" :date="league.date" :isLast="chckIsLast(idx)" />
+            <CommonContentLeagueOdds
+                :season="chckIsSeasonId()"
+                :id="chckIsLeagueId()"
+                :idx="idx"
+                :date="league.date"
+                :isLast="chckIsLast(idx)"
+            />
         </template>
     </div>
 </template>
@@ -12,8 +18,18 @@ const props = defineProps<{
     result_league;
 }>();
 
+const route = useRoute();
+
 const chckIsLast = (idx: number) => {
     return idx === (props.result_league.length - 1);
+};
+
+const chckIsLeagueId = () => {
+    return route.query['id'] as string;
+};
+
+const chckIsSeasonId = () => {
+    return route.query['season'] as string;
 };
 
 </script>

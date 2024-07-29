@@ -1,9 +1,10 @@
 <template>
     <div class="frame-317" :class="props.isLast ? 'rounded-b-lg' : 'rounded-t-lg'">
         <CommonContentHeadDate
-            :id="''"
+            :season="props.season"
+            :id="props.id"
             :idx="props.idx"
-            :title="dateStore.getLeagueFormat(props.date, false)"
+            :title="dateStore.getLeagueFormat(props.date.getTime(), false)"
         />
         <div class="live_-match">
             <CommonContentCountry :title="'ASTON VILLA'" :src="'/img/astonvilla@2x.png'" />
@@ -24,6 +25,8 @@
 
 <script setup lang="ts">
 const props = defineProps<{
+    season: string;
+    id: string;
     idx: number;
     date: Date;
     isLast?: boolean;
