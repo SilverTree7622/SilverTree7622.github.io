@@ -4,8 +4,8 @@
         :season="props.league.ai_season_id"
         :id="props.league.ai_competition_id"
         :idx="props.idx"
-        :title="''"
-        :hasLeagueTag="contentStore.setLeagueGroup(props.league)"
+        :title="leagueStore.getTimeTitle(props.league)"
+        :hasLeagueTag="leagueStore.hasTimeTag(props.league)"
         :src="contentStore.getLeagueFlag(props.league)"
         :alt="contentStore.getLeagueAlt(props.league)"
     />
@@ -117,6 +117,7 @@ const props = defineProps<{
 }>();
 
 const goStore = useGoStore();
+const leagueStore = useLeagueStore();
 const contentStore = useContentStore();
 const slots = useSlots();
 
@@ -141,10 +142,6 @@ const getIsToday = () => {
         UtilDate.addMillisecond(props.league.ai_match_time)
     );
     return isToday;
-};
-
-const hasTimeTag = () => {
-    
 };
 
 onMounted(async () => {

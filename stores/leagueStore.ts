@@ -104,6 +104,14 @@ export const useLeagueStore = defineStore('leagueStore', () => {
         if (value.pageIsOutOfContent !== undefined) opt.pageIsOutOfContent = value.pageIsOutOfContent;
     };
 
+    const hasTimeTag = (schedule: TCommonSchedule): boolean => {
+        return true;
+    };
+
+    const getTimeTitle = (schedule: TCommonSchedule): string => {
+        return '';
+    };
+
     const getHeaderConfig = () => { return headerConfig; };
 
     const getMatchUpConfig = () => { return matchUpConfig; };
@@ -114,9 +122,9 @@ export const useLeagueStore = defineStore('leagueStore', () => {
 
     const getTableConfig = () => { return tableConfig; };
 
-    const getMatchUpType = (league: TCommonSchedule): 'result' | 'fixtures' => {
-        if (isResult(config.sportSection, league.ai_status_id)) return 'result';
-        if (isFixtures(league.ai_status_id)) return 'fixtures';
+    const getMatchUpType = (schedule: TCommonSchedule): 'result' | 'fixtures' => {
+        if (isResult(config.sportSection, schedule.ai_status_id)) return 'result';
+        if (isFixtures(schedule.ai_status_id)) return 'fixtures';
         return 'result';
     };
 
@@ -125,6 +133,8 @@ export const useLeagueStore = defineStore('leagueStore', () => {
         onMountedMatchUp,
         onMountedTable,
         setOpt,
+        getTimeTitle,
+        hasTimeTag,
         getHeaderConfig,
         getMatchUpConfig,
         getConfig,
