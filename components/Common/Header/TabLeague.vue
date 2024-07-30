@@ -25,12 +25,12 @@
             :isToggled="props.tab === 'result'"
             :customHeading="getCustomHeading('result')"
         />
-        <CommonHeaderTabCommon
+        <!-- <CommonHeaderTabCommon
             :sName="props.sName"
             name="players"
             :isToggled="props.tab === 'players'"
             :customHeading="getCustomHeading('players')"
-        />
+        /> -->
     </div>
 </template>
 

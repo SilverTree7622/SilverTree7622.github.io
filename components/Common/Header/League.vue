@@ -16,6 +16,10 @@
                         <img class="flag_-circle_eng" :src="opt.flag" />
                     </div>
                     <p class="surname body">{{ `${ opt.country }` }}</p>
+                    <CommonSelectorSeason
+                        v-if="leagueStore.getHeaderConfig().seasonList.length"
+                        ref="$selectorSeason"
+                    />
                 </div>
             </div>
             <CommonFavoriteStar
@@ -34,7 +38,10 @@ const opt = reactive({
     isFavorite: <boolean> false,
 });
 
+const selectorStore = useSelectorStore();
 const leagueStore = useLeagueStore();
+
+const $selectorSeason = ref();
 
 onMounted(async () => {
     await nextTick();
@@ -42,12 +49,16 @@ onMounted(async () => {
         leagueLogo, leagueTitle,
         countryLogo, countryName,
         isFavorite,
+        seasonList,
     } = leagueStore.getHeaderConfig();
     opt.logo = leagueLogo;
     opt.title = leagueTitle;
     opt.flag = countryLogo;
     opt.country = countryName;
     opt.isFavorite = isFavorite;
+    if (!$selectorSeason.value) return;
+    selectorStore.onMountedSeason(seasonList);
+    
 });
 </script>
 

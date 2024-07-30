@@ -15,10 +15,10 @@
         <LeagueTableMain
             v-if="opt.tab == 'table'"
         />
-        <!-- <LeagueOddsMain
+        <LeagueOddsMain
             v-if="opt.tab == 'odds'"
-            :result_league="list.sortedLeagueList"
-        /> -->
+            :result_league="[]"
+        />
         <LeagueResultMain
             v-if="opt.tab == 'result'"
         />

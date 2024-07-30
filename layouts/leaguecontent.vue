@@ -21,7 +21,7 @@
         />
         
         <!-- init content loading skeletons -->
-        <div class="mt-10">
+        <div v-show="props.isPending" class="mt-10">
             <LoadingSkeleton v-show="props.isPending" />
             <LoadingSkeleton v-show="props.isPending" />
             <LoadingSkeleton v-show="props.isPending" />

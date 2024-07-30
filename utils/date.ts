@@ -26,6 +26,10 @@ const UtilDate = {
         return UtilDate.chckSameDay(d, new Date(Date.now()));
     },
 
+    chckYearIsSame: (year: string | number): boolean => {
+        return new Date(Date.now()).getUTCFullYear() === Number(year);
+    },
+
     chckIsYesterday: (d: Date): boolean => {
         const isToday = UtilDate.chckDateIsToday(d);
         if (isToday) {

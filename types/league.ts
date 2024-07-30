@@ -6,6 +6,7 @@ export type TLeagueStoreConfig = {
     leagueTitle: string;
     countryLogo: string;
     countryName: string;
+    seasonList: TLeagueTableSeason[];
     isFavorite: boolean;
 };
 
@@ -13,12 +14,13 @@ export type TLeagueMatchUpRes = {
     data: TLeagueMatchUpResData;
     matchup: TCommonSchedule[];
     nav_code: string;
+    season: TLeagueTableSeason[];
     result: number;
 };
 
 export type TLeagueTableRes = {
     data: TLeagueMatchUpResData;
-    season: TLeagueTablePlayer[];
+    season: TLeagueTableSeason[];
     table: {
         promotions: TLeagueTablePromotion[];
         tables: TLeagueTableTable[];
@@ -26,7 +28,7 @@ export type TLeagueTableRes = {
     result: number;
 };
 
-export type TLeagueTablePlayer = {
+export type TLeagueTableSeason = {
     "ai_competition_id": string;
     "ai_end_time": number;
     "ai_has_player_stats": number;

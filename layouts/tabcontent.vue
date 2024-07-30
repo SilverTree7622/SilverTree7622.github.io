@@ -241,7 +241,7 @@ const update = async () => {
 const updateCarouselList = async () => {
     carouselOpt.list = [];
     await nextTick();
-    const prevList: TSportScheduleTypes[] = props.pagedList.filter( sortedItem => sortedItem.topscore_id > 0 );
+    const prevList: TSportScheduleTypes[] = props.pagedList.filter( sortedItem => (sortedItem['topscore_id'] ?? 0) > 0 );
     if (prevList.length > MAX_SHOW_CAROUSEL_CNT) {
         prevList.sort((a, b) => new Date(a.ai_match_time).getTime() - new Date(b.ai_match_time).getTime() );
         carouselOpt.list = [];

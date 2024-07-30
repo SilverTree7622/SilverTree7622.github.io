@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { isFixtures, isFixturesAdvanced, isLive, isResult } from "~/types";
 import type { TCommonSchedule } from "~/types/Common/schedule";
 import { GetSportSectionUpperCase, type TCommonSportSection } from "~/types/Common/sport";
-import { type TLeagueTableRes, type TLeagueMatchUpRes, type TLeagueStoreConfig, type TLeagueTableTableRow } from "~/types/league";
+import { type TLeagueTableRes, type TLeagueMatchUpRes, type TLeagueStoreConfig, type TLeagueTableTableRow, type TLeagueTableSeason } from "~/types/league";
 import UtilDate from "~/utils/date";
 import UtilObj from "~/utils/obj";
 
@@ -25,6 +25,7 @@ export const useLeagueStore = defineStore('leagueStore', () => {
         leagueTitle: <string> '',
         countryLogo: <string> '',
         countryName: <string> '',
+        seasonList: <TLeagueTableSeason[]> [],
         isFavorite: <boolean> false,
     });
 
@@ -44,11 +45,18 @@ export const useLeagueStore = defineStore('leagueStore', () => {
         league: <TH2hLeaugeRes[]> [],
     });
 
-    const onMountedHeader = (data: TLeagueMatchUpRes['data']) => {
-        headerConfig.leagueLogo = data.competition_logo;
-        headerConfig.leagueTitle = data.competition_name;
-        headerConfig.countryLogo = data.catetory_logo;
-        headerConfig.countryName = data.category_name;
+    const onMountedHeader = (data: TLeagueMatchUpRes) => {
+        const {
+            competition_logo,
+            competition_name,
+            catetory_logo,
+            category_name,
+        } = data['data'];
+        headerConfig.leagueLogo = competition_logo;
+        headerConfig.leagueTitle = competition_name;
+        headerConfig.countryLogo = catetory_logo;
+        headerConfig.countryName = category_name;
+        headerConfig.seasonList = data.season;
     };
 
     const onMountedMatchUp = async (
@@ -64,14 +72,15 @@ export const useLeagueStore = defineStore('leagueStore', () => {
             {
                 competitionid: config.leagueId,
                 sports: GetSportSectionUpperCase(config.sportSection),
+                seasonid: config.seasonId,
             },
         );
         const data: TLeagueMatchUpRes | {} = (res.data as any)['data'] ?? {};
         if (UtilObj.chckIsEmpty(data)) {
             return;
         }
-        if (data['data'] !== null) {
-            onMountedHeader(data['data']);
+        if (data !== null) {
+            onMountedHeader(data as TLeagueMatchUpRes);
         }
         if (data['matchup']) {
             matchUpConfig.list = data['matchup'];
@@ -98,8 +107,8 @@ export const useLeagueStore = defineStore('leagueStore', () => {
         );
         const data: TLeagueTableRes | {} = (res.data as any)['data'] ?? {};
         console.log('data from table mount: ', data);
-        if (data['data'] !== null) {
-            onMountedHeader(data['data']);
+        if (data !== null) {
+            onMountedHeader(data as TLeagueMatchUpRes);
         }
         if (data['season']) {
             // tableConfig.
