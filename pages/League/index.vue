@@ -18,11 +18,10 @@
         <!-- <LeagueOddsMain
             v-if="opt.tab == 'odds'"
             :result_league="list.sortedLeagueList"
-        />
+        /> -->
         <LeagueResultMain
             v-if="opt.tab == 'result'"
-            :result_league="list.sortedLeagueList"
-        /> -->
+        />
         <LeaguePlayersMain
             v-if="opt.tab == 'players'"
         />

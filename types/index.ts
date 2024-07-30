@@ -15,6 +15,7 @@ import type { TBaseBallSchedule } from './BaseBall/schedule';
 import type { TVolleyBallSchedule } from './VolleyBall/schedule';
 import type { TTennisSchedule } from './Tennis/schedule';
 import type { TIceHockeySchedule } from './IceHockey/schedule';
+import UtilDate from '~/utils/date';
 
 // export enum EError {
 //     SUCCESS = { code: 0, type: null, title: '', message: '', },
@@ -78,11 +79,28 @@ export const isLive = (sportSection: TCommonSportSection, ai_status_id: number):
     return false;
 };
 
-export const isFixtures = (ai_status_id: number): boolean => {
-    return (
-        ai_status_id === 0 ||
-        ai_status_id === 1
-    );
+export const isFixtures = (sportSection: TCommonSportSection, ai_status_id: number): boolean => {
+    if (isLive(sportSection, ai_status_id)) {
+        return false;
+    }
+    if (isResult(sportSection, ai_status_id)) {
+        return false;
+    }
+    return true;
+};
+
+export const isFixturesAdvanced = (sportSection: TCommonSportSection, schedule: TCommonSchedule): boolean => {
+    const { ai_status_id, ai_match_time, } = schedule;
+    if (isLive(sportSection, ai_status_id)) {
+        return false;
+    }
+    if (isResult(sportSection, ai_status_id)) {
+        return false;
+    }
+    if (ai_status_id === 1) {
+        return new Date(Date.now()) < UtilDate.addMillisecond(ai_match_time);
+    }
+    return true;
 };
 
 export const isResult = (sportSection: TCommonSportSection, ai_status_id: number): boolean => {

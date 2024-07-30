@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { isFixtures, isLive, isResult } from "~/types";
+import { isFixtures, isFixturesAdvanced, isLive, isResult } from "~/types";
 import type { TCommonSchedule } from "~/types/Common/schedule";
 import { GetSportSectionUpperCase, type TCommonSportSection } from "~/types/Common/sport";
 import type { TLeagueMatchUpRes, TLeagueStoreConfig } from "~/types/league";
@@ -99,9 +99,7 @@ export const useLeagueStore = defineStore('leagueStore', () => {
         if (data['data'] !== null) {
             onMountedHeader(data.data);
         }
-        if (data.matchup) {
-            // tableConfig.list = data.matchup;
-        }
+        
         callback();
         opt.isPending = false;
     };
@@ -150,9 +148,16 @@ export const useLeagueStore = defineStore('leagueStore', () => {
         return finalList;
     };
 
+    const filterResult = (matchUpList: TCommonSchedule[]): TCommonSchedule[] => {
+        const finalList = matchUpList.filter((item) => {
+            return isResult(config.sportSection, item.ai_status_id);
+        });
+        return filterMatchUp(finalList);
+    };
+
     const getTimeTitle = (schedule: TCommonSchedule): string => {
         const time = UtilDate.addMillisecond(schedule.ai_match_time);
-        const month = time.getUTCMonth();
+        const month = time.getUTCMonth() + 1;
         const resultMonth = JSON.stringify(month).length === 1 ? `0${ month }` : month;
         const day = time.getUTCDate();
         const resultDay = JSON.stringify(day).length === 1 ? `0${ day }` : day;
@@ -223,8 +228,11 @@ export const useLeagueStore = defineStore('leagueStore', () => {
     const getTableConfig = () => { return tableConfig; };
 
     const getMatchUpType = (schedule: TCommonSchedule): 'result' | 'fixtures' => {
-        if (isResult(config.sportSection, schedule.ai_status_id)) return 'result';
-        if (isFixtures(schedule.ai_status_id)) return 'fixtures';
+        if (isFixturesAdvanced(config.sportSection, schedule)) {
+            return 'fixtures';
+        }
+        const { ai_status_id, } = schedule;
+        if (isResult(config.sportSection, ai_status_id)) return 'result';
         return 'result';
     };
 
@@ -234,6 +242,7 @@ export const useLeagueStore = defineStore('leagueStore', () => {
         onMountedTable,
         setOpt,
         filterMatchUp,
+        filterResult,
         getTimeTitle,
         mountTeam,
         mountLeague,

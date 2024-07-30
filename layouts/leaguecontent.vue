@@ -9,6 +9,7 @@
         />
 
         <CommonHeaderTabLeague
+            v-if="!props.isPending"
             :sName="'League'"
             :tab="props.tab"
         />

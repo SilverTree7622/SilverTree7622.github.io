@@ -251,7 +251,7 @@ const getLeagueLogo = (item: TMatchUpTeamInfo): string => {
 const getTime = (item: TMatchUpTeamInfo): string => {
     const date = UtilDate.addMillisecond(item[3]);
     const day = date.getUTCDate();
-    const month = date.getUTCMonth();
+    const month = date.getUTCMonth() + 1;
     return `${ day } ${ UtilDate.changeMonthNum2Str(month) }`;
 };
 

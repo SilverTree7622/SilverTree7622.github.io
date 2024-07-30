@@ -4,7 +4,7 @@
             <template v-for="(league, idx) in list.sortedList">
                 <CommonContentLeagueMatchUp
                     :idx="idx"
-                    :sportSection="'basketball'"
+                    :sportSection="leagueStore.getConfig().sportSection"
                     :league="league"
                     :type="leagueStore.getMatchUpType(league)"
                     :hasLeagueTag="league.hasLeagueTag ?? false"
@@ -15,19 +15,13 @@
 </template>
 
 <script setup lang="ts">
-import type { TCommonSchedule } from '~/types/Common/schedule';
 import type { TLeagueMatchUpRes } from '~/types/league';
-import UtilDate from '~/utils/date';
 
 const {
-    ONE_DAY_MILLISECOND,
     MAX_PAGINATION_CONTENT,
 } = useRuntimeConfig().public.CONSTANTS;
 const leagueStore = useLeagueStore();
-const filterStore = useFilterStore();
-const dateStore = useDateStore();
 const scrollStore = useScrollStore();
-const route = useRoute();
 
 const scroll = reactive({
     key: <string> 'tab',
