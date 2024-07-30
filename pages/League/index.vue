@@ -6,6 +6,7 @@
         :isOutOfContent="leagueStore.getOpt().pageIsOutOfContent"
         :sName="'League'"
         :tab="opt.tab"
+        :changeTab="changeTab"
         :result="opt.result"
     >
         <LeagueMatchUpMain
@@ -46,6 +47,10 @@ const opt = reactive({
     },
     isOutOfContent: scrollStore.getIsOutOfContent(scroll.key) ?? false,
 });
+
+const changeTab = () => {
+    opt.tab = route.query['tab'] as string;
+};
 
 onMounted(async () => {
     await nextTick();

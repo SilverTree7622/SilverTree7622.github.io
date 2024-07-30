@@ -38,6 +38,11 @@ export const useLeagueStore = defineStore('leagueStore', () => {
         leagueId: <string> '',
         sportSection: <TCommonSportSection> 'football',
     });
+    
+    const resourceListConfig = reactive({
+        team: <TH2hTeamRes[]> [],
+        league: <TH2hLeaugeRes[]> [],
+    });
 
     const onMountedHeader = (data: TLeagueMatchUpRes['data']) => {
         headerConfig.leagueLogo = data.competition_logo;
@@ -68,7 +73,6 @@ export const useLeagueStore = defineStore('leagueStore', () => {
         }
         if (data.matchup) {
             matchUpConfig.list = data.matchup;
-            // navigateTo(`/${ config.sportSection }`);
         }
         callback();
         opt.isPending = false;
@@ -90,7 +94,12 @@ export const useLeagueStore = defineStore('leagueStore', () => {
         );
         const data = (res.data as any)['data'] ?? {};
         console.log('data from table mount: ', data);
-        tableConfig
+        if (data['data'] !== null) {
+            onMountedHeader(data.data);
+        }
+        if (data.matchup) {
+            // tableConfig.list = data.matchup;
+        }
         callback();
         opt.isPending = false;
     };
@@ -147,6 +156,50 @@ export const useLeagueStore = defineStore('leagueStore', () => {
         const resultDay = JSON.stringify(day).length === 1 ? `0${ day }` : day;
         const year = time.getUTCFullYear();
         return `${ resultMonth }/${ resultDay }/${ year }`;
+    };
+    
+    const mountTeam = async (teamid: string[]) => {
+        try {
+            const res = await useApiFetch(
+                `GetTeam`,
+                { method: 'POST', },
+                {
+                    teamid,
+                    sports: GetSportSectionUpperCase(config.sportSection),
+                }
+            );
+            const data = (res.data as any)['data'] ?? {};
+            const prevList = [
+                ...data['data'],
+                ...resourceListConfig.team,
+            ];
+            resourceListConfig.team = [ ...new Set(prevList) ];
+        }
+        catch (e) {
+            console.warn('e from get team api: ', e);
+        }
+    };
+
+    const mountLeague = async (leagueid: string[]) => {
+        try {
+            const res = await useApiFetch(
+                `GetCompetition`,
+                { method: 'POST', },
+                {
+                    competitionid: leagueid,
+                    sports: GetSportSectionUpperCase(config.sportSection),
+                }
+            );
+            const data = (res.data as any)['data'] ?? {};
+            const prevList = [
+                ...data['data'],
+                ...resourceListConfig.league,
+            ];
+            resourceListConfig.league = [ ...new Set(prevList) ];
+        }
+        catch (e) {
+            console.warn('e from get league api: ', e);
+        }
     };
 
     const getHeaderConfig = () => { return headerConfig; };

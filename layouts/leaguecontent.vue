@@ -10,7 +10,7 @@
 
         <CommonHeaderTabLeague
             :sName="'League'"
-            :tab="opt.tab"
+            :tab="props.tab"
         />
 
         <CommonHeaderSubTabLeagueTable
@@ -59,6 +59,7 @@ const props = defineProps<{
     isOutOfContent: boolean;
     sName: string;
     tab: string;
+    changeTab: () => Promise<void>;
     result: any;
 }>();
 
@@ -68,17 +69,16 @@ const emit = defineEmits<{
 
 const opt = reactive({
     selectedIdx: <number> 0,
-    tab: <string> props.tab,
 });
 
 const leagueStore = useLeagueStore();
 const route = useRoute();
 
-// tab changed
+// watch tab changed
 watch(
     () => route.fullPath,
     async (p) => {
-        opt.tab = route.query['tab'] as string;
+        await props.changeTab();
     }
 );
 

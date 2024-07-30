@@ -1650,7 +1650,19 @@
 </template>
 
 <script setup lang="ts">
+const leagueStore = useLeagueStore();
 
+const opt = reactive({
+    isPending: <boolean> true,
+});
+
+onMounted(async () => {
+    opt.isPending = true;
+    await nextTick();
+    await leagueStore.onMountedTable(() => {
+        opt.isPending = false;
+    });
+});
 </script>
 
 <style scoped>
