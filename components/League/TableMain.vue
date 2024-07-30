@@ -1,1041 +1,129 @@
 <template>
-    <div class="contents_-football_-live-Mzx5SR" id="contents_-football_-live">
-        <!-- <div class="frmu95mobileu95league w-full">
+    <div v-if="!opt.isPending" class="contents_-football_-live-Mzx5SR" id="contents_-football_-live">
+        <div class="frmu95mobileu95league w-full">
             <div class="contents_-football">
                 <div class="frame-315">
-                    <div class="frame-402">
-                        <article class="btn_-round-square5-1 btn_-round-square5-3">
-                            <div class="overlap-group-3">
-                                <div class="text-13 body2">ALL</div>
-                            </div>
-                        </article>
-                        <article class="btn_-round-square5-2 btn_-round-square5-3">
-                            <div class="overlap-group1-1">
-                                <div class="text-14 body2">TOP SCORER</div>
-                            </div>
-                        </article>
-                        <article class="btn_-round-square5">
-                            <div class="overlap-group2">
-                                <div class="text-15 body2">HOME</div>
-                            </div>
-                        </article>
-                        <article class="btn_-round-square5">
-                            <div class="overlap-group3">
-                                <div class="text-16 body2">AWAY</div>
-                            </div>
-                        </article>
-                    </div>
-                </div>
-                <div class="table-1 table-3">
                     <article class="row row-43">
-                        <div class="cell cell-24">
+                        <div class="cell cell-24 !bg-transparent">
                             <div class="content-11">
                                 <div class="h valign-text-middle h-8 body2">#</div>
                             </div>
                         </div>
-                        <div class="cell-1 cell-24">
+                        <div class="cell-1 cell-24 !bg-transparent">
                             <div class="content-12">
-                                <div class="h-1 valign-text-middle h-8 body2">TEAM</div>
+                                <div class="valign-text-middle h-8 body2">TEAM</div>
                             </div>
                         </div>
-                        <div class="cell-2 cell-24">
+                        <div class="cell-2 cell-24 !bg-transparent">
                             <div class="content">
-                                <div class="h-2 valign-text-middle h-8 body2">P</div>
+                                <div class="valign-text-middle h-8 body2">P</div>
                             </div>
                         </div>
-                        <div class="cell-3 cell-24">
+                        <div class="cell-3 cell-24 !bg-transparent">
                             <div class="content-13">
                                 <div class="a valign-text-middle a-104 body2">W</div>
                             </div>
                         </div>
-                        <div class="cell-2 cell-24">
+                        <div class="cell-2 cell-24 !bg-transparent">
                             <div class="content">
-                                <div class="h-3 valign-text-middle h-8 body2">D</div>
+                                <div class="valign-text-middle h-8 body2">D</div>
                             </div>
                         </div>
-                        <div class="cell-2 cell-24">
+                        <div class="cell-2 cell-24 !bg-transparent">
                             <div class="content">
-                                <div class="h-4 valign-text-middle h-8 body2">L</div>
+                                <div class="valign-text-middle h-8 body2">L</div>
                             </div>
                         </div>
-                        <div class="cell-3 cell-24">
+                        <div class="cell-3 cell-24 !bg-transparent">
                             <div class="content">
-                                <div class="h-5 valign-text-middle h-8 body2">GOALS</div>
+                                <div class="valign-text-middle h-8 body2">GOALS</div>
                             </div>
                         </div>
-                        <div class="cell-3 cell-24">
+                        <div class="cell-3 cell-24 !bg-transparent">
                             <div class="content-14">
-                                <div class="h-6 valign-text-middle h-8 body2">±</div>
+                                <div class="valign-text-middle h-8 body2">±</div>
                             </div>
                         </div>
-                        <div class="cell-3 cell-24">
+                        <div class="cell-3 cell-24 !bg-transparent">
                             <div class="content">
-                                <div class="h-7 valign-text-middle h-8 body2">PTS</div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="table-1-item">
-                        <div class="cell cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">1</div>
-                            </div>
-                        </div>
-                        <div class="cell-4 cell-24">
-                            <div class="content-2">
-                                <div class="arsenal-3"></div>
-                                <div class="b valign-text-middle b-20 body">Arsenal</div>
-                            </div>
-                        </div>
-                        <div class="cell-17 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">31</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">22</div>
-                            </div>
-                        </div>
-                        <div class="cell-6 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">5</div>
-                            </div>
-                        </div>
-                        <div class="cell-7 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">4</div>
-                            </div>
-                        </div>
-                        <div class="cell-8 cell-24">
-                            <div class="content-1">
-                                <div class="text-2-1 valign-text-middle body2">75-74</div>
-                            </div>
-                        </div>
-                        <div class="cell-18 cell-24">
-                            <div class="content-1">
-                                <div class="x75-74 valign-text-middle body2">+51</div>
-                            </div>
-                        </div>
-                        <div class="cell-9 cell-24">
-                            <div class="content-1">
-                                <div class="number valign-text-middle number-43 headline3">71</div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="table-1-item">
-                        <div class="cell cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">2</div>
-                            </div>
-                        </div>
-                        <div class="cell-4 cell-24">
-                            <div class="content-2">
-                                <div class="manchester-city-4"></div>
-                                <div class="b-1 valign-text-middle b-20 body">Manchester City</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">31</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">22</div>
-                            </div>
-                        </div>
-                        <div class="cell-6 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">5</div>
-                            </div>
-                        </div>
-                        <div class="cell-7 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">4</div>
-                            </div>
-                        </div>
-                        <div class="cell-8 cell-24">
-                            <div class="content-1">
-                                <div class="text-3-1 valign-text-middle body2">75-74</div>
-                            </div>
-                        </div>
-                        <div class="cell-10 cell-24">
-                            <div class="content-1">
-                                <div class="x75-74-18 valign-text-middle body2">+51</div>
-                            </div>
-                        </div>
-                        <div class="cell-9 cell-24">
-                            <div class="content-1">
-                                <div class="number valign-text-middle number-43 headline3">71</div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="table-1-item">
-                        <div class="cell cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">3</div>
-                            </div>
-                        </div>
-                        <div class="cell-4 cell-24">
-                            <div class="content-2">
-                                <div class="liverpool-1 liverpool-2"></div>
-                                <div class="b-2 valign-text-middle b-20 body">Liverpool</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">31</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">22</div>
-                            </div>
-                        </div>
-                        <div class="cell-6 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">5</div>
-                            </div>
-                        </div>
-                        <div class="cell-7 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">4</div>
-                            </div>
-                        </div>
-                        <div class="cell-8 cell-24">
-                            <div class="content-1">
-                                <div class="text-4-1 valign-text-middle body2">75-74</div>
-                            </div>
-                        </div>
-                        <div class="cell-10 cell-24">
-                            <div class="content-1">
-                                <div class="x75-74-18 valign-text-middle body2">+51</div>
-                            </div>
-                        </div>
-                        <div class="cell-9 cell-24">
-                            <div class="content-1">
-                                <div class="number valign-text-middle number-43 headline3">71</div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="table-1-item">
-                        <div class="cell cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">4</div>
-                            </div>
-                        </div>
-                        <div class="cell-4 cell-24">
-                            <div class="content-2">
-                                <div class="aston-villa-2 aston-villa-6"></div>
-                                <div class="b-3 valign-text-middle b-20 body">Aston Villa</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">31</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">22</div>
-                            </div>
-                        </div>
-                        <div class="cell-6 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">5</div>
-                            </div>
-                        </div>
-                        <div class="cell-7 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">4</div>
-                            </div>
-                        </div>
-                        <div class="cell-8 cell-24">
-                            <div class="content-1">
-                                <div class="text-5-1 valign-text-middle body2">75-74</div>
-                            </div>
-                        </div>
-                        <div class="cell-10 cell-24">
-                            <div class="content-1">
-                                <div class="x75-74-18 valign-text-middle body2">+51</div>
-                            </div>
-                        </div>
-                        <div class="cell-9 cell-24">
-                            <div class="content-1">
-                                <div class="number valign-text-middle number-43 headline3">71</div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="table-1-item">
-                        <div class="cell cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">5</div>
-                            </div>
-                        </div>
-                        <div class="cell-4 cell-24">
-                            <div class="content-2">
-                                <div class="tottenham-hotspur"></div>
-                                <div class="b-4 valign-text-middle b-20 body">Tottenham Hotspur</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">31</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">22</div>
-                            </div>
-                        </div>
-                        <div class="cell-6 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">5</div>
-                            </div>
-                        </div>
-                        <div class="cell-7 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">4</div>
-                            </div>
-                        </div>
-                        <div class="cell-8 cell-24">
-                            <div class="content-1">
-                                <div class="text-6-1 valign-text-middle body2">75-74</div>
-                            </div>
-                        </div>
-                        <div class="cell-10 cell-24">
-                            <div class="content-1">
-                                <div class="x75-74-18 valign-text-middle body2">+51</div>
-                            </div>
-                        </div>
-                        <div class="cell-9 cell-24">
-                            <div class="content-1">
-                                <div class="number valign-text-middle number-43 headline3">71</div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="table-1-item">
-                        <div class="cell cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">6</div>
-                            </div>
-                        </div>
-                        <div class="cell-4 cell-24">
-                            <div class="content-2">
-                                <div class="manchester-united"></div>
-                                <div class="b-5 valign-text-middle b-20 body">Manchester United</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">31</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">22</div>
-                            </div>
-                        </div>
-                        <div class="cell-6 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">5</div>
-                            </div>
-                        </div>
-                        <div class="cell-7 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">4</div>
-                            </div>
-                        </div>
-                        <div class="cell-8 cell-24">
-                            <div class="content-1">
-                                <div class="text-7-1 valign-text-middle body2">75-74</div>
-                            </div>
-                        </div>
-                        <div class="cell-10 cell-24">
-                            <div class="content-1">
-                                <div class="x75-74-18 valign-text-middle body2">+51</div>
-                            </div>
-                        </div>
-                        <div class="cell-9 cell-24">
-                            <div class="content-1">
-                                <div class="number valign-text-middle number-43 headline3">71</div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="table-1-item">
-                        <div class="cell cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">7</div>
-                            </div>
-                        </div>
-                        <div class="cell-4 cell-24">
-                            <div class="content-2">
-                                <div class="newcastle newcastle-2"></div>
-                                <div class="b-6 valign-text-middle b-20 body">Newcastle</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">31</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">22</div>
-                            </div>
-                        </div>
-                        <div class="cell-6 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">5</div>
-                            </div>
-                        </div>
-                        <div class="cell-7 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">4</div>
-                            </div>
-                        </div>
-                        <div class="cell-8 cell-24">
-                            <div class="content-1">
-                                <div class="text-8-1 valign-text-middle body2">75-74</div>
-                            </div>
-                        </div>
-                        <div class="cell-10 cell-24">
-                            <div class="content-1">
-                                <div class="x75-74-18 valign-text-middle body2">+51</div>
-                            </div>
-                        </div>
-                        <div class="cell-9 cell-24">
-                            <div class="content-1">
-                                <div class="number valign-text-middle number-43 headline3">71</div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="table-1-item">
-                        <div class="cell cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">8</div>
-                            </div>
-                        </div>
-                        <div class="cell-4 cell-24">
-                            <div class="content-2">
-                                <div class="west-ham"></div>
-                                <div class="b-7 b-20 body">WestHam</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">31</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">22</div>
-                            </div>
-                        </div>
-                        <div class="cell-6 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">5</div>
-                            </div>
-                        </div>
-                        <div class="cell-7 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">4</div>
-                            </div>
-                        </div>
-                        <div class="cell-8 cell-24">
-                            <div class="content-1">
-                                <div class="text-9-1 valign-text-middle body2">75-74</div>
-                            </div>
-                        </div>
-                        <div class="cell-10 cell-24">
-                            <div class="content-1">
-                                <div class="x75-74-18 valign-text-middle body2">+51</div>
-                            </div>
-                        </div>
-                        <div class="cell-9 cell-24">
-                            <div class="content-1">
-                                <div class="number valign-text-middle number-43 headline3">71</div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="table-1-item">
-                        <div class="cell cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">9</div>
-                            </div>
-                        </div>
-                        <div class="cell-4 cell-24">
-                            <div class="content-2">
-                                <div class="burnley"></div>
-                                <div class="b-8 valign-text-middle b-20 body">Chelsea</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">31</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">22</div>
-                            </div>
-                        </div>
-                        <div class="cell-6 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">5</div>
-                            </div>
-                        </div>
-                        <div class="cell-7 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">4</div>
-                            </div>
-                        </div>
-                        <div class="cell-8 cell-24">
-                            <div class="content-1">
-                                <div class="text-10-1 valign-text-middle body2">75-74</div>
-                            </div>
-                        </div>
-                        <div class="cell-10 cell-24">
-                            <div class="content-1">
-                                <div class="x75-74-18 valign-text-middle body2">+51</div>
-                            </div>
-                        </div>
-                        <div class="cell-9 cell-24">
-                            <div class="content-1">
-                                <div class="number valign-text-middle number-43 headline3">71</div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="table-1-item">
-                        <div class="cell cell-24">
-                            <div class="content-1">
-                                <div class="a-46 valign-text-middle a-104 body2">10</div>
-                            </div>
-                        </div>
-                        <div class="cell-4 cell-24">
-                            <div class="content-2">
-                                <div class="bournemouth bournemouth-2"></div>
-                                <div class="b-9 valign-text-middle b-20 body">Bourne mouth</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">31</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">22</div>
-                            </div>
-                        </div>
-                        <div class="cell-6 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">5</div>
-                            </div>
-                        </div>
-                        <div class="cell-7 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">4</div>
-                            </div>
-                        </div>
-                        <div class="cell-8 cell-24">
-                            <div class="content-1">
-                                <div class="text-11-1 valign-text-middle body2">75-74</div>
-                            </div>
-                        </div>
-                        <div class="cell-10 cell-24">
-                            <div class="content-1">
-                                <div class="x75-74-18 valign-text-middle body2">+51</div>
-                            </div>
-                        </div>
-                        <div class="cell-9 cell-24">
-                            <div class="content-1">
-                                <div class="number valign-text-middle number-43 headline3">71</div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="table-1-item">
-                        <div class="cell cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">11</div>
-                            </div>
-                        </div>
-                        <div class="cell-4 cell-24">
-                            <div class="content-2">
-                                <div class="wolverhampton-wanderers-1"></div>
-                                <div class="b-10 b-20 body">Wolverhampton</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">31</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">22</div>
-                            </div>
-                        </div>
-                        <div class="cell-6 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">5</div>
-                            </div>
-                        </div>
-                        <div class="cell-7 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">4</div>
-                            </div>
-                        </div>
-                        <div class="cell-8 cell-24">
-                            <div class="content-1">
-                                <div class="text-12-1 valign-text-middle body2">75-74</div>
-                            </div>
-                        </div>
-                        <div class="cell-10 cell-24">
-                            <div class="content-1">
-                                <div class="x75-74-18 valign-text-middle body2">+51</div>
-                            </div>
-                        </div>
-                        <div class="cell-9 cell-24">
-                            <div class="content-1">
-                                <div class="number valign-text-middle number-43 headline3">71</div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="table-1-item">
-                        <div class="cell cell-24">
-                            <div class="content-1">
-                                <div class="a-56 valign-text-middle a-104 body2">12</div>
-                            </div>
-                        </div>
-                        <div class="cell-4 cell-24">
-                            <div class="content-2">
-                                <div class="brighton_-hove-albion"></div>
-                                <div class="b-11 valign-text-middle b-20 body">Brighton &amp; Hove Albion</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">31</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">22</div>
-                            </div>
-                        </div>
-                        <div class="cell-6 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">5</div>
-                            </div>
-                        </div>
-                        <div class="cell-7 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">4</div>
-                            </div>
-                        </div>
-                        <div class="cell-8 cell-24">
-                            <div class="content-1">
-                                <div class="text-13-1 valign-text-middle body2">75-74</div>
-                            </div>
-                        </div>
-                        <div class="cell-10 cell-24">
-                            <div class="content-1">
-                                <div class="x75-74-18 valign-text-middle body2">+51</div>
-                            </div>
-                        </div>
-                        <div class="cell-9 cell-24">
-                            <div class="content-1">
-                                <div class="number valign-text-middle number-43 headline3">71</div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="table-1-item">
-                        <div class="cell cell-24">
-                            <div class="content-1">
-                                <div class="a-61 valign-text-middle a-104 body2">13</div>
-                            </div>
-                        </div>
-                        <div class="cell-4 cell-24">
-                            <div class="content-2">
-                                <div class="fullham"></div>
-                                <div class="b-12 valign-text-middle b-20 body">Fullham</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">31</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">22</div>
-                            </div>
-                        </div>
-                        <div class="cell-6 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">5</div>
-                            </div>
-                        </div>
-                        <div class="cell-7 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">4</div>
-                            </div>
-                        </div>
-                        <div class="cell-8 cell-24">
-                            <div class="content-1">
-                                <div class="text-14-1 valign-text-middle body2">75-74</div>
-                            </div>
-                        </div>
-                        <div class="cell-10 cell-24">
-                            <div class="content-3">
-                                <div class="text-1 valign-text-middle body2">75-74</div>
-                            </div>
-                        </div>
-                        <div class="cell-9 cell-24">
-                            <div class="content-1">
-                                <div class="number valign-text-middle number-43 headline3">71</div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="table-1-item">
-                        <div class="cell cell-24">
-                            <div class="content-1">
-                                <div class="a-66 valign-text-middle a-104 body2">14</div>
-                            </div>
-                        </div>
-                        <div class="cell-4 cell-24">
-                            <div class="content-2">
-                                <div class="crystal_-palace"></div>
-                                <div class="b-13 valign-text-middle b-20 body">Crystal Palace</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">31</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">22</div>
-                            </div>
-                        </div>
-                        <div class="cell-6 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">5</div>
-                            </div>
-                        </div>
-                        <div class="cell-7 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">4</div>
-                            </div>
-                        </div>
-                        <div class="cell-8 cell-24">
-                            <div class="content-1">
-                                <div class="text-16-1 valign-text-middle body2">75-74</div>
-                            </div>
-                        </div>
-                        <div class="cell-10 cell-24">
-                            <div class="content-3">
-                                <div class="text-1 valign-text-middle body2">75-74</div>
-                            </div>
-                        </div>
-                        <div class="cell-9 cell-24">
-                            <div class="content-1">
-                                <div class="number valign-text-middle number-43 headline3">71</div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="table-1-item">
-                        <div class="cell cell-24">
-                            <div class="content-1">
-                                <div class="a-71 valign-text-middle a-104 body2">15</div>
-                            </div>
-                        </div>
-                        <div class="cell-4 cell-24">
-                            <div class="content-2">
-                                <div class="everton"></div>
-                                <div class="b-14 valign-text-middle b-20 body">Everton</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">31</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">22</div>
-                            </div>
-                        </div>
-                        <div class="cell-6 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">5</div>
-                            </div>
-                        </div>
-                        <div class="cell-7 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">4</div>
-                            </div>
-                        </div>
-                        <div class="cell-8 cell-24">
-                            <div class="content-1">
-                                <div class="text-18 valign-text-middle body2">75-74</div>
-                            </div>
-                        </div>
-                        <div class="cell-10 cell-24">
-                            <div class="content-1">
-                                <div class="x75-74-18 valign-text-middle body2">+51</div>
-                            </div>
-                        </div>
-                        <div class="cell-9 cell-24">
-                            <div class="content-1">
-                                <div class="number valign-text-middle number-43 headline3">71</div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="table-1-item">
-                        <div class="cell cell-24">
-                            <div class="content-1">
-                                <div class="a-76 valign-text-middle a-104 body2">16</div>
-                            </div>
-                        </div>
-                        <div class="cell-4 cell-24">
-                            <div class="content-2">
-                                <div class="brentford"></div>
-                                <div class="b-15 valign-text-middle b-20 body">Brentford</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">31</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">22</div>
-                            </div>
-                        </div>
-                        <div class="cell-6 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">5</div>
-                            </div>
-                        </div>
-                        <div class="cell-7 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">4</div>
-                            </div>
-                        </div>
-                        <div class="cell-8 cell-24">
-                            <div class="content-1">
-                                <div class="text-19 valign-text-middle body2">75-74</div>
-                            </div>
-                        </div>
-                        <div class="cell-10 cell-24">
-                            <div class="content-1">
-                                <div class="x75-74-18 valign-text-middle body2">+51</div>
-                            </div>
-                        </div>
-                        <div class="cell-9 cell-24">
-                            <div class="content-1">
-                                <div class="number valign-text-middle number-43 headline3">71</div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="table-1-item">
-                        <div class="cell cell-24">
-                            <div class="content-1">
-                                <div class="a-81 valign-text-middle a-104 body2">17</div>
-                            </div>
-                        </div>
-                        <div class="cell-4 cell-24">
-                            <div class="content-2">
-                                <div class="nottingham-forest"></div>
-                                <div class="b-16 valign-text-middle b-20 body">Nottingham Forest</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">31</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">22</div>
-                            </div>
-                        </div>
-                        <div class="cell-6 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">5</div>
-                            </div>
-                        </div>
-                        <div class="cell-7 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">4</div>
-                            </div>
-                        </div>
-                        <div class="cell-8 cell-24">
-                            <div class="content-1">
-                                <div class="text-20 valign-text-middle body2">75-74</div>
-                            </div>
-                        </div>
-                        <div class="cell-10 cell-24">
-                            <div class="content-1">
-                                <div class="x75-74-18 valign-text-middle body2">+51</div>
-                            </div>
-                        </div>
-                        <div class="cell-9 cell-24">
-                            <div class="content-1">
-                                <div class="number valign-text-middle number-43 headline3">71</div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="table-1-item">
-                        <div class="cell cell-24">
-                            <div class="content-1">
-                                <div class="a-86 valign-text-middle a-104 body2">18</div>
-                            </div>
-                        </div>
-                        <div class="cell-4 cell-24">
-                            <div class="content-2">
-                                <div class="luton-town"></div>
-                                <div class="b-17 valign-text-middle b-20 body">Luton Town</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">31</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">22</div>
-                            </div>
-                        </div>
-                        <div class="cell-6 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">5</div>
-                            </div>
-                        </div>
-                        <div class="cell-7 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">4</div>
-                            </div>
-                        </div>
-                        <div class="cell-8 cell-24">
-                            <div class="content-1">
-                                <div class="text-21 valign-text-middle body2">75-74</div>
-                            </div>
-                        </div>
-                        <div class="cell-10 cell-24">
-                            <div class="content-1">
-                                <div class="x75-74-18 valign-text-middle body2">+51</div>
-                            </div>
-                        </div>
-                        <div class="cell-9 cell-24">
-                            <div class="content-1">
-                                <div class="number valign-text-middle number-43 headline3">71</div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="table-1-item">
-                        <div class="cell cell-24">
-                            <div class="content-1">
-                                <div class="a-91 valign-text-middle a-104 body2">19</div>
-                            </div>
-                        </div>
-                        <div class="cell-4 cell-24">
-                            <div class="content-2">
-                                <div class="burnley"></div>
-                                <div class="b-18 valign-text-middle b-20 body">Burnley</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">31</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">22</div>
-                            </div>
-                        </div>
-                        <div class="cell-6 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">5</div>
-                            </div>
-                        </div>
-                        <div class="cell-7 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">4</div>
-                            </div>
-                        </div>
-                        <div class="cell-8 cell-24">
-                            <div class="content-1">
-                                <div class="text-22 valign-text-middle body2">75-74</div>
-                            </div>
-                        </div>
-                        <div class="cell-10 cell-24">
-                            <div class="content-1">
-                                <div class="x75-74-18 valign-text-middle body2">+51</div>
-                            </div>
-                        </div>
-                        <div class="cell-9 cell-24">
-                            <div class="content-1">
-                                <div class="number valign-text-middle number-43 headline3">71</div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="table-1-item">
-                        <div class="cell cell-24">
-                            <div class="content-1">
-                                <div class="a-96 valign-text-middle a-104 body2">20</div>
-                            </div>
-                        </div>
-                        <div class="cell-4 cell-24">
-                            <div class="content-2">
-                                <div class="sheffield-united"></div>
-                                <div class="b-19 valign-text-middle b-20 body">Sheffield United</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">31</div>
-                            </div>
-                        </div>
-                        <div class="cell-5 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">22</div>
-                            </div>
-                        </div>
-                        <div class="cell-6 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">5</div>
-                            </div>
-                        </div>
-                        <div class="cell-7 cell-24">
-                            <div class="content-1">
-                                <div class="a-104 valign-text-middle body2">4</div>
-                            </div>
-                        </div>
-                        <div class="cell-8 cell-24">
-                            <div class="content-1">
-                                <div class="text-23 valign-text-middle body2">75-74</div>
-                            </div>
-                        </div>
-                        <div class="cell-10 cell-24">
-                            <div class="content-1">
-                                <div class="x75-74-18 valign-text-middle body2">+51</div>
-                            </div>
-                        </div>
-                        <div class="cell-9 cell-24">
-                            <div class="content-1">
-                                <div class="number valign-text-middle number-43 headline3">71</div>
+                                <div class="valign-text-middle h-8 body2">PTS</div>
                             </div>
                         </div>
                     </article>
                 </div>
-                <div class="table table-3 mt-4">
+
+                <div class="table-1 table-3">
+                    <article v-for="(item, idx) in config.list" class="table-1-item">
+                        <div class="cell cell-24">
+                            <div class="content-1">
+                                <div class="a-104 valign-text-middle body2">{{ idx + 1 }}</div>
+                            </div>
+                        </div>
+                        <div class="cell-4 cell-24">
+                            <div class="content-2">
+                                <USkeleton v-if="opt.isResourcePending" class="w-[15px] h-[15px] relative rounded-full" />
+                                <USkeleton v-if="opt.isResourcePending" class="w-[100px] h-[15px]" />
+                                <template v-else>
+                                    <img class="arsenal-3" :src="leagueStore.getTeamLogo(item.team_id)"/>
+                                    <div class="b valign-text-middle b-20 body">
+                                        {{ leagueStore.getTeamName(item.team_id) }}
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                        <div class="cell-17 cell-24">
+                            <div class="content-1">
+                                <div class="a-104 valign-text-middle body2">
+                                    {{ item[ getPrefix(leagueStore.getTableConfig().selectedIdx, [ 'total', 'home_total', 'away_total' ]) ] }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cell-5 cell-24">
+                            <div class="content-1">
+                                <div class="a-104 valign-text-middle body2">
+                                    {{ item[ getPrefix(leagueStore.getTableConfig().selectedIdx, [ 'won', 'home_won', 'away_won' ]) ] }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cell-6 cell-24">
+                            <div class="content-1">
+                                <div class="a-104 valign-text-middle body2">
+                                    {{ item[ getPrefix(leagueStore.getTableConfig().selectedIdx, [ 'draw', 'home_draw', 'away_draw' ]) ] }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cell-7 cell-24">
+                            <div class="content-1">
+                                <div class="a-104 valign-text-middle body2">
+                                    {{ item[ getPrefix(leagueStore.getTableConfig().selectedIdx, [ 'loss', 'home_loss', 'away_loss' ]) ] }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cell-8 cell-24">
+                            <div class="content-1">
+                                <div class="text-2-1 valign-text-middle body2">
+                                    {{ getGoals(leagueStore.getTableConfig().selectedIdx, item) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cell-18 cell-24">
+                            <div class="content-1">
+                                <div class="x75-74 valign-text-middle body2">
+                                    {{ item[ getPrefix(leagueStore.getTableConfig().selectedIdx, [ 'goal_diff', 'home_goal_diff', 'away_goal_diff' ]) ] }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cell-9 cell-24">
+                            <div class="content-1">
+                                <div class="number valign-text-middle number-43 headline3">
+                                    {{ item[ getPrefix(leagueStore.getTableConfig().selectedIdx, [ 'points', 'home_points', 'away_points' ]) ] }}
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- <div class="table table-3 mt-4">
                     <article class="row-43">
                         <div class="cell-19 cell-24">
                             <div class="content-4">
@@ -1063,6 +151,7 @@
                             </div>
                         </div>
                     </article>
+
                     <article class="row-43">
                         <div class="cell-12 cell-24">
                             <div class="content-5">
@@ -1640,28 +729,53 @@
                             </div>
                         </div>
                     </article>
-                </div>
+                </div> -->
                 <div class="contents_-bottom-bg"></div>
             </div>
-
-
-        </div> -->
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import type { TLeagueTableTableRow } from '~/types/league';
+
 const leagueStore = useLeagueStore();
 
 const opt = reactive({
     isPending: <boolean> true,
+    isResourcePending: <boolean> true,
 });
+
+const config = reactive({
+    list: <TLeagueTableTableRow[]> [],
+});
+
+const getPrefix = (selectedIdx: number, prefixList: string[]): string => {
+    return prefixList[selectedIdx];
+};
+
+const getGoals = (selectedIdx: number, item: TLeagueTableTableRow): string => {
+    const plusGoal = item[ getPrefix(selectedIdx, [ 'goals', 'home_goals', 'away_goals' ]) ];
+    const minusGoal = plusGoal - item[ getPrefix(selectedIdx, [ 'goal_diff', 'home_goal_diff', 'away_goal_diff' ]) ];
+    return `${ plusGoal }-${ minusGoal }`;
+};
 
 onMounted(async () => {
     opt.isPending = true;
+    opt.isResourcePending = true;
     await nextTick();
     await leagueStore.onMountedTable(() => {
-        opt.isPending = false;
+
     });
+    const {
+        list
+    } = leagueStore.getTableConfig();
+    config.list = list;
+    opt.isPending = false;
+
+    const teamIdList = config.list.map( item => item.team_id );
+    await leagueStore.mountTeam(teamIdList);
+    opt.isResourcePending = false;
 });
 </script>
 

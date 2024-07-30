@@ -2,8 +2,9 @@ import { defineStore } from "pinia";
 import { isFixtures, isFixturesAdvanced, isLive, isResult } from "~/types";
 import type { TCommonSchedule } from "~/types/Common/schedule";
 import { GetSportSectionUpperCase, type TCommonSportSection } from "~/types/Common/sport";
-import type { TLeagueMatchUpRes, TLeagueStoreConfig } from "~/types/league";
+import { type TLeagueTableRes, type TLeagueMatchUpRes, type TLeagueStoreConfig, type TLeagueTableTableRow } from "~/types/league";
 import UtilDate from "~/utils/date";
+import UtilObj from "~/utils/obj";
 
 
 export const useLeagueStore = defineStore('leagueStore', () => {
@@ -28,10 +29,8 @@ export const useLeagueStore = defineStore('leagueStore', () => {
     });
 
     const tableConfig = reactive({
-        all: <any[]> [],
-        topScorer: <any[]> [],
-        home: <any[]> [],
-        away: <any[]> [],
+        selectedIdx: <number> 0,
+        list: <TLeagueTableTableRow[]> [],
     });
 
     const config = reactive({
@@ -67,12 +66,15 @@ export const useLeagueStore = defineStore('leagueStore', () => {
                 sports: GetSportSectionUpperCase(config.sportSection),
             },
         );
-        const data = (res.data as any)['data'] ?? {};
-        if (data['data'] !== null) {
-            onMountedHeader(data.data);
+        const data: TLeagueMatchUpRes | {} = (res.data as any)['data'] ?? {};
+        if (UtilObj.chckIsEmpty(data)) {
+            return;
         }
-        if (data.matchup) {
-            matchUpConfig.list = data.matchup;
+        if (data['data'] !== null) {
+            onMountedHeader(data['data']);
+        }
+        if (data['matchup']) {
+            matchUpConfig.list = data['matchup'];
         }
         callback();
         opt.isPending = false;
@@ -85,7 +87,7 @@ export const useLeagueStore = defineStore('leagueStore', () => {
         config.seasonId = await chckIsSeasonId();
         config.leagueId = await chckIsLeagueId();
         opt.isTableExist = !!config.seasonId;
-        const res = await useApiFetch(
+        const res = await useApiFetch<TLeagueTableRes>(
             'LeagueTable',
             { method: 'POST', },
             {
@@ -94,14 +96,25 @@ export const useLeagueStore = defineStore('leagueStore', () => {
                 seasonid: config.seasonId,
             },
         );
-        const data = (res.data as any)['data'] ?? {};
+        const data: TLeagueTableRes | {} = (res.data as any)['data'] ?? {};
         console.log('data from table mount: ', data);
         if (data['data'] !== null) {
-            onMountedHeader(data.data);
+            onMountedHeader(data['data']);
         }
-        
+        if (data['season']) {
+            // tableConfig.
+        }
+        if (data['table'] && data['table']['tables'] && data['table']['tables'].length) {
+            const { rows } = data['table']['tables'][0];
+            tableConfig.list = rows;
+        }
+        tableConfig.selectedIdx = 0;
         callback();
         opt.isPending = false;
+    };
+
+    const setTableSubTabSelectedIdx = (idx: number) => {
+        tableConfig.selectedIdx = idx;
     };
 
     const setOpt = (
@@ -235,11 +248,28 @@ export const useLeagueStore = defineStore('leagueStore', () => {
         if (isResult(config.sportSection, ai_status_id)) return 'result';
         return 'result';
     };
+    
+    const getTeamLogo = (teamId: string): string => {
+        return resourceListConfig.team.find( item => item.ai_id === teamId )?.ai_logo_img ?? '';
+    };
+
+    const getTeamName = (teamId: string): string => {
+        return resourceListConfig.team.find( item => item.ai_id === teamId )?.ai_name_eng ?? '';
+    };
+
+    const getLeagueTitle = (leagueId: string): string => {
+        return resourceListConfig.league.find( leagueItem => leagueItem.ai_id === leagueId )?.competition_name ?? '';
+    };
+
+    const getLeagueLogo = (leagueId: string): string => {
+        return resourceListConfig.league.find( leagueItem => leagueItem.ai_id === leagueId )?.competition_logo ?? '';
+    };
 
     return {
         onMountedHeader,
         onMountedMatchUp,
         onMountedTable,
+        setTableSubTabSelectedIdx,
         setOpt,
         filterMatchUp,
         filterResult,
@@ -254,5 +284,9 @@ export const useLeagueStore = defineStore('leagueStore', () => {
         getOpt,
         getTableConfig,
         getMatchUpType,
+        getTeamLogo,
+        getTeamName,
+        getLeagueTitle,
+        getLeagueLogo,
     };
 });

@@ -86,6 +86,7 @@ watch(
 const clickTab = (idx: number) => {
     opt.selectedIdx = idx;
     emit("clickTab", opt.selectedIdx);
+    leagueStore.setTableSubTabSelectedIdx(opt.selectedIdx);
 };
 
 onMounted(async () => {

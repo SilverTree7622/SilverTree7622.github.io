@@ -20,7 +20,7 @@ export type TLeagueTableRes = {
     data: TLeagueMatchUpResData;
     season: TLeagueTablePlayer[];
     table: {
-        promotions: [];
+        promotions: TLeagueTablePromotion[];
         tables: TLeagueTableTable[];
     };
     result: number;
@@ -39,6 +39,12 @@ export type TLeagueTablePlayer = {
     "ai_update_timestamp": number;
     "ai_year": string;
 };
+
+export type TLeagueTablePromotion = {
+    "color": string;
+    "id": string;
+    "name": string;
+}
 
 export type TLeagueTableTable = {
     "conference": string;
