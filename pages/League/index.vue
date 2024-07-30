@@ -49,7 +49,6 @@ const opt = reactive({
 
 onMounted(async () => {
     await nextTick();
-    console.log('opt.tab: ', opt.tab);
 });
 
 onBeforeUnmount(async () => {

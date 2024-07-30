@@ -1,9 +1,8 @@
 <template>
     <div
         v-if="props.hasLeagueTag"
-        :class="props.idx === 0 ? 'frame-384' : 'frame-17'"
-        style="cursor: pointer;"
-        @click="goStore.go_league(props.season, props.id)"
+        :class="getClass()"
+        @click="getClick()"
     >
         <USkeleton v-if="props.isPending === true" class="w-[15px] h-[15px] relative rounded-full" />
         <img v-if="!props.isPending && props.src" class="flag_-circle_eng" :src="props.src" :alt="props.alt ?? props.title" />
@@ -24,10 +23,23 @@ const props = defineProps<{
     hasLeagueTag?: boolean;
     src?: string;
     alt?: string;
+    hasNoRouting?: boolean;
     isPending?: boolean;
 }>();
 
 const goStore = useGoStore();
+
+const getClass = () => {
+    const isPointer = props.hasNoRouting ? '' : 'cursor-pointer';
+    return props.idx === 0 ? `${ isPointer } frame-384` : `${ isPointer } frame-17`;
+};
+
+const getClick = () => {
+    if (props.hasNoRouting) {
+        return;
+    }
+    goStore.go_league(props.season, props.id);
+};
 </script>
 
 <style scoped>

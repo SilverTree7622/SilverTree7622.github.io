@@ -7,6 +7,7 @@
                     :sportSection="'basketball'"
                     :league="league"
                     :type="leagueStore.getMatchUpType(league)"
+                    :hasLeagueTag="league.hasLeagueTag ?? false"
                 />
             </template>
         </div>
@@ -16,12 +17,15 @@
 <script setup lang="ts">
 import type { TCommonSchedule } from '~/types/Common/schedule';
 import type { TLeagueMatchUpRes } from '~/types/league';
+import UtilDate from '~/utils/date';
 
 const {
     ONE_DAY_MILLISECOND,
     MAX_PAGINATION_CONTENT,
 } = useRuntimeConfig().public.CONSTANTS;
 const leagueStore = useLeagueStore();
+const filterStore = useFilterStore();
+const dateStore = useDateStore();
 const scrollStore = useScrollStore();
 const route = useRoute();
 
@@ -79,9 +83,8 @@ const chckIsSeasonId = () => {
     const {
         list: matchUpList,
     } = leagueStore.getMatchUpConfig();
+    list.totalList = leagueStore.filterMatchUp(matchUpList);
     try {
-        list.totalList = matchUpList;
-        console.log('list.totalList: ', list.totalList);
         await callNextContents();
     } catch (e) {
 
@@ -122,7 +125,6 @@ const callNextContents = async (isFilter: boolean = false): Promise<boolean> => 
         return opt.isOutOfContent;
     }
     list.sortedList = await loadSortedContent(isFilter, list.pagedList);
-    console.log('list.sortedList from callNextContents: ', list.sortedList);
     opt.isOutOfContent = (list.pagedList.length === list.sortedList.length);
     return opt.isOutOfContent;
 };

@@ -15,6 +15,8 @@ export const useGoStore = defineStore('goStore', () => {
     };
 
     const go_league = (seasonId: string, leagueId: string) => {
+        console.log('seasonId: ', seasonId);
+        console.log('leagueId: ', leagueId);
         navigateTo(`/League?id=${ leagueId }&season=${ seasonId }`);
     };
     

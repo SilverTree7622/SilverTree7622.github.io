@@ -11,7 +11,7 @@
                 <h1 class="title leaguetitle">
                     {{ opt.title }}
                 </h1>
-                <div class="flex-row mt-4">
+                <div class="flex-row mt-2">
                     <div>
                         <img class="flag_-circle_eng" :src="opt.flag" />
                     </div>

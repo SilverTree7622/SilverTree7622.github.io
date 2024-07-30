@@ -3,6 +3,7 @@ import { isFixtures, isLive, isResult } from "~/types";
 import type { TCommonSchedule } from "~/types/Common/schedule";
 import { GetSportSectionUpperCase, type TCommonSportSection } from "~/types/Common/sport";
 import type { TLeagueMatchUpRes, TLeagueStoreConfig } from "~/types/league";
+import UtilDate from "~/utils/date";
 
 
 export const useLeagueStore = defineStore('leagueStore', () => {
@@ -62,9 +63,13 @@ export const useLeagueStore = defineStore('leagueStore', () => {
             },
         );
         const data = (res.data as any)['data'] ?? {};
-        console.log('data from league mount: ', data);
-        onMountedHeader(data.data);
-        matchUpConfig.list = data.matchup;        
+        if (data['data'] !== null) {
+            onMountedHeader(data.data);
+        }
+        if (data.matchup) {
+            matchUpConfig.list = data.matchup;
+            // navigateTo(`/${ config.sportSection }`);
+        }
         callback();
         opt.isPending = false;
     };
@@ -104,12 +109,44 @@ export const useLeagueStore = defineStore('leagueStore', () => {
         if (value.pageIsOutOfContent !== undefined) opt.pageIsOutOfContent = value.pageIsOutOfContent;
     };
 
-    const hasTimeTag = (schedule: TCommonSchedule): boolean => {
-        return true;
+    const filterMatchUp = (matchUpList: TCommonSchedule[]): TCommonSchedule[] => {
+        matchUpList.sort((a, b) => {
+            return a.ai_match_time - b.ai_match_time;
+        });
+        matchUpList.map( item => item.hasLeagueTag = false );
+        const groupedLeague = matchUpList.reduce((acc, match) => {
+            if (!acc[getTimeTitle(match)]) {
+                acc[getTimeTitle(match)] = [];
+            }
+            acc[getTimeTitle(match)].push(match);
+            return acc;
+        }, {});
+        const sortedLeague = Object.entries(groupedLeague).map((item) => {
+            const [ lg_name, matches, ] = item;
+            const matchesList = matches as any;
+            matchesList.forEach((match, index) => {
+                match.hasLeagueTag = index === 0;
+            });
+            return {
+                lg_name,
+                matches: matchesList,
+            };
+        });
+        const finalList: any[] = [];
+        sortedLeague.map((item) => {
+            finalList.push(...item.matches);
+        });
+        return finalList;
     };
 
     const getTimeTitle = (schedule: TCommonSchedule): string => {
-        return '';
+        const time = UtilDate.addMillisecond(schedule.ai_match_time);
+        const month = time.getUTCMonth();
+        const resultMonth = JSON.stringify(month).length === 1 ? `0${ month }` : month;
+        const day = time.getUTCDate();
+        const resultDay = JSON.stringify(day).length === 1 ? `0${ day }` : day;
+        const year = time.getUTCFullYear();
+        return `${ resultMonth }/${ resultDay }/${ year }`;
     };
 
     const getHeaderConfig = () => { return headerConfig; };
@@ -133,8 +170,8 @@ export const useLeagueStore = defineStore('leagueStore', () => {
         onMountedMatchUp,
         onMountedTable,
         setOpt,
+        filterMatchUp,
         getTimeTitle,
-        hasTimeTag,
         getHeaderConfig,
         getMatchUpConfig,
         getConfig,

@@ -5,9 +5,9 @@
         :id="props.league.ai_competition_id"
         :idx="props.idx"
         :title="leagueStore.getTimeTitle(props.league)"
-        :hasLeagueTag="leagueStore.hasTimeTag(props.league)"
-        :src="contentStore.getLeagueFlag(props.league)"
+        :hasLeagueTag="props.hasLeagueTag"
         :alt="contentStore.getLeagueAlt(props.league)"
+        :hasNoRouting="true"
     />
     <template v-if="props.type === 'result'">
         <!-- match content via conditions -->
@@ -114,6 +114,7 @@ const props = defineProps<{
     sportSection: TCommonSportSection;
     league: TCommonSchedule;
     type: 'result' | 'fixtures';
+    hasLeagueTag: boolean;
 }>();
 
 const goStore = useGoStore();
