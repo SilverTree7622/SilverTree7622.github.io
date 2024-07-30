@@ -2,23 +2,24 @@
     <div class="div-stats-incidents">
         <!-- incidents evt -->
         <MatchUpStatsMatchStatsIncidentsItem
-            v-for="(item, idx) in opt.list"
+            v-for="(item, idx) in props.list"
             :idx="idx"
-            :list="opt.list"
+            :list="props.list"
             :item="item"
         />
     </div>
 </template>
 
 <script setup lang="ts">
-const matchUpStore = useMatchUpStore();
+import type { TMatchUpStatsSport } from '~/types/stats';
 
-const opt = reactive({
-    list: matchUpStore.getConfigStats().incidents.sort((a, b) => b.time - a.time ),
-});
+const props = defineProps<{
+    list: TMatchUpStatsSport['incidents'];
+}>();
 
 onMounted(async () => {
     await nextTick();
+    console.log('props.list: ', props.list);
 });
 </script>
 

@@ -4,7 +4,9 @@
         <MatchUpStatsMatchStatsChart1 />
         <MatchUpStatsMatchStatsChart2 v-if="chckIsVisible()" />
         <!-- <MatchUpStatsMatchStatsChart3 /> -->
-        <MatchUpStatsMatchStatsIncidents />
+        <MatchUpStatsMatchStatsIncidents
+            :list="matchUpStore.getConfigStats().incidents.sort((a, b) => b.time - a.time )"
+        />
     </div>
 </template>
 
@@ -24,6 +26,7 @@ const chckIsVisible = (): boolean => {
 };
 
 onMounted(async () => {
+    opt.isPending = true;
     await nextTick();
     const {
         sportSection,
@@ -38,7 +41,6 @@ onMounted(async () => {
 
 onBeforeUnmount(() => {
     opt.isIncidentsExist = false;
-    opt.isPending = true;
 });
 </script>
 

@@ -26,6 +26,11 @@ const props = defineProps<{
     homeScore: number;
     awayScore: number;
 }>();
+
+onMounted(async () => {
+    await nextTick();
+    console.log('props.goalPlayer: ', props.goalPlayer);
+});
 </script>
 
 <style scoped>

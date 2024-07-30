@@ -56,6 +56,11 @@ const getNeutral = (): string => {
     const awayScore = matchUpStore.getIncidentScore(props.idx, 'away', props.list);
     return `${ prefix } ${ homeScore } - ${ awayScore }`;
 };
+
+onMounted(async () => {
+    await nextTick();
+    console.log('props.item: ', props.item);
+});
 </script>
 
 <style scoped>

@@ -1,7 +1,7 @@
 <template>
     <div class="px-2">
         <MatchUpStatsMatchStats />
-        <MatchUpH2h :isLastMatches="true" />
+        <MatchUpH2h :isLastMatches="true" :name="'matchup-lastmatches'"/>
         <!-- <MatchUpStatsTopPlayers /> -->
         <MatchUpStatsOdds />
         
