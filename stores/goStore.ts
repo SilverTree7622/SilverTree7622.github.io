@@ -14,10 +14,8 @@ export const useGoStore = defineStore('goStore', () => {
         }
     };
 
-    const go_league = (seasonId: string, leagueId: string) => {
-        console.log('seasonId: ', seasonId);
-        console.log('leagueId: ', leagueId);
-        navigateTo(`/League?id=${ leagueId }&season=${ seasonId }`);
+    const go_league = (seasonId: string, leagueId: string, sportSection: TCommonSportSection) => {
+        navigateTo(`/League?id=${ leagueId }&season=${ seasonId }&sport=${ sportSection }`);
     };
     
     const go_livetraker = (match_id: string, sportSection: TCommonSportSection, schedule: TSportScheduleTypes) => {

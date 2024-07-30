@@ -4,31 +4,32 @@
             :sName="props.sName"
             name="matchup"
             :isToggled="props.tab === 'matchup'"
-            :customHeading="`/${props.sName}?id=${ useLeagueStore().getConfig().leagueId }&season=${ useLeagueStore().getConfig().seasonId }&tab=matchup`"
+            :customHeading="getCustomHeading('matchup')"
         />
         <CommonHeaderTabCommon
+            v-if="useLeagueStore().getOpt().isTableExist"
             :sName="props.sName"
             name="table"
             :isToggled="props.tab === 'table'"
-            :customHeading="`/${props.sName}?id=${ useLeagueStore().getConfig().leagueId }&season=${ useLeagueStore().getConfig().seasonId }&tab=table`"
+            :customHeading="getCustomHeading('table')"
         />
         <CommonHeaderTabCommon
             :sName="props.sName"
             name="odds"
             :isToggled="props.tab === 'odds'"
-            :customHeading="`/${props.sName}?id=${ useLeagueStore().getConfig().leagueId }&season=${ useLeagueStore().getConfig().seasonId }&tab=odds`"
+            :customHeading="getCustomHeading('odds')"
         />
         <CommonHeaderTabCommon
             :sName="props.sName"
             name="result"
             :isToggled="props.tab === 'result'"
-            :customHeading="`/${props.sName}?id=${ useLeagueStore().getConfig().leagueId }&season=${ useLeagueStore().getConfig().seasonId }&tab=result`"
+            :customHeading="getCustomHeading('result')"
         />
         <CommonHeaderTabCommon
             :sName="props.sName"
             name="players"
             :isToggled="props.tab === 'players'"
-            :customHeading="`/${props.sName}?id=${ useLeagueStore().getConfig().leagueId }&season=${ useLeagueStore().getConfig().seasonId }&tab=players`"
+            :customHeading="getCustomHeading('players')"
         />
     </div>
 </template>
@@ -44,6 +45,10 @@ const leagueStore = useLeagueStore();
 const opt = reactive({
     leagueId: <string> leagueStore.getConfig().leagueId,
 });
+
+const getCustomHeading = (tab: string): string => {
+    return `/${props.sName}?id=${ useLeagueStore().getConfig().leagueId }&season=${ useLeagueStore().getConfig().seasonId }&sport=${ useLeagueStore().getConfig().sportSection }&tab=${ tab }`
+};
 
 onMounted(async () => {
     await nextTick();

@@ -5,6 +5,7 @@
                 :season="chckIsSeasonId()"
                 :id="chckIsLeagueId()"
                 :idx="idx"
+                :sportSection="'football'"
                 :date="league.date"
                 :isLast="chckIsLast(idx)"
             />

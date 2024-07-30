@@ -60,22 +60,11 @@ const page = reactive({
 const chckIsLast = (idx: number) => {
     return idx === (list.sortedList.length - 1);
 };
-
-const chckIsLeagueId = () => {
-    return route.query['id'] as string;
-};
-
-const chckIsSeasonId = () => {
-    return route.query['season'] as string;
-};
-
 /**
  * res from first page entrance
  */
  const res = async () => {
     await leagueStore.onMountedMatchUp(
-        chckIsSeasonId(),
-        chckIsLeagueId(),
         () => {
             
         }

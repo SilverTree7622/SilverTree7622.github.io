@@ -1,6 +1,6 @@
 <template>
     <div class="contents_-football_-live-Mzx5SR" id="contents_-football_-live">
-        <div class="frmu95mobileu95league w-full">
+        <!-- <div class="frmu95mobileu95league w-full">
             <div class="contents_-football">
                 <div class="frame-315">
                     <div class="frame-402">
@@ -1645,7 +1645,7 @@
             </div>
 
 
-        </div>
+        </div> -->
     </div>
 </template>
 

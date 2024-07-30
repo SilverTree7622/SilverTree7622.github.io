@@ -5,6 +5,7 @@
         :id="props.league.ai_competition_id"
         :idx="props.idx"
         :title="contentStore.getLeagueName(props.league)"
+        :sportSection="props.sportSection"
         :hasLeagueTag="contentStore.setLeagueGroup(props.league)"
         :src="contentStore.getLeagueFlag(props.league)"
         :alt="contentStore.getLeagueAlt(props.league)"
@@ -123,6 +124,7 @@ const goLiveTracker = (league: TFootBallSchedule) => {
 
 onMounted(async () => {
     await nextTick();
+    if (!props.league.ai_season_id) console.log('no season id props.league: ', props.league.ai_competition_name, props.league);
 });
 </script>
 

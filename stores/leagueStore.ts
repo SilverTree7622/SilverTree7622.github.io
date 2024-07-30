@@ -12,6 +12,7 @@ export const useLeagueStore = defineStore('leagueStore', () => {
         pageIdx: <number> 0,
         pageIsPending: <boolean> false,
         pageIsOutOfContent: <boolean> false,
+        isTableExist: <boolean> false,
     });
 
     const matchUpConfig = reactive({
@@ -52,13 +53,12 @@ export const useLeagueStore = defineStore('leagueStore', () => {
     };
 
     const onMountedMatchUp = async (
-        seasonId: string,
-        leagueId: string,
         callback: Function,
     ) => {
         opt.isPending = true;
-        config.seasonId = seasonId;
-        config.leagueId = leagueId;
+        config.seasonId = await chckIsSeasonId();
+        config.leagueId = await chckIsLeagueId();
+        opt.isTableExist = !!config.seasonId;
         const res = await useApiFetch<TLeagueMatchUpRes>(
             'LeagueMatchUp',
             { method: 'POST', },
@@ -78,11 +78,13 @@ export const useLeagueStore = defineStore('leagueStore', () => {
         opt.isPending = false;
     };
 
-    const onMountedTable = async (callback: Function) => {
+    const onMountedTable = async (
+        callback: Function,
+    ) => {
         opt.isPending = true;
-        if (!config.seasonId && useRoute().query['season']) {
-            config.seasonId = useRoute().query['season'] as string;
-        }
+        config.seasonId = await chckIsSeasonId();
+        config.leagueId = await chckIsLeagueId();
+        opt.isTableExist = !!config.seasonId;
         const res = await useApiFetch(
             'LeagueTable',
             { method: 'POST', },
@@ -201,6 +203,14 @@ export const useLeagueStore = defineStore('leagueStore', () => {
             console.warn('e from get league api: ', e);
         }
     };
+    
+    const chckIsLeagueId = async () => {
+        return await useRoute().query['id'] as string;
+    };
+    
+    const chckIsSeasonId = async () => {
+        return await useRoute().query['season'] as string;
+    };
 
     const getHeaderConfig = () => { return headerConfig; };
 
@@ -225,6 +235,10 @@ export const useLeagueStore = defineStore('leagueStore', () => {
         setOpt,
         filterMatchUp,
         getTimeTitle,
+        mountTeam,
+        mountLeague,
+        chckIsLeagueId,
+        chckIsSeasonId,
         getHeaderConfig,
         getMatchUpConfig,
         getConfig,

@@ -5,6 +5,7 @@
         :id="props.league.ai_competition_id"
         :idx="props.idx"
         :title="leagueStore.getTimeTitle(props.league)"
+        :sportSection="props.sportSection"
         :hasLeagueTag="props.hasLeagueTag"
         :alt="contentStore.getLeagueAlt(props.league)"
         :hasNoRouting="true"

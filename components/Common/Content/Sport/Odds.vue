@@ -4,6 +4,7 @@
         :id="props.league.ai_competition_id"
         :idx="props.idx"
         :title="contentStore.getLeagueName(props.league)"
+        :sportSection="props.sportSection"
         :hasLeagueTag="contentStore.setLeagueGroup(props.league)"
         :src="contentStore.getLeagueFlag(props.league)"
         :alt="contentStore.getLeagueAlt(props.league)"

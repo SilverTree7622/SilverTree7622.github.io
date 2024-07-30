@@ -56,6 +56,7 @@
                             :id="item[1]"
                             :idx="idx"
                             :title="getLeagueTitle(item)"
+                            :sportSection="opt.sportSection"
                             :hasLeagueTag="filterOpt.selectedTagList[idx] ?? false"
                             :src="getLeagueLogo(item)"
                             :alt="getLeagueTitle(item)"
@@ -134,6 +135,7 @@
 </template>
 
 <script setup lang="ts">
+import type { TCommonSportSection } from '~/types/Common/sport';
 import type { TMatchUpTeamInfo } from '~/types/FootBall/h2h';
 import type { TMatchUpH2HSport } from '~/types/h2h';
 import UtilDate from '~/utils/date';
@@ -145,6 +147,7 @@ const props = defineProps<{
 const matchUpStore = useMatchUpStore();
 
 const opt = reactive({
+    sportSection: <TCommonSportSection> 'football',
     leagueId: <string> '',
     homeName: <string> '',
     homeLogo: <string> '',
@@ -387,6 +390,7 @@ onMounted(async () => {
     const {
         home, away, vs,
     } = matchUpStore.getConfigH2h();
+    opt.sportSection = sportSection;
     opt.leagueId = leagueId;
     opt.homeName = homeName;
     opt.homeLogo = homeLogo;

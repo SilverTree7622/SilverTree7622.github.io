@@ -5,6 +5,7 @@
             :id="props.id"
             :idx="props.idx"
             :title="dateStore.getLeagueFormat(props.date.getTime(), false)"
+            :sportSection="props.sportSection"
         />
         <div class="live_-match">
             <CommonContentCountry :title="'ASTON VILLA'" :src="'/img/astonvilla@2x.png'" />
@@ -24,10 +25,13 @@
 </template>
 
 <script setup lang="ts">
+import type { TCommonSportSection } from '~/types/Common/sport';
+
 const props = defineProps<{
     season: string;
     id: string;
     idx: number;
+    sportSection: TCommonSportSection;
     date: Date;
     isLast?: boolean;
 }>();

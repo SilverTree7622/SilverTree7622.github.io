@@ -15,11 +15,14 @@
 </template>
 
 <script setup lang="ts">
+import type { TCommonSportSection } from '~/types/Common/sport';
+
 const props = defineProps<{
     id: string;
     season: string;
     idx: number;
     title: string;
+    sportSection: TCommonSportSection;
     hasLeagueTag?: boolean;
     src?: string;
     alt?: string;
@@ -38,7 +41,7 @@ const getClick = () => {
     if (props.hasNoRouting) {
         return;
     }
-    goStore.go_league(props.season, props.id);
+    goStore.go_league(props.season, props.id, props.sportSection);
 };
 </script>
 
