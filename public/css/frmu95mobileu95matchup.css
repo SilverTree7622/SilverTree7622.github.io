@@ -2,7 +2,7 @@
 
 .frmu95mobileu95matchup {
   align-items: flex-start;
-  background-color: var(--bg);
+  /* background-color: var(--bg); */
   display: flex;
   flex-direction: column;
   position: relative;
@@ -1613,7 +1613,7 @@
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
-  padding: 0px 10px 8px;
+  /* padding: 0px 10px 8px; */
   position: relative;
   width: 100%;
 }

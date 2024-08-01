@@ -64,7 +64,7 @@ export type TBaseBallSchedule =
                 string,                 // Away team score
             ];
         },
-        "ai_status_id": TCommonMatchStatus;
+        "ai_status_id": number;
 
         "ai_kickoff_timestamp"?: number;
     }

@@ -1,26 +1,34 @@
 <template>
-    <div :class="getClassViaPosition(props.item.position)">
-        <div v-if="props.item.position === 0">
+    <div :class="getTopClassViaPosition(props.item.position)">
+        <template v-if="props.item.position === 0">
             {{ getNeutral() }}
-        </div>
-        <div v-if="props.item.position === 1" class="div-4">
-            {{ `${ props.item.time }’` }}
-        </div>
-        <MatchUpStatsMatchStatsIncidentsTypeGoal
-            v-if="props.item.type === 1"
-            :goalPlayer="props.item.player_id && props.item.player_name ? props.item.player_name : ''"
-            :assistPlayer1="props.item.assist1_id && props.item.assist1_name ? props.item.assist1_name : ''"
-            :assistPlayer2="props.item.assist2_id && props.item.assist2_name ? props.item.assist2_name : ''"
-            :homeScore="props.item.home_score ? props.item.home_score : 0"
-            :awayScore="props.item.away_score ? props.item.away_score : 0"
-        />
-        <MatchUpStatsMatchStatsIncidentsTypeSwitch
-            v-if="props.item.type === 9"
-            :in="props.item.in_player_id && props.item.in_player_name ? props.item.in_player_name : ''"
-            :out="props.item.out_player_id && props.item.out_player_name ? props.item.out_player_name : ''"
-        />
-        <div v-if="props.item.position === 2" class="div-15">
-            {{ `${ props.item.time }’` }}
+        </template>
+        <div v-else :class="getSubClassViaPosition(props.item.position)">
+            <div v-if="props.item.position === 1" class="text caption">
+                {{ `${ props.item.time }’` }}
+            </div>
+            <MatchUpStatsMatchStatsIncidentsTypeGoal
+                v-if="props.item.type === 1"
+                :goalPlayer="props.item.player_id && props.item.player_name ? props.item.player_name : ''"
+                :assistPlayer1="props.item.assist1_id && props.item.assist1_name ? props.item.assist1_name : ''"
+                :assistPlayer2="props.item.assist2_id && props.item.assist2_name ? props.item.assist2_name : ''"
+                :homeScore="props.item.home_score ? props.item.home_score : 0"
+                :awayScore="props.item.away_score ? props.item.away_score : 0"
+            />
+            <MatchUpStatsMatchStatsIncidentsTypeSwitch
+                v-if="props.item.type === 9"
+                :in="props.item.in_player_id && props.item.in_player_name ? props.item.in_player_name : ''"
+                :out="props.item.out_player_id && props.item.out_player_name ? props.item.out_player_name : ''"
+            />
+            <MatchUpStatsMatchStatsIncidentsTypeCard
+                v-if="props.item.type === 3 || props.item.type === 4"
+                :position="props.item.position"
+                :type="props.item.type"
+                :player="props.item.player_name ?? ''"
+            />
+            <div v-if="props.item.position === 2" class="text-2 caption">
+                {{ `${ props.item.time }’` }}
+            </div>
         </div>
     </div>
 </template>
@@ -37,17 +45,18 @@ const props = defineProps<{
 
 const matchUpStore = useMatchUpStore();
 
-const getClassViaPosition = (position: number): string => {
+const getTopClassViaPosition = (position: number): string => {
     if (position === 0) {
-        return 'div-2';
+        return 'ft-0-2 py-2';
     }
+    return 'frame-4';
+};
+
+const getSubClassViaPosition = (position: number): string => {
     if (position === 1) {
-        return 'div-3';
+        return 'flex-row';
     }
-    if (position === 2) {
-        return 'div-16';
-    }
-    return '';
+    return 'flex-row-1 flex-row-13';
 };
 
 const getNeutral = (): string => {
@@ -59,11 +68,18 @@ const getNeutral = (): string => {
 
 onMounted(async () => {
     await nextTick();
-    console.log('props.item: ', props.item);
+    if (props.item.type === 3 || props.item.type === 4) {
+        console.log('props.item: ', props.item);
+    }
 });
 </script>
 
 <style scoped>
+
+@import '@/public/css/matchup/stats/incidents/globals.css';
+@import '@/public/css/matchup/stats/incidents/styleguide.css';
+@import '@/public/css/matchup/stats/incidents/tmpu95incidentu95list.css';
+
 
 .div-2 {
     color: #000;

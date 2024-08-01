@@ -1,5 +1,8 @@
 <template>
-    <div class="div-stats-result">
+    <MatchUpStatsMatchStatsHeader
+        :home="getTeam('home')"
+        :away="getTeam('away')"
+    >
         <!-- <div class="flex flex-row mb-2">
             <MatchUpH2hFilter
                 :title="'Match'"
@@ -20,13 +23,12 @@
                 @toggle="(value: boolean) => { value && toggleFilter(2) }"
             />
         </div> -->
-
+        <div class="div-stats-result">
         <MatchUpStatsMatchStatsResultTotalShot
             v-if="(opt.shotTarget.on.type as number) !== 0 && (opt.shotTarget.off.type as number) !== 0"
             :shotTargetOn="opt.shotTarget.on"
             :shotTargetOff="opt.shotTarget.off"
         />
-
         <div v-for="(item, idx) in opt.list" class="div-2">
             <MatchUpStatsMatchStatsResultGraph
                 :title="TMatchUpStatistics2TitleFootball[ item.type ]"
@@ -36,6 +38,7 @@
             />
         </div>
     </div>
+    </MatchUpStatsMatchStatsHeader>
 </template>
 
 <script setup lang="ts">
@@ -70,6 +73,15 @@ const opt = reactive({
 const filterOpt = reactive({
     idx: <number> 0,
 });
+
+const getTeam = (prefix: TContentStoreHomeAwayPrefix): string => {
+    const {
+        homeName, awayName,
+    } = matchUpStore.getConfig();
+    if (prefix === 'home') return homeName;
+    if (prefix === 'away') return awayName;
+    return homeName;
+};
 
 const getWidthClass = (score: number, totalScore: number): number => {
     return (totalScore === 0) ? 0 : Math.floor(score / totalScore * 100);

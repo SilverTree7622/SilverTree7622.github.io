@@ -1,7 +1,7 @@
 <template>
     <div class="container-center-horizontal">
-        <div class="statchart2 screen w-full">
-            <div class="bg-[--bggray] w-full h-full pt-6 pb-12">
+        <div class="statchart2 screen w-full rounded-sm">
+            <div class="bg-[--bggray] w-full h-full pt-6 pb-12 rounded-sm">
                 <div class="frame-432">
                     <MatchUpStatsMatchStatsChart2GraphCircle
                         :title="'Attacks'"

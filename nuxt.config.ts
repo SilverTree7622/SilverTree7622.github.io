@@ -49,6 +49,8 @@ export default defineNuxtConfig({
 				MAX_SHOW_INNING_CNT: 5,
 				MAX_SHOW_CAROUSEL_CNT: 10,
 
+                MATCH_UP_HOME_STATS_INCIDENT_MIN_LENGTH: 2,
+
 				// CAROUSEL_INTERVAL_DURAITON: 3 * 1000,
 			},
 		},

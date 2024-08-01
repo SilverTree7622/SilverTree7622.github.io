@@ -1,136 +1,137 @@
 <template>
     <div class="frmu95mobileu95matchup">
-        <div class="frmu95mobileu95matchup-item-2">
-            <MatchUpH2hTeamSelection
-                v-if="props.isLastMatches"
-                :homeName="opt.homeName"
-                :homeLogo="opt.homeLogo"
-                :awayName="opt.awayName"
-                :awayLogo="opt.awayLogo"
-                :isSelectedIdx="filterOpt.selectedIdx"
-                class="mt-2"
-                @toggle="clickSelection"
-            />
-            <div class="frame-315-2 frame-315-3">
-                <div class="surname-1 surname-2 headline3 flex flex-row">
-                    <MatchUpH2hFilter
-                        :title="`Home${ props.isLastMatches ? '' : ` - ${ opt.homeName }` }`"
-                        :isChecked="filterOpt.isHome"
-                        class="mr-2"
-                        @toggle="clickHome"
-                    />
-                    <MatchUpH2hFilter
-                        :title="'This league'"
-                        :isChecked="filterOpt.isThisLeague"
-                        @toggle="clickThisLeague"
-                    />
-                </div>
-            </div>
-            <div class="frame-532">
-                <div class="frame-531">
-                    <div class="frame-526">
-                        <div class="number-17 valign-text-middle leaguetitle">
-                            {{ scoreOpt.win }}
-                        </div>
-                        <div class="win-2 valign-text-middle win-7 headline2">WIN</div>
-                    </div>
-                    <img class="line-2-h2h" src="/img/line-27@2x.png" alt="Line 27" />
-                    <div class="frame-527">
-                        <div class="number-18 valign-text-middle leaguetitle">
-                            {{ scoreOpt.draw }}
-                        </div>
-                        <div class="drawn-1 valign-text-middle drawn-3 headline2">DRAW</div>
-                    </div>
-                    <img class="line-2-h2h" src="/img/line-27@2x.png" alt="Line 28" />
-                    <div class="frame-528">
-                        <div class="number-19 valign-text-middle leaguetitle">
-                            {{ scoreOpt.lose }}
-                        </div>
-                        <div class="lose valign-text-middle lose-3 headline2">LOSE</div>
-                    </div>
-                </div>
-                <div class="table-8 table-9">
-                    <template v-for="(item, idx) in filterOpt.selectedList">
-                        <CommonContentHeadDate
-                            :season="item[9][0]"
-                            :id="item[1]"
-                            :idx="idx"
-                            :title="getLeagueTitle(item)"
-                            :sportSection="opt.sportSection"
-                            :hasLeagueTag="filterOpt.selectedTagList[idx] ?? false"
-                            :src="getLeagueLogo(item)"
-                            :alt="getLeagueTitle(item)"
-                            :isPending="pendingOpt.league"
+        <MatchUpH2hHeader>
+            <div class="frmu95mobileu95matchup-item-2">
+                <MatchUpH2hTeamSelection
+                    v-if="props.isLastMatches"
+                    :homeName="opt.homeName"
+                    :homeLogo="opt.homeLogo"
+                    :awayName="opt.awayName"
+                    :awayLogo="opt.awayLogo"
+                    :isSelectedIdx="filterOpt.selectedIdx"
+                    @toggle="clickSelection"
+                />
+                <div class="frame-315-2 frame-315-3">
+                    <div class="surname-1 surname-2 headline3 flex flex-row">
+                        <MatchUpH2hFilter
+                            :title="`Home${ props.isLastMatches ? '' : ` - ${ opt.homeName }` }`"
+                            :isChecked="filterOpt.isHome"
+                            class="mr-2"
+                            @toggle="clickHome"
                         />
-                        <article class="row-28 row-35">
-                            <div class="cell-13">
-                                <div class="content-13 w-[54px]">
-                                    <div class="time-time body2 mx-auto">
-                                        {{ getTime(item) }}<br />
-                                        {{ getYear(item) }}
+                        <MatchUpH2hFilter
+                            :title="'This league'"
+                            :isChecked="filterOpt.isThisLeague"
+                            @toggle="clickThisLeague"
+                        />
+                    </div>
+                </div>
+                <div class="frame-532">
+                    <div class="frame-531">
+                        <div class="frame-526">
+                            <div class="number-17 valign-text-middle leaguetitle">
+                                {{ scoreOpt.win }}
+                            </div>
+                            <div class="win-2 valign-text-middle win-7 headline2">WIN</div>
+                        </div>
+                        <img class="line-2-h2h" src="/img/line-27@2x.png" alt="Line 27" />
+                        <div class="frame-527">
+                            <div class="number-18 valign-text-middle leaguetitle">
+                                {{ scoreOpt.draw }}
+                            </div>
+                            <div class="drawn-1 valign-text-middle drawn-3 headline2">DRAW</div>
+                        </div>
+                        <img class="line-2-h2h" src="/img/line-27@2x.png" alt="Line 28" />
+                        <div class="frame-528">
+                            <div class="number-19 valign-text-middle leaguetitle">
+                                {{ scoreOpt.lose }}
+                            </div>
+                            <div class="lose valign-text-middle lose-3 headline2">LOSE</div>
+                        </div>
+                    </div>
+                    <div class="table-8 table-9">
+                        <template v-for="(item, idx) in filterOpt.selectedList">
+                            <CommonContentHeadDate
+                                :season="item[9][0]"
+                                :id="item[1]"
+                                :idx="idx"
+                                :title="getLeagueTitle(item)"
+                                :sportSection="opt.sportSection"
+                                :hasLeagueTag="filterOpt.selectedTagList[idx] ?? false"
+                                :src="getLeagueLogo(item)"
+                                :alt="getLeagueTitle(item)"
+                                :isPending="pendingOpt.league"
+                            />
+                            <article class="row-28 row-35">
+                                <div class="cell-13">
+                                    <div class="content-13 w-[54px]">
+                                        <div class="time-time body2 mx-auto">
+                                            {{ getTime(item) }}<br />
+                                            {{ getYear(item) }}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="cell-14">
-                                <div class="content-14">
-                                    <div class="frame-41">
-                                        <USkeleton v-if="pendingOpt.team" class="w-[15px] h-[15px] relative rounded-full" />
-                                        <USkeleton v-if="pendingOpt.team" class="w-[100px] h-[15px]" />
-                                        <template v-else>
-                                            <img :src="getTeamLogo(item[5][0])" style=" height: 15px; position: relative; width: 15px;" />
-                                            <!-- home name -->
-                                            <div
-                                                class="valign-text-middle body"
-                                                :class="chckIsHomeId(item[5][0]) ? 'asoton-villa' : 'arsenal-8'"
-                                            >
-                                                {{ getTeamName(item[5][0]) }}
-                                            </div>
-                                        </template>
-                                    </div>
-                                    <div class="frame-41">
-                                        <USkeleton v-if="pendingOpt.team" class="w-[15px] h-[15px] relative rounded-full" />
-                                        <USkeleton v-if="pendingOpt.team" class="w-[100px] h-[15px]" />
-                                        <template v-else>
-                                            <img :src="getTeamLogo(item[6][0])" style=" height: 15px; position: relative; width: 15px;" />
-                                            <!-- away name -->
-                                            <div 
-                                                class="valign-text-middle body"
-                                                :class="chckIsHomeId(item[6][0]) ? 'asoton-villa' : 'arsenal-8'"
-                                            >
-                                                {{ getTeamName(item[6][0]) }}
-                                            </div>
-                                        </template>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="cell-13">
-                                <div class="content-22 headline3">
-                                    <div class="score-1 valign-text-middle score-8">    <!-- home score -->
-                                        {{ item[5][2] }}
-                                    </div>
-                                    <div class="score-8 valign-text-middle">            <!-- away score -->
-                                        {{ item[6][2] }}
+                                <div class="cell-14">
+                                    <div class="content-14">
+                                        <div class="frame-41">
+                                            <USkeleton v-if="pendingOpt.team" class="w-[15px] h-[15px] relative rounded-full" />
+                                            <USkeleton v-if="pendingOpt.team" class="w-[100px] h-[15px]" />
+                                            <template v-else>
+                                                <img :src="getTeamLogo(item[5][0])" style=" height: 15px; position: relative; width: 15px;" />
+                                                <!-- home name -->
+                                                <div
+                                                    class="valign-text-middle body"
+                                                    :class="chckIsHomeId(item[5][0]) ? 'asoton-villa' : 'arsenal-8'"
+                                                >
+                                                    {{ getTeamName(item[5][0]) }}
+                                                </div>
+                                            </template>
+                                        </div>
+                                        <div class="frame-41">
+                                            <USkeleton v-if="pendingOpt.team" class="w-[15px] h-[15px] relative rounded-full" />
+                                            <USkeleton v-if="pendingOpt.team" class="w-[100px] h-[15px]" />
+                                            <template v-else>
+                                                <img :src="getTeamLogo(item[6][0])" style=" height: 15px; position: relative; width: 15px;" />
+                                                <!-- away name -->
+                                                <div 
+                                                    class="valign-text-middle body"
+                                                    :class="chckIsHomeId(item[6][0]) ? 'asoton-villa' : 'arsenal-8'"
+                                                >
+                                                    {{ getTeamName(item[6][0]) }}
+                                                </div>
+                                            </template>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="cell-type5">
-                                <div class="content-15">
-                                    <div v-if="chckIsFilteredWinLoseDraw(item) === 'win'" class="img_-matchup_h2-h_-tag_-win_new img_-matchup_h2-h_-tag_">
-                                        <div class="win-3 valign-text-middle win-7 caption">WIN</div>
-                                    </div>
-                                    <div v-if="chckIsFilteredWinLoseDraw(item) === 'lose'" class="img_-matchup_h2-h_-tag_-lose_new img_-matchup_h2-h_-tag_">
-                                        <div class="lose-1 valign-text-middle lose-3 caption">LOSE</div>
-                                    </div>
-                                    <div v-if="chckIsFilteredWinLoseDraw(item) === 'draw'" class="img_-matchup_h2-h_-tag_-drawn_new img_-matchup_h2-h_-tag_">
-                                        <div class="drawn-2 valign-text-middle drawn-3 caption">DRAW</div>
+                                <div class="cell-13">
+                                    <div class="content-22 headline3">
+                                        <div class="score-1 valign-text-middle score-8">    <!-- home score -->
+                                            {{ item[5][2] }}
+                                        </div>
+                                        <div class="score-8 valign-text-middle">            <!-- away score -->
+                                            {{ item[6][2] }}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </article>
-                    </template>
+                                <div class="cell-type5">
+                                    <div class="content-15">
+                                        <div v-if="chckIsFilteredWinLoseDraw(item) === 'win'" class="img_-matchup_h2-h_-tag_-win_new img_-matchup_h2-h_-tag_">
+                                            <div class="win-3 valign-text-middle win-7 caption">WIN</div>
+                                        </div>
+                                        <div v-if="chckIsFilteredWinLoseDraw(item) === 'lose'" class="img_-matchup_h2-h_-tag_-lose_new img_-matchup_h2-h_-tag_">
+                                            <div class="lose-1 valign-text-middle lose-3 caption">LOSE</div>
+                                        </div>
+                                        <div v-if="chckIsFilteredWinLoseDraw(item) === 'draw'" class="img_-matchup_h2-h_-tag_-drawn_new img_-matchup_h2-h_-tag_">
+                                            <div class="drawn-2 valign-text-middle drawn-3 caption">DRAW</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </template>
+                    </div>
                 </div>
             </div>
-        </div>
+        </MatchUpH2hHeader>
     </div>
 </template>
 

@@ -29,7 +29,7 @@
 .frmu95mobile .contents-footer-Mzx5SR-footer {
   align-items: flex-start;
   align-self: stretch;
-  background-color: #17191b;
+  background-color: var(--tory-blue);
   display: flex;
   flex-wrap: wrap;
   gap: 21px 21px;

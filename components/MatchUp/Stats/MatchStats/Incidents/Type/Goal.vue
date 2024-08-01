@@ -21,10 +21,10 @@
 <script setup lang="ts">
 const props = defineProps<{
     goalPlayer: string;
-    assistPlayer1?: string;
-    assistPlayer2?: string;
     homeScore: number;
     awayScore: number;
+    assistPlayer1?: string;
+    assistPlayer2?: string;
 }>();
 
 onMounted(async () => {
@@ -34,6 +34,11 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+
+@import '@/public/css/matchup/stats/incidents/globals.css';
+@import '@/public/css/matchup/stats/incidents/styleguide.css';
+@import '@/public/css/matchup/stats/incidents/tmpu95incidentu95list.css';
+
 
 .div-10 {
     display: flex;

@@ -13,7 +13,7 @@ export type TCommonSchedule =
     {
         "ai_away_scores": TCommonScore;
         "ai_home_scores": TCommonScore;
-        "ai_status_id": TCommonMatchStatus;
+        "ai_status_id": TCommonMatchStatus | number;
 
         "ai_kickoff_timestamp"?: number;
     }

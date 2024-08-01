@@ -61,7 +61,7 @@ const click = (idx: number) => {
 .div-2 {
   justify-content: center;
   display: flex;
-  margin-top: 4px;
+  /* margin-top: 4px; */
   flex-direction: column;
   /* color: #fff; */
   flex: 1;
@@ -95,7 +95,7 @@ const click = (idx: number) => {
 .div-5 {
   justify-content: center;
   display: flex;
-  margin-top: 4px;
+  /* margin-top: 4px; */
   flex-direction: column;
   /* color: #000; */
   white-space: nowrap;

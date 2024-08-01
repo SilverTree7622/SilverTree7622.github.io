@@ -1,0 +1,37 @@
+:root { 
+  --bggray: #f8f8f8;
+  --bk: #000000;
+  --ctgray2: #616161;
+  --wt: #ffffff;
+ 
+  --font-size-l: 13px;
+  --font-size-m: 10px;
+  --font-size-xl: 14px;
+ 
+  --font-family-pretendard-medium: "Pretendard-Medium", Helvetica;
+  --font-family-pretendard-regular: "Pretendard-Regular", Helvetica;
+  --font-family-pretendard-semibold: "Pretendard-SemiBold", Helvetica;
+}
+.headline3 {
+  font-family: var(--font-family-pretendard-semibold);
+  font-size: var(--font-size-xl);
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: -0.56px;
+}
+
+.body {
+  font-family: var(--font-family-pretendard-regular);
+  font-size: var(--font-size-l);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.caption {
+  font-family: var(--font-family-pretendard-medium);
+  font-size: var(--font-size-m);
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0;
+}

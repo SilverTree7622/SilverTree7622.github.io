@@ -1,14 +1,13 @@
 <template>
-    <div class="px-2">
-        <MatchUpStatsMatchStats />
-        <MatchUpH2h :isLastMatches="true" :name="'matchup-lastmatches'"/>
+    <div class="bg-white">
+        <MatchUpStatsMatchStats class="bg-white mb-1" />
+        <MatchUpH2h :isLastMatches="true" :name="'matchup-lastmatches'" class="mb-1" />
         <!-- <MatchUpStatsTopPlayers /> -->
         <MatchUpStatsOdds />
         
         <!-- only after live is over statistics -->
         <MatchUpStatsMatchStatsResult
             v-if="!matchUpStore.chckIsLive()"
-            :list="[]"
         />
     </div>
 </template>
