@@ -1,5 +1,6 @@
 import UtilDate from "~/utils/date";
 import type { TTennisSchedule } from "./schedule";
+import type { TMatchUpH2HTennis } from "./h2h";
 
 
 export const isLive = (ai_status_id: number): boolean => {
@@ -112,4 +113,14 @@ export const getTimeViaIdx = (
     schedule: TTennisSchedule,
 ): string => {
     return `${ inningIdx + 1 }`;
+};
+
+export const getMatchUpH2hInfo = (
+    type: string,
+    item: TMatchUpH2HTennis,
+) => {
+    if (type === 'match_id') return item[0];
+    if (type === 'competition_id') return item[2];
+
+    return item[0];
 };

@@ -178,8 +178,10 @@ const on = (home: boolean, away: boolean, time: boolean) => {
     if (time) updateOpt.time = true;
 };
 
-const goLiveTracker = (league: TSportScheduleTypes) => {
-    goStore.go_livetraker(league.match_id, props.sportSection, league);
+const goLiveTracker = (schedule: TSportScheduleTypes) => {
+    console.log('schedule.match_id, props.sportSection, schedule: ', schedule.match_id, props.sportSection, schedule);
+    
+    goStore.go_livetracker(schedule.match_id, props.sportSection, schedule);
 };
 
 onMounted(async () => {

@@ -5,6 +5,7 @@
             :match_id="matchUpStore.getConfig().match_id"
         />
         <MatchUpStatsMatchStatsHeader
+            v-if="matchUpStore.getConfigStats().isExist"
             :home="getTeam('home')"
             :away="getTeam('away')"
         >

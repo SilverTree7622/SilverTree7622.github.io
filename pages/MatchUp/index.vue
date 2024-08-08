@@ -4,7 +4,7 @@
         :isPending="opt.isPending"
         :sName="'MatchUp'"
         :tab="opt.tab"
-        :result="opt.result"
+        :result="'dummy'"
         :changeTab="changeTab"
         @clickTab="clickTab"
     >
@@ -24,13 +24,13 @@
             v-if="!opt.isPending && opt.tab === 'lineup'"
         />
         <MatchUpH2hMain
-            v-if="!opt.isPending && opt.tab === 'h2h'"
+            v-if="!opt.isPending && opt.tab === 'h2h' && matchUpStore.getConfigH2h().isExist"
         />
     </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-import { GetSportSectionUpperCase } from '~/types/Common/sport';
+import { GetSportSectionUpperCase, type TCommonSportSection } from '~/types/Common/sport';
 import UtilObj from '~/utils/obj';
 
 const matchUpStore = useMatchUpStore();
@@ -40,11 +40,7 @@ const opt = reactive({
     isBooting: <boolean> true,
     isPending: <boolean> true,
     tab: <string> route.query['tab'] as string ?? 'stats',
-    result: <any> {
-        nav_code: '',
-        sName: 'dummy_sName',
-        league: [],
-    },
+    sportSection: <TCommonSportSection> route.query['sport'] as TCommonSportSection ?? 'football',
 });
 
 const statsOpt = reactive({
@@ -61,8 +57,6 @@ const clickTab = (idx: number) => {
 
 const changeTab = async () => {
     opt.tab = route.query['tab'] as string;
-    // opt.isPending = true;
-    // await res();
 };
 
 const chckMatchId = (): string => {
@@ -82,22 +76,21 @@ const chckLineUpInfo = async () => {
             sports: GetSportSectionUpperCase(sportSection),
         },
     );
-    const lineUpdata = (lineUpRes.data as any)['data']['LineUp'] ?? {};
-    if (!UtilObj.chckIsEmpty(lineUpdata)) {
-        matchUpStore.setIsLineUpExist(true);
-        matchUpStore.setConfigLineUp(lineUpdata);
-        return;
+    if ((lineUpRes.data as any)['data']) {
+        const lineUpdata = (lineUpRes.data as any)['data']['LineUp'] ?? {};
+        if (!UtilObj.chckIsEmpty(lineUpdata)) {
+            matchUpStore.setIsLineUpExist(true);
+            matchUpStore.setConfigLineUp(lineUpdata);
+            return;
+        }
     }
     matchUpStore.setIsLineUpExist(false);
     if (opt.tab !== 'lineup') return;
-    navigateTo(`/MatchUp?tab=stats&uuid=${ matchid }`);
+    navigateTo(`/MatchUp?tab=stats&uuid=${ matchid }&sport=${ opt.sportSection }`);
 };
 
 const res = async () => {
     const matchid = chckMatchId();
-    const {
-        sportSection,
-    } = matchUpStore.getConfig();
     let path = 'MatchStats';
     if (opt.tab === 'h2h') {
         path = 'MatchH2H';
@@ -107,16 +100,13 @@ const res = async () => {
         { method: 'POST', },
         {
             matchid,
-            sports: GetSportSectionUpperCase(sportSection),
-        },
+            sports: GetSportSectionUpperCase(opt.sportSection),
+        }
     );
     const data = (statsRes.data as any)['data'] ?? {};
-    console.log('data from stats res: ', data);
-    matchUpStore.setConfig(sportSection, data['data']);
+    matchUpStore.setConfig(opt.sportSection, data['data']);
     matchUpStore.setConfigStats(data['overview']);
     matchUpStore.setConfigH2h(data['H2H']);
-    opt.isBooting = false;
-    opt.isPending = false;
 };
 
 onMounted(async () => {
@@ -124,6 +114,8 @@ onMounted(async () => {
     await nextTick();
     await chckLineUpInfo();
     await res();
+    opt.isBooting = false;
+    opt.isPending = false;
 });
 
 onBeforeUnmount(() => {

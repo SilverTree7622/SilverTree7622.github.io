@@ -53,7 +53,7 @@
                         <template v-for="(item, idx) in filterOpt.selectedList">
                             <CommonContentHeadDate
                                 :season="item[9][0]"
-                                :id="item[1]"
+                                :id="matchUpStore.getH2hInfo(opt.sportSection, 'competition_id', item as any)"
                                 :idx="idx"
                                 :title="getLeagueTitle(item)"
                                 :sportSection="opt.sportSection"
@@ -137,8 +137,8 @@
 
 <script setup lang="ts">
 import type { TCommonSportSection } from '~/types/Common/sport';
-import type { TMatchUpTeamInfo } from '~/types/FootBall/h2h';
-import type { TMatchUpH2HSport } from '~/types/h2h';
+import type { TMatchUpTeamInfoFootball } from '~/types/FootBall/h2h';
+import type { TMatchUpH2HSportCommon } from '~/types/h2h';
 import UtilDate from '~/utils/date';
 
 const props = defineProps<{
@@ -158,7 +158,7 @@ const opt = reactive({
     awayTeamId: <string> '',
 });
 
-const config = reactive<TMatchUpH2HSport['history']>({
+const config = reactive({
     home: [],
     away: [],
     vs: [],
@@ -167,7 +167,7 @@ const config = reactive<TMatchUpH2HSport['history']>({
 const filterOpt = reactive({
     selectedIdx: <number> 0,
     selectedTeamId: <string> '',
-    selectedList: <TMatchUpTeamInfo[]> [],
+    selectedList: <TMatchUpTeamInfoFootball[]> [],
     selectedTagList: <boolean[]> [],
     isHome: <boolean> false,
     isThisLeague: <boolean> false,
@@ -203,7 +203,7 @@ const setTeamIdViaOpts = (): string => {
     return (filterOpt.selectedIdx === 0) ? opt.homeTeamId : opt.awayTeamId;
 };
 
-const setListViaOpts = (): TMatchUpTeamInfo[]  => {
+const setListViaOpts = (): TMatchUpTeamInfoFootball[]  => {
     if (props.isLastMatches) {
         return (filterOpt.selectedIdx === 0) ? config.home : config.away;
     }
@@ -241,22 +241,22 @@ const clickThisLeague = (value: boolean) => {
     filterOpt.isThisLeague = value;
 };
 
-const getLeagueTitle = (item: TMatchUpTeamInfo): string => {
+const getLeagueTitle = (item: TMatchUpTeamInfoFootball): string => {
     return matchUpStore.getLeagueTitle(item[1]);
 };
 
-const getLeagueLogo = (item: TMatchUpTeamInfo): string => {
+const getLeagueLogo = (item: TMatchUpTeamInfoFootball): string => {
     return matchUpStore.getLeagueLogo(item[1]);
 };
 
-const getTime = (item: TMatchUpTeamInfo): string => {
+const getTime = (item: TMatchUpTeamInfoFootball): string => {
     const date = UtilDate.addMillisecond(item[3]);
     const day = date.getUTCDate();
     const month = date.getUTCMonth() + 1;
     return `${ day } ${ UtilDate.changeMonthNum2Str(month) }`;
 };
 
-const getYear = (item: TMatchUpTeamInfo): string => {
+const getYear = (item: TMatchUpTeamInfoFootball): string => {
     const date = UtilDate.addMillisecond(item[3]);
     const year = date.getUTCFullYear();
     return `${ year }`;
@@ -270,13 +270,13 @@ const getTeamName = (teamId: string): string => {
     return matchUpStore.getTeamName(teamId);
 };
 
-const getIsHomeWin = (item: TMatchUpTeamInfo): 'win' | 'lose' | 'draw' => {
+const getIsHomeWin = (item: TMatchUpTeamInfoFootball): 'win' | 'lose' | 'draw' => {
     if (item[5][2] > item[6][2]) return 'win';
     if (item[5][2] < item[6][2]) return 'lose';
     return 'draw';
 };
 
-const chckIsFilteredWinLoseDraw = (item: TMatchUpTeamInfo): 'win' | 'lose' | 'draw' => {
+const chckIsFilteredWinLoseDraw = (item: TMatchUpTeamInfoFootball): 'win' | 'lose' | 'draw' => {
     if (item[5][0] === filterOpt.selectedTeamId) {
         return getIsHomeWin(item);
     }
@@ -290,7 +290,7 @@ const chckIsHomeId = (id: string): boolean => {
     return id === filterOpt.selectedTeamId;
 };
 
-const getTotalWin = (targetList: TMatchUpTeamInfo[]): number => {
+const getTotalWin = (targetList: TMatchUpTeamInfoFootball[]): number => {
     let winCnt = 0;
     for (const item of targetList) {
         if (item[5][0] === filterOpt.selectedTeamId) {
@@ -307,7 +307,7 @@ const getTotalWin = (targetList: TMatchUpTeamInfo[]): number => {
     return winCnt;
 };
 
-const getTotalDraw = (targetList: TMatchUpTeamInfo[]): number => {
+const getTotalDraw = (targetList: TMatchUpTeamInfoFootball[]): number => {
     let drawCnt = 0;
     for (const item of targetList) {
         if (item[5][0] === filterOpt.selectedTeamId) {
@@ -324,7 +324,7 @@ const getTotalDraw = (targetList: TMatchUpTeamInfo[]): number => {
     return drawCnt;
 };
 
-const getTotalLose = (targetList: TMatchUpTeamInfo[]): number => {
+const getTotalLose = (targetList: TMatchUpTeamInfoFootball[]): number => {
     let loseCnt = 0;
     for (const item of targetList) {
         if (item[5][0] === filterOpt.selectedTeamId) {
@@ -341,8 +341,8 @@ const getTotalLose = (targetList: TMatchUpTeamInfo[]): number => {
     return loseCnt;  
 };
 
-const sortLeagueTag = (list: TMatchUpTeamInfo[]) => {
-    const getDatePath = (item: TMatchUpTeamInfo) => {
+const sortLeagueTag = (list: TMatchUpTeamInfoFootball[]) => {
+    const getDatePath = (item: TMatchUpTeamInfoFootball) => {
         return new Date(item[3]);
     };
     list.forEach((item, idx) => {
@@ -407,7 +407,7 @@ onMounted(async () => {
     sortLeagueTag(filterOpt.selectedList);
     updateTotalValues();
 
-    let totalList: TMatchUpTeamInfo[] = [];
+    let totalList: TMatchUpTeamInfoFootball[] = [];
     if (props.isLastMatches) {
         totalList = [ ...config.home, ...config.away, ...config.vs ];
     } else {

@@ -43,7 +43,6 @@
 </template>
 
 <script setup lang="ts">
-import type { TCommonMatchStatus } from '~/types/Common/status';
 import type { TMatchUpStoreConfig } from '~/types/matchUp';
 import UtilDate from '~/utils/date';
 
@@ -57,7 +56,7 @@ const clickBack = () => {
     router.back();
 };
 
-const getScore = (matchStatus: TCommonMatchStatus, homeScore: number | string, awayScore: number | string) => {
+const getScore = (matchStatus: number, homeScore: number | string, awayScore: number | string) => {
     const isFixtures = (
         matchStatus === 0 ||
         matchStatus === 1
@@ -73,7 +72,7 @@ const getTime = (timestamp: number) => {
     return `${ time }, ${ dateStore.getFilterFormat(standard) }, ${ weekday }`;
 };
 
-const getIsFinished = (matchStatus: TCommonMatchStatus): boolean => {
+const getIsFinished = (matchStatus: number): boolean => {
     return !matchUpStore.chckIsLive();
 };
 

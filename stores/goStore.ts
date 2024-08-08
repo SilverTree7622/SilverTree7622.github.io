@@ -18,14 +18,14 @@ export const useGoStore = defineStore('goStore', () => {
         navigateTo(`/League?id=${ leagueId }&season=${ seasonId }&sport=${ sportSection }`);
     };
     
-    const go_livetraker = (match_id: string, sportSection: TCommonSportSection, schedule: TSportScheduleTypes) => {
+    const go_livetracker = (match_id: string, sportSection: TCommonSportSection, schedule: TSportScheduleTypes) => {
         useMatchUpStore().setConfig(sportSection, schedule);
-        navigateTo(`/Matchup?tab=stats&uuid=${ match_id }`);
+        navigateTo(`/Matchup?tab=stats&uuid=${ match_id }&sport=${ sportSection }`);
     };
 
     return {
         go_matchup,
         go_league,
-        go_livetraker,
+        go_livetracker,
     };
 });

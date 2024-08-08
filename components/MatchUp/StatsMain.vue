@@ -1,7 +1,14 @@
 <template>
     <div class="bg-white">
-        <MatchUpStatsMatchStats class="bg-white mb-1" />
-        <MatchUpH2h :isLastMatches="true" :name="'matchup-lastmatches'" class="mb-1" />
+        <MatchUpStatsMatchStats
+            class="bg-white mb-1"
+        />
+        <MatchUpH2h
+            v-if="matchUpStore.getConfigH2h().isExist"
+            :isLastMatches="true"
+            :name="'matchup-lastmatches'"
+            class="mb-1"
+        />
         <!-- <MatchUpStatsTopPlayers /> -->
         <MatchUpStatsOdds />
         

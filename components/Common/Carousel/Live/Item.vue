@@ -140,7 +140,7 @@ const opt = reactive({
 });
 
 const clickLiveCenter = () => {
-    goStore.go_livetraker(props.item.match_id ?? '', props.sportSection, props.item);
+    goStore.go_livetracker(props.item.match_id ?? '', props.sportSection, props.item);
 };
 
 const getLeagueTime = () => {

@@ -1,5 +1,8 @@
 import UtilDate from "~/utils/date";
 import type { TFootBallSchedule } from "./schedule";
+import type { TCommonSportSection } from "../Common/sport";
+import type { TMatchUpH2HSportCommon } from "../h2h";
+import type { TMatchUpH2HFootball } from "./h2h";
 
 
 export const isLive = (ai_status_id: number): boolean => {
@@ -101,4 +104,14 @@ export const getTimeViaIdx = (
     schedule: TFootBallSchedule,
 ): string => {
     return '';
+};
+
+export const getMatchUpH2hInfo = (
+    type: string,
+    item: TMatchUpH2HFootball,
+) => {
+    if (type === 'match_id') return item[0];
+    if (type === 'competition_id') return item[1];
+
+    return item[0];
 };

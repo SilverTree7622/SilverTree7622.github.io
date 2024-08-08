@@ -26,6 +26,7 @@
             :customHeading="`/${props.sName}?uuid=${ opt.uuid }&tab=lineup`"
         />
         <CommonHeaderTabCommon
+            v-show="matchUpStore.getConfigH2h().isExist"
             :sName="props.sName"
             name="h2h"
             :isToggled="props.tab === 'h2h'"
@@ -35,19 +36,20 @@
 </template>
 
 <script lang="ts" setup>
-import { ECommonSportSectionValue } from '~/types/Common/sport';
+import { ECommonSportSectionValue, type TCommonSportSection } from '~/types/Common/sport';
 
 const props = defineProps<{
     sName: string;
     tab: string;
 }>();
 
-const opt = reactive({
-    uuid: <string> '',
-});
-
 const matchUpStore = useMatchUpStore();
 const route = useRoute();
+
+const opt = reactive({
+    uuid: <string> route.query['uuid'] ?? 'football',
+    sportSection: <TCommonSportSection> route.query['sport'] ?? 'football',
+});
 
 onMounted(async () => {
     await nextTick();
@@ -56,8 +58,9 @@ onMounted(async () => {
         sportSection,
     } = matchUpStore.getConfig();
     opt.uuid = (route.query["uuid"] as string) ?? match_id;
+    opt.sportSection = (route.query["sport"] as TCommonSportSection) ?? sportSection;
     if (opt.uuid !== '') return;
     // redirect to live home?
-    navigateTo(`/${ ECommonSportSectionValue[sportSection] ?? 'FootBall' }`);
+    navigateTo(`/${ ECommonSportSectionValue[opt.sportSection] ?? 'FootBall' }`);
 })
 </script>

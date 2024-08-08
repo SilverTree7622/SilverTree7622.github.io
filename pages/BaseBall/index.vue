@@ -127,14 +127,17 @@ const toggleByTime = async () => {
 const updateLiveRealTime = async () => {
     const prevSortedList = [ ...list.sortedList ];
     const prevSortedListMatchUpList = list.sortedList.map( item => item.match_id );
-    const prevSortedListHomeScoreList = list.sortedList.map( item => item.ai_scores['ft'][0] );
+    const prevSortedListHomeScoreList = list.sortedList.map((item) => {
+        // if (!item.ai_scores['ft']) return undefined;
+        return item.ai_scores['ft'][0];
+    });
     const prevSortedListAwayScoreList = list.sortedList.map( item => item.ai_scores['ft'][1] );
     const prevSortedListMatchStatusList = list.sortedList.map( item => item.ai_status_id );
     const prevSortedKickOffList = [ ...list.sortedKickOffList ];
     
-    list.totalList = liveIntervalLoadingStore.updateLiveRealTime(list.totalList);
+    list.totalList = liveIntervalLoadingStore.updateLiveRealTime(list.totalList) as TBaseBallSchedule[];
     list.totalKickOffList = liveIntervalLoadingStore.updateLiveKickOff(list.totalList);
-    list.sortedList = liveIntervalLoadingStore.updateLiveRealTime(list.sortedList);
+    list.sortedList = liveIntervalLoadingStore.updateLiveRealTime(list.sortedList) as TBaseBallSchedule[];
     list.sortedKickOffList = liveIntervalLoadingStore.updateLiveKickOff(list.sortedList);
     
     await callNextContents(true);
@@ -179,6 +182,7 @@ const updateLiveRealTime = async () => {
             prevFilteredKickOffList['ai_kickoff_timestamp']
         ;
         const config = {};
+        config['ai_scores'] = {};
         config['ai_scores']['ft'] = item.ai_scores['ft'];
         config['ai_kickoff_timestamp'] = ai_kickoff_timestamp;
         config['ai_match_status'] = item.ai_status_id;

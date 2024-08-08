@@ -1,12 +1,13 @@
 import { defineStore } from "pinia";
-import { getScore, isLive } from "~/types";
+import { getMatchUpH2hInfo, getScore, isLive } from "~/types";
 import { GetSportSectionUpperCase, type TCommonSportSection } from "~/types/Common/sport";
-import type { TMatchUpH2HSport } from "~/types/h2h";
+import type { TMatchUpH2HSportCommon } from "~/types/h2h";
 import type { TMatchUpLineUpSport } from "~/types/lineUp";
 import type { TMatchUpStoreConfig, TMatchUpStoreStatsIncident } from "~/types/matchUp";
 import type { TSportScheduleTypes } from "~/types/schedule";
 import type { TMatchUpStatsSport } from "~/types/stats";
 import type { TContentStoreHomeAwayPrefix } from "./contentStore";
+import UtilObj from "~/utils/obj";
 
 
 export type TH2hTeamRes = {
@@ -51,7 +52,8 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
         matchStatus: 1,
     });
 
-    const statsConfig = reactive<TMatchUpStatsSport>({
+    const statsConfig = reactive<TMatchUpStatsSport & { isExist: boolean; }>({
+        isExist: <boolean> false,
         id: '',
         incidents: [],
         score: {} as any,
@@ -76,7 +78,8 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
         },
     });
 
-    const h2hConfig = reactive<TMatchUpH2HSport['history']>({
+    const h2hConfig = reactive({
+        isExist: <boolean> false,
         home: [],
         away: [],
         vs: [],
@@ -132,6 +135,15 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
         for (const item in data) {
             statsConfig[item] = data[item];
         }
+        if (
+            statsConfig.incidents.length === 0 &&
+            UtilObj.chckIsEmpty(statsConfig.score) &&
+            statsConfig.stats.length === 0
+        ) {
+            statsConfig.isExist = false;
+        } else {
+            statsConfig.isExist = true;
+        }
     };
 
     const setConfigLineUp = (data: TMatchUpLineUpSport) => {
@@ -140,7 +152,12 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
         }
     };
 
-    const setConfigH2h = (data: TMatchUpH2HSport) => {
+    const setConfigH2h = (data: TMatchUpH2HSportCommon) => {
+        if (typeof data === 'string' || (typeof data === 'object' && UtilObj.chckIsEmpty(data))) {
+            h2hConfig.isExist = false;
+            return;
+        }
+        h2hConfig.isExist = true;
         for (const item in data.history) {
             h2hConfig[item] = data.history[item];
         }
@@ -267,6 +284,10 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
         return resourceListConfig.league.find( leagueItem => leagueItem.ai_id === leagueId )?.competition_logo ?? '';
     };
 
+    const getH2hInfo = (sportSection: TCommonSportSection, type: string, item: TMatchUpH2HSportCommon) => {
+        return getMatchUpH2hInfo(sportSection, type, item);
+    };
+
     return {
         onMounted,
         onBeforeUnmountPage,
@@ -290,5 +311,6 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
         getTeamName,
         getLeagueTitle,
         getLeagueLogo,
+        getH2hInfo,
     };
 });

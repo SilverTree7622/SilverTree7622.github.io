@@ -1,6 +1,8 @@
 import UtilDate from "~/utils/date";
 import type { TBasketBallSchedule } from "./schedule";
 import type { TSportScheduleTypes } from "../schedule";
+import type { TCommonSportSection } from "../Common/sport";
+import type { TMatchUpH2HBasketball } from "./h2h";
 
 
 export const isLive = (ai_status_id: number): boolean => {
@@ -112,4 +114,16 @@ export const getTimeViaIdx = (
         return getTime(schedule.ai_status_id, schedule['ai_kickoff_timestamp'] ?? 0);
     }
     return 'Ended';
+};
+
+export const getMatchUpH2hInfo = (
+    type: string,
+    item: TMatchUpH2HBasketball,
+) => {
+    console.log('item[2]: ', item[2]);
+
+    if (type === 'match_id') return item[0];
+    if (type === 'competition_id') return item[2];
+
+    return item[0];
 };

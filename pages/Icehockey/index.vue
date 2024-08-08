@@ -131,9 +131,9 @@ const updateLiveRealTime = async () => {
     const prevSortedListMatchStatusList = list.sortedList.map( item => item.ai_status_id );
     const prevSortedKickOffList = [ ...list.sortedKickOffList ];
     
-    list.totalList = liveIntervalLoadingStore.updateLiveRealTime(list.totalList);
+    list.totalList = liveIntervalLoadingStore.updateLiveRealTime(list.totalList) as TIceHockeySchedule[];
     list.totalKickOffList = liveIntervalLoadingStore.updateLiveKickOff(list.totalList);
-    list.sortedList = liveIntervalLoadingStore.updateLiveRealTime(list.sortedList);
+    list.sortedList = liveIntervalLoadingStore.updateLiveRealTime(list.sortedList) as TIceHockeySchedule[];
     list.sortedKickOffList = liveIntervalLoadingStore.updateLiveKickOff(list.sortedList);
     
     await callNextContents(true);

@@ -1,5 +1,5 @@
 
-export type TMatchUpH2H = {
+export type TMatchUpH2HFootball = {
     future: TMatchUpH2HFuture;
     goal_distribution: TMatchUpH2HGoalDist;
     history: TMatchUpH2HHistory;
@@ -7,8 +7,8 @@ export type TMatchUpH2H = {
 };
 
 export type TMatchUpH2HFuture = {
-    home: TMatchUpTeamInfo[];
-    away: TMatchUpTeamInfo[];
+    home: TMatchUpTeamInfoFootball[];
+    away: TMatchUpTeamInfoFootball[];
 };
 
 export type TMatchUpH2HGoalDist = {
@@ -38,14 +38,14 @@ export type TMatchUpH2HGoalDistListItemEle = [
 ];
 
 export type TMatchUpH2HHistory = {
-    home: TMatchUpTeamInfo[];
-    away: TMatchUpTeamInfo[];
-    vs: TMatchUpTeamInfo[];
+    home: TMatchUpTeamInfoFootball[];
+    away: TMatchUpTeamInfoFootball[];
+    vs: TMatchUpTeamInfoFootball[];
 };
 
-export type TMatchUpH2HInfo = TMatchUpTeamInfo;
+export type TMatchUpH2HInfo = TMatchUpTeamInfoFootball;
 
-export type TMatchUpTeamInfo = [
+export type TMatchUpTeamInfoFootball = [
     string,         // match id
     string,         // competiton id
     number,         // match status

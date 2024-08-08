@@ -123,7 +123,7 @@ const getIsToday = (): number => {
 };
 
 const goLiveTracker = (league: TSportScheduleTypes) => {
-    goStore.go_livetraker(league.match_id, props.sportSection, league);
+    goStore.go_livetracker(league.match_id, props.sportSection, league);
 };
 </script>
 

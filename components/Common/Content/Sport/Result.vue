@@ -119,7 +119,7 @@ const hasSlot = (name) => {
 };
 
 const goLiveTracker = (league: TFootBallSchedule) => {
-    goStore.go_livetraker(league.match_id, props.sportSection, league);
+    goStore.go_livetracker(league.match_id, props.sportSection, league);
 };
 
 onMounted(async () => {
