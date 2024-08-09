@@ -82,9 +82,9 @@
                                                 <!-- home name -->
                                                 <div
                                                     class="valign-text-middle body"
-                                                    :class="chckIsHomeId(item[5][0]) ? 'asoton-villa' : 'arsenal-8'"
+                                                    :class="chckIsHomeId('home', item) ? 'asoton-villa' : 'arsenal-8'"
                                                 >
-                                                    {{ getTeamName(item[5][0]) }}
+                                                    {{ getTeamName('home', item) }}
                                                 </div>
                                             </template>
                                         </div>
@@ -97,9 +97,9 @@
                                                 <!-- away name -->
                                                 <div 
                                                     class="valign-text-middle body"
-                                                    :class="chckIsHomeId(item[6][0]) ? 'asoton-villa' : 'arsenal-8'"
+                                                    :class="chckIsHomeId('away', item) ? 'asoton-villa' : 'arsenal-8'"
                                                 >
-                                                    {{ getTeamName(item[6][0]) }}
+                                                    {{ getTeamName('away', item) }}
                                                 </div>
                                             </template>
                                         </div>
@@ -108,10 +108,10 @@
                                 <div class="cell-13">
                                     <div class="content-22 headline3">
                                         <div class="score-1 valign-text-middle score-8">    <!-- home score -->
-                                            {{ item[5][2] }}
+                                            {{ getScore('home', item) }}
                                         </div>
                                         <div class="score-8 valign-text-middle">            <!-- away score -->
-                                            {{ item[6][2] }}
+                                            {{ getScore('away', item) }}
                                         </div>
                                     </div>
                                 </div>
@@ -252,7 +252,8 @@ const getCompetitionId = (item: TMatchUpTeamInfoCommon) => {
 
 const getLeagueTitle = (item: TMatchUpTeamInfoCommon): string => {
     const leagueId = matchUpStore.getH2hInfo(opt.sportSection, 'competiton_id', item);
-    return matchUpStore.getLeagueTitle(leagueId);
+    const leagueTitle = matchUpStore.getLeagueTitle(leagueId);
+    return leagueTitle;
 };
 
 const getLeagueLogo = (item: TMatchUpTeamInfoCommon): string => {
@@ -280,8 +281,13 @@ const getTeamLogo = (prefix: TContentStoreHomeAwayPrefix, item: TMatchUpTeamInfo
     return matchUpStore.getTeamLogo(teamId);
 };
 
-const getTeamName = (teamId: string): string => {
+const getTeamName = (prefix: TContentStoreHomeAwayPrefix, item: TMatchUpTeamInfoCommon): string => {
+    const teamId = matchUpStore.getH2hInfo(opt.sportSection, `${ prefix }_id`, item);
     return matchUpStore.getTeamName(teamId);
+};
+
+const getScore = (prefix: TContentStoreHomeAwayPrefix, item: TMatchUpTeamInfoCommon) => {
+    return matchUpStore.getH2hInfo(opt.sportSection, `${ prefix }_score`, item);
 };
 
 const getIsHomeWin = (item: TMatchUpTeamInfoCommon): 'win' | 'lose' | 'draw' => {
@@ -299,8 +305,8 @@ const chckIsFilteredWinLoseDraw = (item: TMatchUpTeamInfoCommon): 'win' | 'lose'
     return 'draw';
 };
 
-const chckIsHomeId = (id: string): boolean => {
-    return id === filterOpt.selectedTeamId;
+const chckIsHomeId = (prefix: TContentStoreHomeAwayPrefix, item: TMatchUpTeamInfoCommon): boolean => {
+    return matchUpStore.getH2hInfo(opt.sportSection, `${ prefix }_id`, item) === filterOpt.selectedTeamId;
 };
 
 const getTotalWin = (targetList: TMatchUpTeamInfoCommon[]): number => {
@@ -383,7 +389,11 @@ const sortLeagueTag = (list: TMatchUpTeamInfoCommon[]) => {
             if (typeof match === 'object') {
                 match['hasLeagueTag'] = (index === 0);
             } else {
-                match[ match.length ] = (index === 0);
+                if (typeof match[ match.length - 1 ] === 'boolean') {
+                    match[ match.length - 1 ] = (index === 0);
+                } else {
+                    match[ match.length ] = (index === 0);
+                }
             }
         });
         return {
@@ -413,6 +423,7 @@ const sortLeagueTag = (list: TMatchUpTeamInfoCommon[]) => {
 
 onMounted(async () => {
     await nextTick();
+    // setting config & opt
     const {
         sportSection,
         homeName, homeLogo, homeTeamId,
@@ -435,9 +446,8 @@ onMounted(async () => {
     config.vs = vs;
     filterOpt.selectedTeamId = opt.homeTeamId;
     filterOpt.selectedList = setListViaOpts();
-    sortLeagueTag(filterOpt.selectedList);
     updateTotalValues();
-
+    // setting team & competition resource list
     let totalList: TMatchUpTeamInfoCommon[] = [];
     if (props.isLastMatches) {
         totalList = [ ...config.home, ...config.away, ...config.vs ];
@@ -445,22 +455,25 @@ onMounted(async () => {
         totalList = [ ...config.vs ];
     }
     const prevTeamid = [
-        ...totalList.map( item => item[5][0] ),
-        ...totalList.map( item => item[6][0] ),
+        ...totalList.map( item => matchUpStore.getH2hInfo(opt.sportSection, 'home_id', item) ),
+        ...totalList.map( item => matchUpStore.getH2hInfo(opt.sportSection, 'away_id', item) ),
     ];
-    const teamid = [ ...new Set(prevTeamid) ];
-    const prevCompetitionid = [
-        ...totalList.map( item => item[1] )
+    const teamId = [ ...new Set(prevTeamid) ];
+    console.log('teamId: ', teamId);
+    const prevCompetitionId = [
+        ...totalList.map( item => matchUpStore.getH2hInfo(opt.sportSection, 'competition_id', item) )
     ];
-    const competitionid = [ ...new Set(prevCompetitionid) ];
-    if (teamid.length) {
-        await matchUpStore.mountTeam(teamid);
+    const competitionId = [ ...new Set(prevCompetitionId) ];
+    console.log('competitionId: ', competitionId);
+    if (teamId.length) {
+        await matchUpStore.mountTeam(teamId);
     }
     pendingOpt.team = false;
-    if (competitionid.length) {
-        await matchUpStore.mountLeague(competitionid);
+    if (competitionId.length) {
+        await matchUpStore.mountLeague(competitionId);
     }
     pendingOpt.league = false;
+    sortLeagueTag(filterOpt.selectedList);
 });
 </script>
 

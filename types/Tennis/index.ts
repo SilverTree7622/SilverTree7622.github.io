@@ -125,6 +125,8 @@ export const getMatchUpH2hInfo = (
     if (type === 'home_id') return item['home_team_id'];
     if (type === 'away_id') return item['away_team_id'];
     if (type === 'time') return item['match_time'];
+    if (type === 'home_score') return item['scores']['ft'][0];
+    if (type === 'away_score') return item['scores']['ft'][1];
     if (type === 'is_home_win') {
         const totalScoreHome = item['scores']['ft'][0];
         const totalScoreAway = item['scores']['ft'][1];

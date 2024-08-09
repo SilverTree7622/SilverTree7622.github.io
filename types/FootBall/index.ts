@@ -116,6 +116,8 @@ export const getMatchUpH2hInfo = (
     if (type === 'home_id') return item[5][0];
     if (type === 'away_id') return item[6][0];
     if (type === 'time') return item[3];
+    if (type === 'home_score') return item[5][2];
+    if (type === 'away_score') return item[6][2];
     if (type === 'is_home_win') {
         if (item[5][2] > item[6][2]) return 'win';
         if (item[5][2] < item[6][2]) return 'lose';
