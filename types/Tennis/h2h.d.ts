@@ -17,27 +17,27 @@ export type TMatchUpH2HHistoryTennis = {
 };
 
 export type TMatchUpTeamInfoTennis = {
-    id: string;
-    unique_tournament_id: string;
-    season_id: string;
-    tournament_id: string;
-    venue_id: string;
-    home_team_id: string;
-    away_team_id: string;
-    status_id: number;
-    match_time: number;
-    neutral: number;
-    bestof: number;
-    coverage: {
-        mlive: number;
-    };
-    scores: TTennisSchedule['ai_scores'];
-    weather: {
-        desc: string;
-        pressure: number;
-        temp: number;
-        wind: number;
-        humidity: number;
-    };
-    updated_at: number;
+    id: string;                                 // match id
+    unique_tournament_id: string;               // Competition id
+    season_id: string;                          // Season id
+    tournament_id: string;                      // Stage id
+    venue_id: string;                           // Venue id
+    home_team_id: string;                       // Home team id
+    away_team_id: string;                       // Away team id
+    status_id: number;                          // Match status，please refer to Status code->Match
+    match_time: number;                         // Match time
+    neutral: number;                            // Is it neutral，1-Yes、0-No
+    bestof: number;                             // Number of sets，3-BO3、5-BO5、0-Unknown
+    coverage: {                                 // Animation
+        mlive: number;                          // Is there any animation，1-yes、0-no
+    };      
+    scores: TTennisSchedule['ai_scores'];       // Score data（May be empty）
+    weather: {                                  // Match environment（No data, field does not exist）
+        desc: string;                           // Weather description
+        pressure: number;                       // Air pressure mmHg
+        temp: number;                           // Temperature ℃
+        wind: number;                           // Wind speed m/s
+        humidity: number;                       // Humidity %
+    };      
+    updated_at: number;                         // Update time
 };

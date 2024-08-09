@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { getMatchUpH2hInfo, getScore, isLive } from "~/types";
 import { GetSportSectionUpperCase, type TCommonSportSection } from "~/types/Common/sport";
-import type { TMatchUpH2HSportCommon } from "~/types/h2h";
+import type { TMatchUpH2HSportCommon, TMatchUpTeamInfoCommon } from "~/types/h2h";
 import type { TMatchUpLineUpSport } from "~/types/lineUp";
 import type { TMatchUpStoreConfig, TMatchUpStoreStatsIncident } from "~/types/matchUp";
 import type { TSportScheduleTypes } from "~/types/schedule";
@@ -161,9 +161,9 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
         for (const item in data.history) {
             h2hConfig[item] = data.history[item];
         }
-        for (const item in data.future) {
-            h2hConfig[item].push(...data.future[item]);
-        }
+        // for (const item in data.future) {
+        //     h2hConfig[item].push(...data.future[item]);
+        // }
     };
 
     const setIsLineUpExist = (value: boolean) => {
@@ -284,7 +284,7 @@ export const useMatchUpStore = defineStore('matchUpStore', () => {
         return resourceListConfig.league.find( leagueItem => leagueItem.ai_id === leagueId )?.competition_logo ?? '';
     };
 
-    const getH2hInfo = (sportSection: TCommonSportSection, type: string, item: TMatchUpH2HSportCommon) => {
+    const getH2hInfo = (sportSection: TCommonSportSection, type: string, item: TMatchUpTeamInfoCommon) => {
         return getMatchUpH2hInfo(sportSection, type, item);
     };
 

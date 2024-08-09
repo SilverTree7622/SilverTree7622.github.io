@@ -5,8 +5,8 @@
         @click="getClick()"
     >
         <USkeleton v-if="props.isPending === true" class="w-[15px] h-[15px] relative rounded-full" />
-        <img v-if="!props.isPending && props.src" class="flag_-circle_eng" :src="props.src" :alt="props.alt ?? props.title" />
         <USkeleton v-if="props.isPending === true" class="w-[100px] h-[15px]" />
+        <img v-if="!props.isPending && props.src" class="flag_-circle_eng" :src="props.src" :alt="props.alt ?? props.title" />
         <div v-if="!props.isPending" :class="props.src ? `premier-league-lE9kB9 premier-league headline2`: `x04092024-tue valign-text-middle headline2`">
             {{ props.title }}
         </div>

@@ -16,10 +16,10 @@ import type { TVolleyBallSchedule } from './VolleyBall/schedule';
 import type { TTennisSchedule } from './Tennis/schedule';
 import type { TIceHockeySchedule } from './IceHockey/schedule';
 import UtilDate from '~/utils/date';
-import type { TMatchUpH2HSportCommon } from './h2h';
-import type { TMatchUpH2HBasketball } from './BasketBall/h2h';
-import type { TMatchUpH2HFootball } from './FootBall/h2h';
-import type { TMatchUpH2HTennis } from './Tennis/h2h';
+import type { TMatchUpH2HSportCommon, TMatchUpTeamInfoCommon } from './h2h';
+import type { TMatchUpH2HBasketball, TMatchUpTeamInfoBasketball } from './BasketBall/h2h';
+import type { TMatchUpH2HFootball, TMatchUpTeamInfoFootball } from './FootBall/h2h';
+import type { TMatchUpH2HTennis, TMatchUpTeamInfoTennis } from './Tennis/h2h';
 
 // export enum EError {
 //     SUCCESS = { code: 0, type: null, title: '', message: '', },
@@ -256,11 +256,11 @@ export const getTimeViaIdx = (
 export const getMatchUpH2hInfo = (
     sportSection: TCommonSportSection,
     type: string,
-    item: TMatchUpH2HSportCommon,
+    item: TMatchUpTeamInfoCommon,
 ) => {
-    if (sportSection === 'football') return football.getMatchUpH2hInfo(type, item as TMatchUpH2HFootball);
-    if (sportSection === 'basketball') return basketball.getMatchUpH2hInfo(type, item as TMatchUpH2HBasketball);
-    if (sportSection === 'tennis') return tennis.getMatchUpH2hInfo(type, item as TMatchUpH2HTennis);
+    if (sportSection === 'football') return football.getMatchUpH2hInfo(type, item as TMatchUpTeamInfoFootball);
+    if (sportSection === 'basketball') return basketball.getMatchUpH2hInfo(type, item as TMatchUpTeamInfoBasketball);
+    if (sportSection === 'tennis') return tennis.getMatchUpH2hInfo(type, item as TMatchUpTeamInfoTennis);
     console.warn(`${ sportSection } sport has not h2h data`);
     return ``;
 };

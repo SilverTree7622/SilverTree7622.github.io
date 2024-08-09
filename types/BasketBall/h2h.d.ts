@@ -20,10 +20,10 @@ export type TMatchUpH2HInfoBasketball = TMatchUpTeamInfoBasketball;
 
 export type TMatchUpTeamInfoBasketball = [
     string,         // match id
-    number,         // Competition id
+    number,         // Total quarters of the match
     string,         // competiton id
     number,         // match status
-    number,         // Match time stamp
+    number,         // Match time
     number,         // Remaining time of the match section (seconds)
     [
         string,     // Home team id

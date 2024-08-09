@@ -1,6 +1,6 @@
 import UtilDate from "~/utils/date";
 import type { TTennisSchedule } from "./schedule";
-import type { TMatchUpH2HTennis } from "./h2h";
+import type { TMatchUpH2HTennis, TMatchUpTeamInfoTennis } from "./h2h";
 
 
 export const isLive = (ai_status_id: number): boolean => {
@@ -117,10 +117,20 @@ export const getTimeViaIdx = (
 
 export const getMatchUpH2hInfo = (
     type: string,
-    item: TMatchUpH2HTennis,
+    item: TMatchUpTeamInfoTennis,
 ) => {
-    if (type === 'match_id') return item[0];
-    if (type === 'competition_id') return item[2];
-
+    if (type === 'season_id') return item['season_id'];
+    if (type === 'match_id') return item['id'];
+    if (type === 'competition_id') return item['unique_tournament_id'];
+    if (type === 'home_id') return item['home_team_id'];
+    if (type === 'away_id') return item['away_team_id'];
+    if (type === 'time') return item['match_time'];
+    if (type === 'is_home_win') {
+        const totalScoreHome = item['scores']['ft'][0];
+        const totalScoreAway = item['scores']['ft'][1];
+        if (totalScoreHome > totalScoreAway) return 'win';
+        if (totalScoreHome < totalScoreAway) return 'lose';
+        return 'draw';
+    }
     return item[0];
 };

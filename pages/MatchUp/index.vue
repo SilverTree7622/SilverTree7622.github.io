@@ -4,7 +4,7 @@
         :isPending="opt.isPending"
         :sName="'MatchUp'"
         :tab="opt.tab"
-        :result="'dummy'"
+        :result="{ nav_code: 'dummy' }"
         :changeTab="changeTab"
         @clickTab="clickTab"
     >

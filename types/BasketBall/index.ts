@@ -2,7 +2,7 @@ import UtilDate from "~/utils/date";
 import type { TBasketBallSchedule } from "./schedule";
 import type { TSportScheduleTypes } from "../schedule";
 import type { TCommonSportSection } from "../Common/sport";
-import type { TMatchUpH2HBasketball } from "./h2h";
+import type { TMatchUpH2HBasketball, TMatchUpTeamInfoBasketball } from "./h2h";
 
 
 export const isLive = (ai_status_id: number): boolean => {
@@ -118,12 +118,20 @@ export const getTimeViaIdx = (
 
 export const getMatchUpH2hInfo = (
     type: string,
-    item: TMatchUpH2HBasketball,
+    item: TMatchUpTeamInfoBasketball,
 ) => {
-    console.log('item[2]: ', item[2]);
-
+    if (type === 'season_id') return item[9][0];
     if (type === 'match_id') return item[0];
     if (type === 'competition_id') return item[2];
-
+    if (type === 'home_id') return item[6][0];
+    if (type === 'away_id') return item[7][0];
+    if (type === 'time') return item[4];
+    if (type === 'is_home_win') {
+        const totalScoreHome = item[6][2] + item[6][3] + item[6][4] + item[6][5] + item[6][6];
+        const totalScoreAway = item[7][2] + item[7][3] + item[7][4] + item[7][5] + item[7][6];
+        if (totalScoreHome > totalScoreAway) return 'win';
+        if (totalScoreHome < totalScoreAway) return 'lose';
+        return 'draw';
+    }
     return item[0];
 };
